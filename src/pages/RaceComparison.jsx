@@ -584,7 +584,7 @@ export default function RaceComparison({ t, onBack }) {
                         {/* Row 1: naam + TX grijs | diff rechts */}
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                           <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, overflow: 'hidden' }}>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, overflow: 'hidden' }}>
                               <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
                                 {boat.type}
                               </div>
