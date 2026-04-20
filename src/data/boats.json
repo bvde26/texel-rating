@@ -1013,6 +1013,72 @@
       "trWithSpi": 103
     },
     {
+      "id": "hobie_20_formula",
+      "type": "Hobie 20 Formula",
+      "class": "Performance",
+      "crew": 2,
+      "rl": 5.89,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 106,
+      "trWithSpi": 100
+    },
+    {
+      "id": "hobie_21",
+      "type": "Hobie 21",
+      "class": "Performance",
+      "crew": 2,
+      "rl": 6.47,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 98,
+      "trWithSpi": 94
+    },
+    {
+      "id": "hobie_21_formula",
+      "type": "Hobie 21 Formula",
+      "class": "Performance",
+      "crew": 2,
+      "rl": 6.47,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 98,
+      "trWithSpi": 94
+    },
+    {
+      "id": "hobie_fx_one_cat_boat",
+      "type": "Hobie FX One Cat Boat",
+      "class": "Single-handed",
+      "crew": 1,
+      "rl": 5.23,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 110,
+      "trWithSpi": 105
+    },
+    {
+      "id": "hobie_fx_one_double",
+      "type": "Hobie FX One Double",
+      "class": "Intermediate",
+      "crew": 2,
+      "rl": 5.23,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 107,
+      "trWithSpi": 103
+    },
+    {
+      "id": "hobie_fox_f20",
+      "type": "Hobie Fox F20",
+      "class": "Foiler",
+      "crew": 2,
+      "rl": 6.12,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 101,
+      "trWithSpi": 96
+    },
+    {
       "id": "hobie_max",
       "type": "Hobie Max",
       "class": "Intermediate",
@@ -2045,6 +2111,61 @@
       "rw": 0,
       "trNoSpi": 92,
       "trWithSpi": 87
+    },
+    {
+      "id": "nacra_infusion_f18",
+      "type": "Nacra Infusion F18",
+      "class": "Foiler",
+      "crew": 2,
+      "rl": 5.52,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 104,
+      "trWithSpi": 100
+    },
+    {
+      "id": "nacra_inter_17_jib",
+      "type": "Nacra Inter 17 Jib",
+      "class": "Intermediate",
+      "crew": 2,
+      "rl": 5.22,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 113,
+      "trWithSpi": 107
+    },
+    {
+      "id": "nacra_inter_17_solo_jib",
+      "type": "Nacra Inter 17 Solo Jib",
+      "class": "Single-handed",
+      "crew": 1,
+      "rl": 5.22,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 108,
+      "trWithSpi": 103
+    },
+    {
+      "id": "nacra_inter_17r",
+      "type": "Nacra Inter 17R",
+      "class": "Single-handed",
+      "crew": 1,
+      "rl": 5.22,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 109,
+      "trWithSpi": 103
+    },
+    {
+      "id": "nacra_inter_18_f18",
+      "type": "Nacra Inter 18 F18",
+      "class": "Foiler",
+      "crew": 2,
+      "rl": 5.52,
+      "rsa": 0,
+      "rw": 0,
+      "trNoSpi": 104,
+      "trWithSpi": 100
     },
     {
       "id": "nacra_inter_20_f20",
