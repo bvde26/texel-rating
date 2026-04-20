@@ -4,53 +4,58 @@ import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
 import './App.css'
 
-function App() {
-  const [currentPage, setCurrentPage] = useState('home')
+const NAV = [
+  { id: 'home',     icon: '⛵', label: 'Home',     Page: Home },
+  { id: 'compare',  icon: '⏱',  label: 'Vergelijk', Page: RaceComparison },
+  { id: 'schedule', icon: '📋', label: 'Schema',   Page: Info },
+]
 
-  const navItems = [
-    { id: 'home',     label: '🏠', title: 'Home',     page: <Home /> },
-    { id: 'compare',  label: '⏱️', title: 'Vergelijk', page: <RaceComparison /> },
-    { id: 'schedule', label: '📅', title: 'Schema',   page: <Info /> },
-  ]
+export default function App() {
+  const [page, setPage] = useState('home')
+  const active = NAV.find(n => n.id === page)
 
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--bg)' }}>
-      {/* iOS Navigation Bar */}
-      <header
-        className="bg-white px-4 pt-3 pb-3 flex items-center"
-        style={{ boxShadow: '0 0.5px 0 rgba(0,0,0,0.12)' }}
-      >
-        <h1 className="font-['Bebas_Neue'] text-2xl tracking-widest leading-none" style={{ color: 'var(--accent)' }}>
-          Round Texel
-        </h1>
+
+      {/* Header */}
+      <header className="bg-white px-5 py-3.5 flex items-baseline gap-2.5"
+        style={{ borderBottom: '0.5px solid rgba(12,30,48,0.08)' }}>
+        <span className="font-['Bebas_Neue'] text-[22px] tracking-[0.12em] leading-none"
+          style={{ color: 'var(--accent)' }}>Round Texel</span>
+        <span className="text-sm font-medium" style={{ color: 'var(--text3)' }}>
+          {active?.label}
+        </span>
       </header>
 
-      <main className="flex-1 overflow-y-auto pb-24">
-        <div className="max-w-lg mx-auto px-4 pb-4">
-          {navItems.map(item =>
-            currentPage === item.id && <div key={item.id}>{item.page}</div>
+      {/* Page */}
+      <main className="flex-1 overflow-y-auto pb-28">
+        <div className="max-w-lg mx-auto px-4">
+          {NAV.map(({ id, Page }) =>
+            page === id && <Page key={id} />
           )}
         </div>
       </main>
 
-      {/* iOS Tab Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 tab-bar">
-        <div className="flex max-w-lg mx-auto" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
-          {navItems.map(item => (
-            <button
-              key={item.id}
-              onClick={() => setCurrentPage(item.id)}
-              className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2 transition-colors"
-              style={{ minHeight: '49px', color: currentPage === item.id ? 'var(--accent)' : 'var(--label3)' }}
-            >
-              <span className="text-xl leading-none">{item.label}</span>
-              <span className="text-[10px] font-medium leading-tight">{item.title}</span>
-            </button>
-          ))}
+      {/* Bottom nav */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 nav-bar">
+        <div className="flex max-w-lg mx-auto"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+          {NAV.map(({ id, icon, label }) => {
+            const isActive = page === id
+            return (
+              <button key={id} onClick={() => setPage(id)}
+                className="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 transition-colors"
+                style={{ minHeight: '52px', color: isActive ? 'var(--accent)' : 'var(--text3)' }}
+              >
+                <span className="text-[20px] leading-none">{icon}</span>
+                <span className="text-[10px] font-semibold tracking-wide leading-none">
+                  {label}
+                </span>
+              </button>
+            )
+          })}
         </div>
       </nav>
     </div>
   )
 }
-
-export default App

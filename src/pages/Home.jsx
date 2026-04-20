@@ -1,64 +1,71 @@
 import { useState } from 'react'
 
 export default function Home() {
-  const [programmaOpen, setProgrammaOpen] = useState(null)
+  const [open, setOpen] = useState(null)
 
   return (
     <div>
-      {/* Event card */}
-      <p className="ios-section-label">EVENT</p>
-      <div className="ios-card px-4 py-4" style={{ backgroundColor: 'var(--accent-bg)' }}>
-        <p className="text-xs font-medium mb-1" style={{ color: 'var(--accent)' }}>CATAMARAN RACE · TEXEL</p>
-        <h2 className="font-['Bebas_Neue'] text-4xl tracking-widest leading-none mb-1" style={{ color: 'var(--label)' }}>
-          Round Texel
-        </h2>
-        <p className="text-sm" style={{ color: 'var(--label2)' }}>8 juni 2025 · Den Hoorn</p>
-      </div>
-
-      {/* Info rows */}
-      <p className="ios-section-label">INFORMATIE</p>
-      <div className="ios-card">
-        <div className="ios-row flex items-center justify-between">
-          <span className="text-sm font-medium" style={{ color: 'var(--label)' }}>290 boten geregistreerd</span>
-          <span className="text-sm" style={{ color: 'var(--label3)' }}>›</span>
+      {/* Hero */}
+      <div className="mt-5 card overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #02aaff 0%, #0090e0 100%)' }}>
+        <div className="px-5 pt-5 pb-6">
+          <p className="text-[11px] font-semibold tracking-[0.14em] uppercase text-white opacity-70 mb-1">
+            Catamaran Race · Texel
+          </p>
+          <h2 className="font-['Bebas_Neue'] text-[42px] tracking-[0.06em] leading-none text-white mb-2">
+            Round Texel
+          </h2>
+          <p className="text-sm text-white opacity-80">8 juni 2025 · Den Hoorn</p>
         </div>
-        <div className="ios-row flex items-center justify-between">
-          <span className="text-sm font-medium" style={{ color: 'var(--label)' }}>Tijdvergelijker</span>
-          <span className="text-sm" style={{ color: 'var(--label3)' }}>›</span>
+        <div className="flex" style={{ borderTop: '1px solid rgba(255,255,255,0.18)' }}>
+          <div className="flex-1 px-5 py-3.5" style={{ borderRight: '0.5px solid rgba(255,255,255,0.18)' }}>
+            <p className="font-['Bebas_Neue'] text-3xl text-white leading-none">290</p>
+            <p className="text-[11px] text-white opacity-70 mt-0.5">Boten</p>
+          </div>
+          <div className="flex-1 px-5 py-3.5">
+            <p className="font-['Bebas_Neue'] text-3xl text-white leading-none">2025</p>
+            <p className="text-[11px] text-white opacity-70 mt-0.5">Editie</p>
+          </div>
         </div>
       </div>
 
       {/* Programma */}
-      <p className="ios-section-label">PROGRAMMA</p>
-      <div className="ios-card">
+      <p className="section-title">Programma</p>
+      <div className="card">
         {[
-          { key: 'za', dag: 'Za 7 juni', events: [{ tijd: '10:00', naam: 'Inschrijving open' }, { tijd: '15:00', naam: 'Schippersmeeting' }] },
-          { key: 'zo', dag: 'Zo 8 juni', events: [{ tijd: '10:00', naam: 'Start race', sub: 'Vertrek vanuit Den Hoorn' }] },
-        ].map(dag => (
-          <div key={dag.key}>
+          {
+            key: 'za', dag: 'Zaterdag 7 juni',
+            items: [{ t: '10:00', n: 'Inschrijving open' }, { t: '15:00', n: 'Schippersmeeting' }]
+          },
+          {
+            key: 'zo', dag: 'Zondag 8 juni',
+            items: [{ t: '10:00', n: 'Start race', sub: 'Vertrek vanuit Den Hoorn' }]
+          },
+        ].map(({ key, dag, items }) => (
+          <div key={key}>
             <button
-              onClick={() => setProgrammaOpen(programmaOpen === dag.key ? null : dag.key)}
-              className="ios-row w-full flex items-center justify-between text-left"
+              onClick={() => setOpen(open === key ? null : key)}
+              className="row w-full flex items-center justify-between text-left"
             >
-              <span className="text-sm font-medium" style={{ color: 'var(--label)' }}>{dag.dag}</span>
-              <span
-                className="text-xs transition-transform duration-200"
+              <span className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>{dag}</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
                 style={{
-                  color: 'var(--label3)',
-                  transform: programmaOpen === dag.key ? 'rotate(90deg)' : 'rotate(0deg)',
-                }}
-              >›</span>
+                  color: 'var(--text3)',
+                  transform: open === key ? 'rotate(90deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s',
+                  flexShrink: 0,
+                }}>
+                <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </button>
-            {programmaOpen === dag.key && dag.events.map((e, i) => (
-              <div
-                key={i}
-                className="ios-row flex items-start gap-3 pl-8"
-                style={{ backgroundColor: 'var(--surface2)' }}
-              >
-                <span className="text-sm font-['DM_Mono'] shrink-0 w-12" style={{ color: 'var(--accent)' }}>{e.tijd}</span>
+            {open === key && items.map((e, i) => (
+              <div key={i} className="row flex gap-3 pl-5"
+                style={{ backgroundColor: 'var(--surface2)' }}>
+                <span className="font-['DM_Mono'] text-sm font-medium w-11 shrink-0 pt-0.5"
+                  style={{ color: 'var(--accent)' }}>{e.t}</span>
                 <div>
-                  <p className="text-sm" style={{ color: 'var(--label)' }}>{e.naam}</p>
-                  {e.sub && <p className="text-xs mt-0.5" style={{ color: 'var(--label2)' }}>{e.sub}</p>}
+                  <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>{e.n}</p>
+                  {e.sub && <p className="text-xs mt-0.5" style={{ color: 'var(--text2)' }}>{e.sub}</p>}
                 </div>
               </div>
             ))}
@@ -66,13 +73,16 @@ export default function Home() {
         ))}
       </div>
 
-      {/* TR uitleg */}
-      <p className="ios-section-label">TEXEL RATING</p>
-      <div className="ios-card ios-row">
-        <p className="text-sm leading-relaxed" style={{ color: 'var(--label2)' }}>
-          Hogere TR = meer tijd toegestaan. Gebruik de <span className="font-semibold" style={{ color: 'var(--label)' }}>Vergelijker</span> om te zien wat andere boten mogen varen ten opzichte van jou.
+      {/* TR info */}
+      <p className="section-title">Texel Rating</p>
+      <div className="card row">
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
+          Hogere TR = meer tijd toegestaan. Gebruik de{' '}
+          <span className="font-semibold" style={{ color: 'var(--text)' }}>Vergelijker</span>{' '}
+          om te berekenen hoeveel tijd jouw concurrent meer of minder mag dan jij.
         </p>
       </div>
+      <div className="pb-4" />
     </div>
   )
 }
