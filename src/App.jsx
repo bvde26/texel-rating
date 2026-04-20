@@ -1,65 +1,209 @@
 import { useState } from 'react'
-import Logo from './components/Logo'
 import Home from './pages/Home'
 import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
-import TexelRatingInfo from './pages/TexelRatingInfo'
 
-const NAV = [
-  { id: 'home',    label: 'Home',     Page: Home },
-  { id: 'compare', label: 'Vergelijk', Page: RaceComparison },
-  { id: 'schema',  label: 'Schema',   Page: Info },
-  { id: 'uitleg',  label: 'Uitleg',   Page: TexelRatingInfo },
-]
+const COPY = {
+  nl: {
+    tile_compare_title: 'Vergelijker',
+    tile_compare_sub: 'Bereken wie tijd over heeft',
+    tile_agenda_title: 'Programma',
+    tile_agenda_sub: 'Tijden, regels, contact',
+    home_footer: 'Werkt zonder internet',
+    compare_title: 'Vergelijker',
+    agenda_title: 'Programma',
+    search_placeholder: 'Schipper, zeilnummer of type',
+    no_results: 'Geen boot gevonden',
+    your_boat: 'Jouw boot',
+    pick_boat: 'Kies je boot',
+    spinnaker: 'Spinnaker',
+    yes: 'Ja',
+    no: 'Nee',
+    finish_time: 'Vaartijd',
+    h: 'uur', m: 'min', s: 'sec',
+    add_competitor: 'Voeg concurrent toe',
+    results: 'Uitslag',
+    advantage: 'voordeel',
+    disadvantage: 'nadeel',
+    corrected: 'Gecorrigeerd',
+    tap_to_set: 'Tik om in te vullen',
+    filter_all: 'Alle',
+    back: 'Terug',
+    schedule: 'Programma',
+    rules: 'Regels',
+    contacts: 'Contact',
+    rating_faq: 'Over TX-rating',
+    remove: 'Verwijder',
+    edit: 'Bewerk',
+    done: 'Klaar',
+    reset: 'Reset',
+    edition: 'Editie 2026',
+    meta_compare: '290 BOTEN · OFFLINE',
+    meta_agenda: '4 DAGEN · REGELS · CONTACT',
+    ranking: 'Uitslag',
+    add_boat: 'Boot toevoegen',
+    tile_reg_eyebrow: 'Inschrijvingen',
+    cat_catamaran_duo: 'Catamaran duo',
+    cat_wingfoil: 'Wingfoil',
+    cat_windsurf: 'Windsurf',
+    cat_catamaran_single: 'Catamaran solo',
+  },
+  en: {
+    tile_compare_title: 'Comparator',
+    tile_compare_sub: 'See who owes time',
+    tile_agenda_title: 'Programme',
+    tile_agenda_sub: 'Schedule, rules, contacts',
+    home_footer: 'Works offline',
+    compare_title: 'Comparator',
+    agenda_title: 'Programme',
+    search_placeholder: 'Skipper, sail number or type',
+    no_results: 'No boats found',
+    your_boat: 'Your boat',
+    pick_boat: 'Pick your boat',
+    spinnaker: 'Spinnaker',
+    yes: 'Yes',
+    no: 'No',
+    finish_time: 'Race time',
+    h: 'h', m: 'min', s: 'sec',
+    add_competitor: 'Add competitor',
+    results: 'Results',
+    advantage: 'ahead',
+    disadvantage: 'behind',
+    corrected: 'Corrected',
+    tap_to_set: 'Tap to set',
+    filter_all: 'All',
+    back: 'Back',
+    schedule: 'Schedule',
+    rules: 'Rules',
+    contacts: 'Contacts',
+    rating_faq: 'About TX-rating',
+    remove: 'Remove',
+    edit: 'Edit',
+    done: 'Done',
+    reset: 'Reset',
+    edition: 'Edition 2026',
+    meta_compare: '290 BOATS · OFFLINE',
+    meta_agenda: '4 DAYS · RULES · CONTACT',
+    ranking: 'Results',
+    add_boat: 'Add boat',
+    tile_reg_eyebrow: 'Registrations',
+    cat_catamaran_duo: 'Catamaran duo',
+    cat_wingfoil: 'Wingfoil',
+    cat_windsurf: 'Windsurf',
+    cat_catamaran_single: 'Catamaran single',
+  },
+  de: {
+    tile_compare_title: 'Vergleicher',
+    tile_compare_sub: 'Wer hat Zeitgutschrift',
+    tile_agenda_title: 'Programm',
+    tile_agenda_sub: 'Zeiten, Regeln, Kontakt',
+    home_footer: 'Funktioniert offline',
+    compare_title: 'Vergleicher',
+    agenda_title: 'Programm',
+    search_placeholder: 'Skipper, Segelnummer oder Typ',
+    no_results: 'Kein Boot gefunden',
+    your_boat: 'Dein Boot',
+    pick_boat: 'Boot wählen',
+    spinnaker: 'Spinnaker',
+    yes: 'Ja',
+    no: 'Nein',
+    finish_time: 'Fahrzeit',
+    h: 'Std', m: 'Min', s: 'Sek',
+    add_competitor: 'Konkurrent hinzufügen',
+    results: 'Ergebnis',
+    advantage: 'Vorsprung',
+    disadvantage: 'Rückstand',
+    corrected: 'Korrigiert',
+    tap_to_set: 'Antippen zum Eingeben',
+    filter_all: 'Alle',
+    back: 'Zurück',
+    schedule: 'Programm',
+    rules: 'Regeln',
+    contacts: 'Kontakt',
+    rating_faq: 'Über TX-Rating',
+    remove: 'Entfernen',
+    edit: 'Bearbeiten',
+    done: 'Fertig',
+    reset: 'Reset',
+    edition: 'Ausgabe 2026',
+    meta_compare: '290 BOOTE · OFFLINE',
+    meta_agenda: '4 TAGE · REGELN · KONTAKT',
+    ranking: 'Ergebnis',
+    add_boat: 'Boot hinzufügen',
+    tile_reg_eyebrow: 'Anmeldungen',
+    cat_catamaran_duo: 'Katamaran Duo',
+    cat_wingfoil: 'Wingfoil',
+    cat_windsurf: 'Windsurf',
+    cat_catamaran_single: 'Katamaran Solo',
+  },
+  fr: {
+    tile_compare_title: 'Comparateur',
+    tile_compare_sub: 'Qui a un avantage de temps',
+    tile_agenda_title: 'Programme',
+    tile_agenda_sub: 'Horaires, règles, contact',
+    home_footer: 'Fonctionne hors ligne',
+    compare_title: 'Comparateur',
+    agenda_title: 'Programme',
+    search_placeholder: 'Skipper, numéro ou type',
+    no_results: 'Aucun bateau trouvé',
+    your_boat: 'Votre bateau',
+    pick_boat: 'Choisir votre bateau',
+    spinnaker: 'Spinnaker',
+    yes: 'Oui',
+    no: 'Non',
+    finish_time: 'Temps de course',
+    h: 'h', m: 'min', s: 'sec',
+    add_competitor: 'Ajouter concurrent',
+    results: 'Résultats',
+    advantage: 'avance',
+    disadvantage: 'retard',
+    corrected: 'Corrigé',
+    tap_to_set: 'Appuyer pour saisir',
+    filter_all: 'Tout',
+    back: 'Retour',
+    schedule: 'Programme',
+    rules: 'Règles',
+    contacts: 'Contact',
+    rating_faq: 'À propos TX-rating',
+    remove: 'Supprimer',
+    edit: 'Modifier',
+    done: 'OK',
+    reset: 'Reset',
+    edition: 'Édition 2026',
+    meta_compare: '290 BATEAUX · HORS LIGNE',
+    meta_agenda: '4 JOURS · RÈGLES · CONTACT',
+    ranking: 'Résultats',
+    add_boat: 'Ajouter bateau',
+    tile_reg_eyebrow: 'Inscriptions',
+    cat_catamaran_duo: 'Catamaran duo',
+    cat_wingfoil: 'Wingfoil',
+    cat_windsurf: 'Windsurf',
+    cat_catamaran_single: 'Catamaran solo',
+  },
+}
 
 export default function App() {
   const [page, setPage] = useState('home')
+  const [dir, setDir] = useState('fwd')
+  const [lang, setLang] = useState('nl')
+
+  const go = (next) => {
+    setDir(next === 'home' ? 'back' : 'fwd')
+    setPage(next)
+  }
+
+  const t = COPY[lang]
+  const props = { t, lang, setLang, go, onBack: () => go('home') }
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg)' }}>
-
-      {/* Sticky header */}
-      <header className="sticky top-0 z-50 bg-white" style={{ borderBottom: '1px solid var(--border)' }}>
-        <div className="max-w-sm mx-auto px-4">
-          {/* Logo row */}
-          <div className="pt-3 pb-2">
-            <Logo size={22} />
-          </div>
-
-          {/* Pill-nav */}
-          <div className="pb-2">
-            <div className="flex gap-1 rounded-lg p-1" style={{ backgroundColor: '#f3f4f6' }}>
-              {NAV.map(({ id, label }) => {
-                const isActive = page === id
-                return (
-                  <button
-                    key={id}
-                    onClick={() => setPage(id)}
-                    className="flex-1 text-center rounded-md py-1.5 text-xs font-semibold transition-all"
-                    style={{
-                      background: isActive ? '#fff' : 'transparent',
-                      color: isActive ? 'var(--text)' : 'var(--text3)',
-                      boxShadow: isActive ? '0 1px 3px rgba(0,0,0,0.1)' : 'none',
-                      fontFamily: 'Inter, sans-serif',
-                    }}
-                  >
-                    {label}
-                  </button>
-                )
-              })}
-            </div>
-          </div>
+    <div style={{ minHeight: '100svh', background: 'var(--stage)', display: 'flex', justifyContent: 'center' }}>
+      <div style={{ width: '100%', maxWidth: 430, minHeight: '100svh', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}>
+        <div key={page} className={`page-${dir}`} style={{ minHeight: '100svh' }}>
+          {page === 'home'    && <Home    {...props} />}
+          {page === 'compare' && <RaceComparison {...props} />}
+          {page === 'agenda'  && <Info    {...props} />}
         </div>
-      </header>
-
-      {/* Page content */}
-      <main style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 16px)' }}>
-        <div className="max-w-sm mx-auto px-4">
-          {NAV.map(({ id, Page }) =>
-            page === id && <Page key={id} onNavigate={setPage} />
-          )}
-        </div>
-      </main>
+      </div>
     </div>
   )
 }
