@@ -5,7 +5,7 @@ export default function BoatCatalog() {
   const [searchTerm, setSearchTerm] = useState('')
   const [filterClass, setFilterClass] = useState('all')
   const [selectedBoat, setSelectedBoat] = useState(null)
-  const [sortBy, setSortBy] = useState('tr')
+  const [sortBy, setSortBy] = useState('name')
 
   const filtered = useMemo(() => {
     let results = boats.boats.filter(boat => {

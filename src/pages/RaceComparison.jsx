@@ -13,10 +13,13 @@ function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
   }, [])
 
   const filtered = useMemo(() =>
-    boats.boats.filter(b =>
-      !excludeIds.includes(b.id) &&
-      b.type.toLowerCase().includes(search.toLowerCase())
-    ), [search, excludeIds])
+    boats.boats
+      .filter(b =>
+        !excludeIds.includes(b.id) &&
+        b.type.toLowerCase().includes(search.toLowerCase())
+      )
+      .sort((a, b) => a.type.localeCompare(b.type))
+  , [search, excludeIds])
 
   return (
     <div ref={ref} className="relative">
