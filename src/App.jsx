@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import Home from './pages/Home'
 import TexelRatingInfo from './pages/TexelRatingInfo'
-import BoatCatalog from './pages/BoatCatalog'
 import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
 import './App.css'
@@ -12,7 +11,6 @@ function App() {
   const navItems = [
     { id: 'home',    label: '🏠', title: 'Home',     page: <Home /> },
     { id: 'info',    label: 'ℹ️', title: 'Uitleg',   page: <TexelRatingInfo /> },
-    { id: 'catalog', label: '⛵', title: 'Boten',    page: <BoatCatalog /> },
     { id: 'compare', label: '⏱️', title: 'Vergelijk', page: <RaceComparison /> },
     { id: 'schedule',label: '📅', title: 'Schema',   page: <Info /> },
   ]
