@@ -3,40 +3,59 @@
 @tailwind utilities;
 
 :root {
-  --bg:           #f1f5f9;
-  --surface:      #ffffff;
-  --surface2:     #f8fafc;
-  --border:       rgba(15,23,42,0.08);
-  --border2:      rgba(15,23,42,0.14);
-  --accent:       #02aaff;
-  --accent-light: rgba(2,170,255,0.10);
-  --accent-text:  #0090e0;
-  --text:         #0f172a;
-  --text2:        #475569;
-  --text3:        #94a3b8;
-  --green:        #16a34a;
-  --green-light:  rgba(22,163,74,0.10);
-  --red:          #dc2626;
-  --red-light:    rgba(220,38,38,0.10);
+  --bg:        #f2f2f7;
+  --surface:   #ffffff;
+  --surface2:  #f2f2f7;
+  --separator: rgba(60,60,67,0.12);
+  --accent:    #02aaff;
+  --accent-bg: rgba(2,170,255,0.08);
+  --label:     #000000;
+  --label2:    rgba(60,60,67,0.6);
+  --label3:    rgba(60,60,67,0.3);
+  --green:     #34c759;
+  --green-bg:  rgba(52,199,89,0.10);
+  --red:       #ff3b30;
+  --red-bg:    rgba(255,59,48,0.10);
 }
 
 body {
   background-color: var(--bg);
-  color: var(--text);
-  font-family: 'Instrument Sans', system-ui, sans-serif;
+  color: var(--label);
+  font-family: 'Instrument Sans', -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-.card {
+.ios-card {
   background: var(--surface);
-  border-radius: 20px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.07);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  overflow: hidden;
 }
 
-.nav-bg {
+.ios-row {
+  padding: 13px 16px;
+  border-bottom: 0.5px solid var(--separator);
+}
+.ios-row:last-child {
+  border-bottom: none;
+}
+
+.ios-section-label {
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--label2);
+  padding: 0 4px;
+  margin-bottom: 6px;
+  margin-top: 20px;
+}
+
+.tab-bar {
   background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 -1px 0 rgba(15,23,42,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 -0.5px 0 rgba(0,0,0,0.15);
 }
 
 .scrollbar-none {
