@@ -1,270 +1,202 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import boats from '../data/boats.json'
+
+function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
+  const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState('')
+  const ref = useRef(null)
+
+  useEffect(() => {
+    const handler = (e) => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const filtered = useMemo(() =>
+    boats.boats.filter(b =>
+      !excludeIds.includes(b.id) &&
+      b.type.toLowerCase().includes(search.toLowerCase())
+    ), [search, excludeIds])
+
+  return (
+    <div ref={ref} className="relative">
+      <input
+        type="text"
+        placeholder={placeholder}
+        value={search}
+        onChange={e => { setSearch(e.target.value); setOpen(true) }}
+        onFocus={() => setOpen(true)}
+        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+      />
+      {open && (
+        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-56 overflow-y-auto">
+          {filtered.length === 0 && (
+            <p className="px-4 py-3 text-sm text-gray-500">Geen boten gevonden</p>
+          )}
+          {filtered.map(boat => (
+            <button
+              key={boat.id}
+              onMouseDown={() => { onSelect(boat); setSearch(''); setOpen(false) }}
+              className="w-full text-left px-4 py-2 hover:bg-blue-50 border-b border-gray-100 last:border-0"
+            >
+              <span className="font-semibold text-blue-900 text-sm">{boat.type}</span>
+              <span className="text-xs text-gray-500 ml-2">TR {boat.trNoSpi} · {boat.class}</span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 
 export default function RaceComparison() {
   const [selectedBoat, setSelectedBoat] = useState(null)
-  const [finishTime, setFinishTime] = useState('4:00:00')
+  const [finishTime, setFinishTime] = useState('04:00')
   const [comparisonBoats, setComparisonBoats] = useState([])
-  const [searchOwn, setSearchOwn] = useState('')
-  const [searchCompare, setSearchCompare] = useState('')
-
-  // Parse time string to seconds
-  const timeToSeconds = (timeStr) => {
-    const [h, m, s] = timeStr.split(':').map(Number)
-    return h * 3600 + m * 60 + s
-  }
-
-  // Convert seconds to time string
-  const secondsToTime = (seconds) => {
-    const h = Math.floor(seconds / 3600)
-    const m = Math.floor((seconds % 3600) / 60)
-    const s = seconds % 60
-    return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
-  }
-
-  // Calculate corrected time (simplified: Corrected = Actual × (TR / 1000))
-  const calculateCorrectedTime = (actualSeconds, trRating) => {
-    return actualSeconds * (trRating / 1000)
-  }
 
   const finishTimeSeconds = useMemo(() => {
-    try {
-      return timeToSeconds(finishTime)
-    } catch {
-      return 0
-    }
+    const [h, m] = finishTime.split(':').map(Number)
+    return (h * 60 + m) * 60
   }, [finishTime])
 
+  // Corrected time for your own boat
+  const yourCorrectedSeconds = useMemo(() => {
+    if (!selectedBoat || !finishTimeSeconds) return 0
+    return finishTimeSeconds * (selectedBoat.trNoSpi / 1000)
+  }, [selectedBoat, finishTimeSeconds])
+
+  // For each comparison boat: max actual time to tie on corrected time
   const results = useMemo(() => {
     if (!selectedBoat || !finishTimeSeconds) return []
+    return comparisonBoats.map(boat => {
+      const allowedSeconds = yourCorrectedSeconds / (boat.trNoSpi / 1000)
+      const diff = allowedSeconds - finishTimeSeconds
+      return { boat, allowedSeconds, diff }
+    })
+  }, [selectedBoat, finishTimeSeconds, comparisonBoats, yourCorrectedSeconds])
 
-    const yourCorrected = calculateCorrectedTime(finishTimeSeconds, selectedBoat.trNoSpi)
+  const formatTime = (seconds) => {
+    const totalMin = Math.round(seconds / 60)
+    const h = Math.floor(totalMin / 60)
+    const m = totalMin % 60
+    return `${h}:${String(m).padStart(2, '0')}`
+  }
 
-    return comparisonBoats
-      .map(boat => {
-        const actualTime = timeToSeconds(boat.time)
-        const correctedTime = calculateCorrectedTime(actualTime, boat.boat.trNoSpi)
-        const diff = correctedTime - yourCorrected
+  const formatDiff = (diffSeconds) => {
+    const abs = Math.abs(Math.round(diffSeconds / 60))
+    const h = Math.floor(abs / 60)
+    const m = abs % 60
+    if (h > 0) return `${h}u ${m}min`
+    return `${m} min`
+  }
 
-        return {
-          ...boat,
-          actualSeconds: actualTime,
-          correctedSeconds: correctedTime,
-          diff
-        }
-      })
-      .sort((a, b) => a.correctedSeconds - b.correctedSeconds)
-  }, [selectedBoat, finishTimeSeconds, comparisonBoats])
-
-  const handleAddComparison = (boat) => {
-    if (!finishTime) {
-      alert('Please enter your finish time first')
-      return
+  const addBoat = (boat) => {
+    if (!comparisonBoats.find(b => b.id === boat.id)) {
+      setComparisonBoats(prev => [...prev, boat])
     }
-
-    if (comparisonBoats.some(cb => cb.boat.id === boat.id)) {
-      alert('This boat is already added')
-      return
-    }
-
-    setComparisonBoats([...comparisonBoats, { boat, time: '4:05:00' }])
   }
 
-  const handleRemoveComparison = (boatId) => {
-    setComparisonBoats(comparisonBoats.filter(cb => cb.boat.id !== boatId))
+  const removeBoat = (boatId) => {
+    setComparisonBoats(prev => prev.filter(b => b.id !== boatId))
   }
 
-  const handleUpdateComparisonTime = (boatId, newTime) => {
-    setComparisonBoats(
-      comparisonBoats.map(cb =>
-        cb.boat.id === boatId ? { ...cb, time: newTime } : cb
-      )
-    )
-  }
+  const excludeIds = [selectedBoat?.id, ...comparisonBoats.map(b => b.id)].filter(Boolean)
 
   return (
     <div className="space-y-4">
-      {/* Your Boat Setup */}
       <div className="bg-white rounded-lg shadow-lg p-6">
         <h2 className="text-2xl font-bold text-blue-900 mb-4">Race Time Comparison</h2>
 
+        {/* Step 1: own boat */}
         {!selectedBoat ? (
           <div>
-            <p className="text-gray-600 mb-3">Select your boat first:</p>
-            <input
-              type="text"
-              placeholder="Zoek boot..."
-              value={searchOwn}
-              onChange={e => setSearchOwn(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              autoFocus
+            <p className="text-sm text-gray-600 mb-2">Selecteer je eigen boot:</p>
+            <BoatPicker
+              placeholder="Zoek je boot..."
+              excludeIds={[]}
+              onSelect={setSelectedBoat}
             />
-            <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
-              {boats.boats.filter(b => b.type.toLowerCase().includes(searchOwn.toLowerCase())).map(boat => (
-                <button
-                  key={boat.id}
-                  onClick={() => setSelectedBoat(boat)}
-                  className="text-left px-4 py-2 border border-gray-300 rounded hover:bg-blue-50 hover:border-blue-500 transition"
-                >
-                  <div className="font-semibold text-blue-900">{boat.type}</div>
-                  <div className="text-sm text-gray-600">TR {boat.trNoSpi} • {boat.class}</div>
-                </button>
-              ))}
-            </div>
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="bg-blue-50 p-4 rounded-lg border-2 border-blue-500">
-              <div className="flex justify-between items-start mb-3">
-                <div>
-                  <h3 className="text-lg font-bold text-blue-900">{selectedBoat.type}</h3>
-                  <p className="text-sm text-gray-600">{selectedBoat.class}</p>
-                </div>
-                <button
-                  onClick={() => {
-                    setSelectedBoat(null)
-                    setComparisonBoats([])
-                  }}
-                  className="text-sm px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                  Change
-                </button>
-              </div>
-
+          <div className="bg-blue-50 border-2 border-blue-500 rounded-lg p-4">
+            <div className="flex justify-between items-start mb-3">
               <div>
-                <label className="block text-sm font-semibold text-blue-900 mb-2">
-                  Your Finish Time
-                </label>
-                <input
-                  type="time"
-                  value={finishTime}
-                  onChange={e => setFinishTime(e.target.value)}
-                  className="w-full px-3 py-2 border border-blue-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
-                />
+                <p className="font-bold text-blue-900">{selectedBoat.type}</p>
+                <p className="text-xs text-gray-500">{selectedBoat.class} · TR {selectedBoat.trNoSpi}</p>
               </div>
-
-              <div className="mt-4 p-3 bg-white rounded border border-blue-200">
-                <p className="text-xs text-gray-600">TR Rating (no spi)</p>
-                <p className="text-2xl font-bold text-blue-600">{selectedBoat.trNoSpi}</p>
-              </div>
+              <button
+                onClick={() => { setSelectedBoat(null); setComparisonBoats([]) }}
+                className="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Wijzig
+              </button>
             </div>
+            <label className="block text-sm font-semibold text-blue-900 mb-1">Jouw racetijd</label>
+            <input
+              type="time"
+              value={finishTime}
+              onChange={e => setFinishTime(e.target.value)}
+              className="w-full px-3 py-2 border border-blue-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
+            />
           </div>
         )}
       </div>
 
-      {/* Add Comparison Boats */}
+      {/* Step 2: comparison boats */}
       {selectedBoat && (
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-3">Compare With Other Boats</h3>
+        <div className="bg-white rounded-lg shadow-lg p-6 space-y-3">
+          <h3 className="text-lg font-bold text-blue-900">Vergelijk met andere boten</h3>
 
-          <input
-            type="text"
-            placeholder="Zoek boot..."
-            value={searchCompare}
-            onChange={e => setSearchCompare(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-
-          <div className="space-y-2 max-h-40 overflow-y-auto mb-4">
-            {boats.boats
-              .filter(b => b.id !== selectedBoat.id && b.type.toLowerCase().includes(searchCompare.toLowerCase()))
-              .map(boat => (
-                <button
-                  key={boat.id}
-                  onClick={() => handleAddComparison(boat)}
-                  disabled={comparisonBoats.some(cb => cb.boat.id === boat.id)}
-                  className="w-full text-left px-4 py-2 border border-gray-300 rounded hover:bg-green-50 hover:border-green-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  <div className="font-semibold text-gray-900">{boat.type}</div>
-                  <div className="text-sm text-gray-600">TR {boat.trNoSpi}</div>
-                </button>
-              ))}
-          </div>
-
-          <p className="text-xs text-gray-500 text-center">
-            {comparisonBoats.length} boat{comparisonBoats.length !== 1 ? 's' : ''} added for comparison
-          </p>
-        </div>
-      )}
-
-      {/* Comparison Times */}
-      {comparisonBoats.length > 0 && selectedBoat && (
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4">Results</h3>
-
-          <div className="space-y-2">
-            {/* Your Result */}
-            <div className="bg-green-50 border-2 border-green-500 p-4 rounded-lg">
-              <div className="flex justify-between items-center">
+          {/* Existing comparison boats */}
+          {results.map(({ boat, allowedSeconds, diff }) => (
+            <div
+              key={boat.id}
+              className={`rounded-lg p-4 border-l-4 ${diff >= 0 ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}`}
+            >
+              <div className="flex justify-between items-start">
                 <div>
-                  <p className="font-bold text-green-900">{selectedBoat.type}</p>
-                  <p className="text-sm text-green-700">Your Boat</p>
+                  <p className="font-semibold text-gray-900 text-sm">{boat.type}</p>
+                  <p className="text-xs text-gray-500">TR {boat.trNoSpi}</p>
+                </div>
+                <button onClick={() => removeBoat(boat.id)} className="text-xs px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded">
+                  ✕
+                </button>
+              </div>
+              <div className="mt-2 flex justify-between items-end">
+                <div>
+                  <p className="text-xs text-gray-500">Maximale tijd voor gelijke uitslag</p>
+                  <p className="text-xl font-bold text-gray-900">{formatTime(allowedSeconds)}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-sm text-gray-600">Actual: {finishTime}</p>
-                  <p className="text-lg font-bold text-green-700">
-                    {secondsToTime(Math.round(finishTimeSeconds))}
+                  <p className={`font-bold ${diff >= 0 ? 'text-green-700' : 'text-red-700'}`}>
+                    {diff >= 0 ? `+${formatDiff(diff)}` : `−${formatDiff(diff)}`}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    {diff >= 0 ? 'mag langer doen' : 'moet eerder finishen'}
                   </p>
                 </div>
               </div>
             </div>
+          ))}
 
-            {/* Comparison Results */}
-            {results.map((result, idx) => (
-              <div
-                key={result.boat.id}
-                className={`p-4 rounded-lg border-l-4 ${
-                  result.diff < 0
-                    ? 'border-l-green-500 bg-green-50'
-                    : 'border-l-red-500 bg-red-50'
-                }`}
-              >
-                <div className="flex justify-between items-start mb-2">
-                  <div>
-                    <p className="font-semibold text-gray-900">{idx + 1}. {result.boat.type}</p>
-                    <p className="text-sm text-gray-600">{result.boat.class}</p>
-                  </div>
-                  <button
-                    onClick={() => handleRemoveComparison(result.boat.id)}
-                    className="text-xs px-2 py-1 bg-gray-300 hover:bg-gray-400 rounded"
-                  >
-                    Remove
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 mb-2 text-sm">
-                  <div>
-                    <p className="text-xs text-gray-600">Actual Time</p>
-                    <input
-                      type="time"
-                      value={result.time}
-                      onChange={e => handleUpdateComparisonTime(result.boat.id, e.target.value)}
-                      className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs text-gray-600">Corrected Time</p>
-                    <p className="font-semibold text-gray-900">{secondsToTime(Math.round(result.correctedSeconds))}</p>
-                  </div>
-                </div>
-
-                <div className="text-right">
-                  <p className={`font-bold text-lg ${result.diff < 0 ? 'text-green-700' : 'text-red-700'}`}>
-                    {result.diff < 0 ? '✓ ' : '✗ '}
-                    {Math.abs(Math.round(result.diff))}s
-                  </p>
-                  <p className="text-xs text-gray-600">
-                    {result.diff < 0 ? 'Faster than you' : 'Slower than you'}
-                  </p>
-                </div>
-              </div>
-            ))}
+          {/* Always-visible picker to add next boat */}
+          <div>
+            <p className="text-sm text-gray-600 mb-2">
+              {comparisonBoats.length === 0 ? 'Voeg een boot toe:' : 'Nog een boot toevoegen:'}
+            </p>
+            <BoatPicker
+              placeholder="Zoek boot om toe te voegen..."
+              excludeIds={excludeIds}
+              onSelect={addBoat}
+            />
           </div>
-
-          <p className="text-xs text-gray-500 mt-4 text-center">
-            Corrected Time = Actual Time × (TR ÷ 1000)
-          </p>
         </div>
+      )}
+
+      {results.length > 0 && (
+        <p className="text-xs text-gray-400 text-center pb-4">
+          Berekening: Toegestane tijd = jouw gecorrigeerde tijd ÷ (TR vergelijkingsboot ÷ 1000)
+        </p>
       )}
     </div>
   )
