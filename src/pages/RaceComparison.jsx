@@ -146,13 +146,13 @@ function SwipeableCard({ onDelete, onRight, radius = 12, cardPadding = '12px 14p
   return (
     <div style={{ position: 'relative', borderRadius: radius, overflow: 'hidden' }}>
       {onRight && (
-        <div onClick={() => { onRight(); setOffset(0) }} style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: REVEAL, background: '#16a34a', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-          <Icon.Plus color="#fff" size={22}/>
+        <div onClick={() => { onRight(); setOffset(0) }} style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: REVEAL, background: '#86efac', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <Icon.Plus color="#166534" size={22}/>
         </div>
       )}
       {onDelete && (
-        <div onClick={() => { onDelete(); setOffset(0) }} style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: REVEAL, background: '#dc2626', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
-          <Icon.Trash color="#fff" size={20}/>
+        <div onClick={() => { onDelete(); setOffset(0) }} style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: REVEAL, background: '#fca5a5', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
+          <Icon.Trash color="#991b1b" size={20}/>
         </div>
       )}
       <div
@@ -256,32 +256,31 @@ function CompactTimeField({ time, activeField, onTap }) {
 function MyBoatCard({ boat, reg, spi, setSpi, time, activeField, setActiveField, timeComplete, elapsed, myTR, t, onRight, onDelete }) {
   return (
     <SwipeableCard onRight={onRight} onDelete={onDelete} radius={16} cardPadding="14px 16px">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 18, letterSpacing: -0.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-            {boat.type}
-          </div>
-          {reg?.skipper && (
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {reg.sailNumber && `${reg.sailNumber} · `}{reg.skipper}{reg.crew ? ` / ${reg.crew}` : ''}
-            </div>
-          )}
+      {/* Naam + TX inline, namen eronder, SPI klein */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, overflow: 'hidden' }}>
+        <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 18, letterSpacing: -0.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+          {boat.type}
         </div>
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 20, fontWeight: 700, letterSpacing: -0.5, color: '#000', flexShrink: 0 }}>
-          {myTR}
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', letterSpacing: 0.2, flexShrink: 0 }}>
+          TX {myTR}
         </div>
       </div>
-      <div style={{ marginTop: 10 }}>
-        <SpiChip value={spi} onChange={setSpi} label={t.spinnaker}/>
+      {reg?.skipper && (
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          {reg.sailNumber && `${reg.sailNumber} · `}{reg.skipper}{reg.crew ? ` / ${reg.crew}` : ''}
+        </div>
+      )}
+      <div style={{ marginTop: 4, marginLeft: -8 }}>
+        <SpiChipSmall value={spi} onChange={setSpi}/>
       </div>
-      <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '12px -16px' }}/>
-      <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 10 }}>
+      <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '8px -16px' }}/>
+      <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8 }}>
         {t.finish_time}
       </div>
       <TimeField h={time.h} m={time.m} s={time.s} active={activeField} onTap={setActiveField} t={t}/>
       {timeComplete && (
         <>
-          <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '12px -16px' }}/>
+          <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '10px -16px' }}/>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase' }}>
               TX {myTR} NETTO
@@ -529,7 +528,7 @@ export default function RaceComparison({ t, onBack }) {
                   timeComplete={timeComplete} elapsed={elapsed} myTR={myTR}
                   t={t}
                   onRight={() => addToRanking(myBoat.id, spi, timeComplete ? { ...time } : emptyTime())}
-                  onDelete={() => { setMyBoat(null); setMyReg(null); setSpi(false); setTime(emptyTime()); setActiveField('h'); setCompetitors([]) }}
+                  onDelete={() => { setMyBoat(null); setMyReg(null); setSpi(false); setTime(emptyTime()); setActiveField('h') }}
                 />
               ) : (
                 <Pressable
@@ -569,7 +568,7 @@ export default function RaceComparison({ t, onBack }) {
                     ? <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.6 }}>{t.corrected.toUpperCase()} TX {myTR}</span>
                     : null
                   }
-                >{t.results}</SectionLabel>
+                >{t.competitors}</SectionLabel>
                 <div style={{ display: 'grid', gap: 8 }}>
                   {results.map(({ uid, boat, cSpi, compTR, diff, skipper, crew, sailNumber }) => {
                     const positive = diff >= 0
