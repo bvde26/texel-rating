@@ -1,0 +1,45 @@
+{
+  "boats": [
+    {"id": "aclass", "type": "A-Class", "class": "Single-handed", "crew": 1, "loa": 4.80, "rl": 5.49, "rsa": 5.49, "rw": 75, "trNoSpi": 500, "trWithSpi": 500, "notes": "Classic single-handed"},
+    {"id": "ahpc_capricorn_f18", "type": "AHPC Capricorn F18", "class": "Foiler", "crew": 2, "loa": 5.52, "rl": 5.52, "rsa": 17.00, "rw": 180, "trNoSpi": 605, "trWithSpi": 573, "notes": "High performance foiler"},
+    {"id": "ahpc_taipan_49", "type": "AHPC Taipan 4.9", "class": "Performance", "crew": 2, "loa": 4.95, "rl": 4.95, "rsa": 14.66, "rw": 102, "trNoSpi": 522, "trWithSpi": 491, "notes": "Smaller performance cat"},
+    {"id": "bim_javelin_18", "type": "Bim Javelin 18 Hightech", "class": "Intermediate", "crew": 2, "loa": 5.50, "rl": 5.50, "rsa": 20.00, "rw": 130, "trNoSpi": 564, "trWithSpi": 531, "notes": "Mid-range performance"},
+    {"id": "cirrus_f18", "type": "Cirrus F18", "class": "Foiler", "crew": 2, "loa": 5.52, "rl": 5.52, "rsa": 17.00, "rw": 180, "trNoSpi": 605, "trWithSpi": 573, "notes": "Foiling catamaran"},
+    {"id": "dart_15", "type": "Dart 15", "class": "Recreation", "crew": 1, "loa": 4.34, "rl": 4.34, "rsa": 10.25, "rw": 120, "trNoSpi": 456, "trWithSpi": 421, "notes": "Small recreational boat"},
+    {"id": "dart_20", "type": "Dart 20", "class": "Intermediate", "crew": 2, "loa": 5.67, "rl": 5.67, "rsa": 17.92, "rw": 170, "trNoSpi": 591, "trWithSpi": 549, "notes": "Popular 20ft cat"},
+    {"id": "eagle_20_carbon", "type": "Eagle 20 Carbon", "class": "Performance", "crew": 2, "loa": 6.05, "rl": 6.05, "rsa": 19.35, "rw": 141, "trNoSpi": 665, "trWithSpi": 618, "notes": "High-end performance"},
+    {"id": "formula_18", "type": "Formula 18", "class": "Foiler", "crew": 2, "loa": 5.52, "rl": 5.52, "rsa": 17.00, "rw": 180, "trNoSpi": 605, "trWithSpi": 573, "notes": "Modern foiler design"},
+    {"id": "formula_20", "type": "Formula 20", "class": "Performance", "crew": 2, "loa": 6.12, "rl": 6.12, "rsa": 18.00, "rw": 190, "trNoSpi": 626, "trWithSpi": 584, "notes": "Larger performance cat"},
+    {"id": "g_cat_50", "type": "G-Cat 5.0", "class": "Recreational", "crew": 2, "loa": 4.80, "rl": 4.80, "rsa": 13.99, "rw": 170, "trNoSpi": 530, "trWithSpi": 500, "notes": "Fun recreational boat"},
+    {"id": "hobie_14", "type": "Hobie 14", "class": "Recreational", "crew": 1, "loa": 4.08, "rl": 4.08, "rsa": 11.22, "rw": 109, "trNoSpi": 475, "trWithSpi": 445, "notes": "Classic small boat"},
+    {"id": "hobie_16", "type": "Hobie 16", "class": "Intermediate", "crew": 2, "loa": 4.72, "rl": 4.72, "rsa": 15.19, "rw": 145, "trNoSpi": 550, "trWithSpi": 511, "notes": "Popular intermediate"},
+    {"id": "hobie_18", "type": "Hobie 18", "class": "Intermediate", "crew": 2, "loa": 5.39, "rl": 5.39, "rsa": 16.00, "rw": 181, "trNoSpi": 570, "trWithSpi": 533, "notes": "Hobie performance model"},
+    {"id": "hobie_20", "type": "Hobie 20", "class": "Performance", "crew": 2, "loa": 5.75, "rl": 5.75, "rsa": 17.73, "rw": 191, "trNoSpi": 602, "trWithSpi": 559, "notes": "Larger Hobie cat"},
+    {"id": "nacra_15", "type": "Nacra 15", "class": "Recreational", "crew": 2, "loa": 4.70, "rl": 4.70, "rsa": 13.31, "rw": 150, "trNoSpi": 478, "trWithSpi": 450, "notes": "Small Nacra"},
+    {"id": "nacra_17_mk1", "type": "Nacra 17 MK1", "class": "High Performance", "crew": 2, "loa": 5.25, "rl": 5.25, "rsa": 16.17, "rw": 150, "trNoSpi": 582, "trWithSpi": 551, "notes": "Olympic-class design"},
+    {"id": "nacra_18", "type": "Nacra 18 FCS", "class": "Performance", "crew": 2, "loa": 5.52, "rl": 5.52, "rsa": 17.00, "rw": 192, "trNoSpi": 605, "trWithSpi": 573, "notes": "Nacra performance cat"},
+    {"id": "nacra_20_od", "type": "Nacra 20 One Design", "class": "High Performance", "crew": 2, "loa": 6.10, "rl": 6.10, "rsa": 19.20, "rw": 192, "trNoSpi": 625, "trWithSpi": 582, "notes": "One design class"},
+    {"id": "nacra_50", "type": "Nacra 5.0", "class": "Recreational", "crew": 2, "loa": 5.07, "rl": 5.07, "rsa": 14.08, "rw": 147, "trNoSpi": 464, "trWithSpi": 441, "notes": "Entry-level performance"},
+    {"id": "nacra_55_raid", "type": "Nacra 5.5 Raid", "class": "Intermediate", "crew": 2, "loa": 5.45, "rl": 5.45, "rsa": 16.26, "rw": 176, "trNoSpi": 569, "trWithSpi": 532, "notes": "Mid-range performance"},
+    {"id": "nacra_60", "type": "Nacra 6.0", "class": "Performance", "crew": 2, "loa": 5.92, "rl": 5.92, "rsa": 17.48, "rw": 202, "trNoSpi": 612, "trWithSpi": 568, "notes": "Advanced performance"},
+    {"id": "prindle_15", "type": "Prindle 15", "class": "Recreational", "crew": 1, "loa": 4.47, "rl": 4.47, "rsa": 13.08, "rw": 118, "trNoSpi": 447, "trWithSpi": 415, "notes": "Classic small cat"},
+    {"id": "prindle_18", "type": "Prindle 18", "class": "Intermediate", "crew": 2, "loa": 5.18, "rl": 5.18, "rsa": 15.25, "rw": 152, "trNoSpi": 485, "trWithSpi": 451, "notes": "Popular intermediate"},
+    {"id": "tornado", "type": "Tornado", "class": "High Performance", "crew": 2, "loa": 5.94, "rl": 5.94, "rsa": 17.53, "rw": 165, "trNoSpi": 630, "trWithSpi": 586, "notes": "Olympic high-performance"}
+  ],
+  "classes": [
+    {"name": "Single-handed", "description": "One person crew"},
+    {"name": "Recreational", "description": "Fun, family-friendly boats"},
+    {"name": "Intermediate", "description": "Good all-around performance"},
+    {"name": "Performance", "description": "Competitive day sailors"},
+    {"name": "High Performance", "description": "Advanced racers"},
+    {"name": "Foiler", "description": "Modern foiling catamarans"}
+  ],
+  "legend": {
+    "rl": "Rated Length",
+    "rsa": "Rated Sail Area (m²)",
+    "rw": "Rated Weight (kg)",
+    "trNoSpi": "Texel Rating without spinnaker",
+    "trWithSpi": "Texel Rating with spinnaker",
+    "notes": "Boat class description"
+  }
+}

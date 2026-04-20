@@ -1,85 +1,59 @@
 import { useState } from 'react'
 import Home from './pages/Home'
 import Info from './pages/Info'
-import TexelRating from './pages/TexelRating'
+import TexelRatingInfo from './pages/TexelRatingInfo'
+import BoatCatalog from './pages/BoatCatalog'
+import RaceComparison from './pages/RaceComparison'
 import Registrations from './pages/Registrations'
 import './App.css'
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home')
 
+  const navItems = [
+    { id: 'home', label: '🏠', title: 'Home', page: <Home /> },
+    { id: 'info', label: 'ℹ️', title: 'Info', page: <TexelRatingInfo /> },
+    { id: 'catalog', label: '⛵', title: 'Boats', page: <BoatCatalog /> },
+    { id: 'compare', label: '⏱️', title: 'Compare', page: <RaceComparison /> },
+    { id: 'schedule', label: '📅', title: 'Schedule', page: <Info /> },
+  ]
+
+  const currentNavItem = navItems.find(item => item.id === currentPage)
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col">
       {/* Header */}
-      <header className="bg-blue-900 text-white shadow-lg">
-        <div className="max-w-6xl mx-auto px-4 py-6">
-          <h1 className="text-3xl font-bold mb-2">Round Texel 2025</h1>
-          <p className="text-blue-100">Catamaran Race Information Hub</p>
-        </div>
+      <header className="bg-blue-900 text-white shadow-lg px-4 py-4">
+        <h1 className="text-2xl font-bold">Round Texel</h1>
+        <p className="text-sm text-blue-100">{currentNavItem?.title || 'Catamaran Race'}</p>
       </header>
 
-      {/* Navigation */}
-      <nav className="bg-blue-800 sticky top-0 z-50 shadow">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="flex gap-4 py-3 overflow-x-auto">
-            <button
-              onClick={() => setCurrentPage('home')}
-              className={`px-4 py-2 rounded whitespace-nowrap transition ${
-                currentPage === 'home'
-                  ? 'bg-white text-blue-900 font-semibold'
-                  : 'text-white hover:bg-blue-700'
-              }`}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => setCurrentPage('info')}
-              className={`px-4 py-2 rounded whitespace-nowrap transition ${
-                currentPage === 'info'
-                  ? 'bg-white text-blue-900 font-semibold'
-                  : 'text-white hover:bg-blue-700'
-              }`}
-            >
-              Schedule & Info
-            </button>
-            <button
-              onClick={() => setCurrentPage('rating')}
-              className={`px-4 py-2 rounded whitespace-nowrap transition ${
-                currentPage === 'rating'
-                  ? 'bg-white text-blue-900 font-semibold'
-                  : 'text-white hover:bg-blue-700'
-              }`}
-            >
-              Texel Rating
-            </button>
-            <button
-              onClick={() => setCurrentPage('registrations')}
-              className={`px-4 py-2 rounded whitespace-nowrap transition ${
-                currentPage === 'registrations'
-                  ? 'bg-white text-blue-900 font-semibold'
-                  : 'text-white hover:bg-blue-700'
-              }`}
-            >
-              Registrations
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        {currentPage === 'home' && <Home />}
-        {currentPage === 'info' && <Info />}
-        {currentPage === 'rating' && <TexelRating />}
-        {currentPage === 'registrations' && <Registrations />}
+      {/* Main Content - grows to fill space */}
+      <main className="flex-1 overflow-y-auto px-4 py-4 pb-20">
+        {navItems.map(item => (
+          currentPage === item.id && <div key={item.id}>{item.page}</div>
+        ))}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gray-800 text-gray-300 mt-12">
-        <div className="max-w-6xl mx-auto px-4 py-6 text-center">
-          <p>&copy; 2025 Round Texel. All rights reserved.</p>
+      {/* Bottom Navigation - fixed */}
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
+        <div className="flex justify-around max-w-full">
+          {navItems.map(item => (
+            <button
+              key={item.id}
+              onClick={() => setCurrentPage(item.id)}
+              className={`flex-1 py-3 text-center transition flex flex-col items-center gap-1 ${
+                currentPage === item.id
+                  ? 'text-blue-600 border-t-2 border-blue-600'
+                  : 'text-gray-600 hover:text-blue-500'
+              }`}
+            >
+              <span className="text-xl">{item.label}</span>
+              <span className="text-xs font-semibold">{item.title}</span>
+            </button>
+          ))}
         </div>
-      </footer>
+      </nav>
     </div>
   )
 }
