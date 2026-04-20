@@ -570,10 +570,6 @@ export default function RaceComparison({ t, onBack }) {
             {myBoat && (
               <div style={{ padding: '12px 16px 8px' }}>
                 <SectionLabel
-                  right={timeComplete
-                    ? <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.6 }}>{t.corrected.toUpperCase()} TX {myTR}</span>
-                    : null
-                  }
                 >{t.competitors}</SectionLabel>
                 <div style={{ display: 'grid', gap: 8 }}>
                   {results.map(({ uid, boat, cSpi, compTR, diff, skipper, crew, sailNumber }) => {
