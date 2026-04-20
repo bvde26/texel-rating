@@ -708,7 +708,7 @@ export default function RaceComparison({ t, onBack }) {
                     {hasTime && (
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '2px 0', paddingLeft: 32 }}>
                         <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase' }}>
-                          TX {tr} NETTO
+                          TX RATING NETTO TIJD
                         </div>
                         <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 14, fontWeight: 700, letterSpacing: -0.3, color: '#000' }}>
                           {fmtTime(cs)}
