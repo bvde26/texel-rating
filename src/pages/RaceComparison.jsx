@@ -1,18 +1,28 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import boats from '../data/boats.json'
 
-function SpiToggle({ value, onChange }) {
+const CLASSES = ['Alle', 'Foiler', 'High Performance', 'Performance', 'Intermediate', 'Recreational', 'Single-handed']
+const CLASS_SHORT = { 'High Performance': 'High Perf.', 'Intermediate': 'Interm.', 'Recreational': 'Recreat.', 'Single-handed': 'Single' }
+
+const getTR = (boat, spi) => spi && boat.trWithSpi ? boat.trWithSpi : boat.trNoSpi
+
+function SpiToggle({ value, onChange, small }) {
   return (
-    <div className="flex gap-1 p-1 rounded-xl"
-      style={{ backgroundColor: 'var(--surface2)' }}>
+    <div
+      className="flex gap-1 p-0.5 rounded-lg"
+      style={{ backgroundColor: '#f3f4f6', display: 'inline-flex' }}
+    >
       {[false, true].map(v => (
-        <button key={String(v)} onClick={() => onChange(v)}
-          className="flex-1 py-2 text-sm font-medium rounded-lg transition-all"
+        <button
+          key={String(v)}
+          onClick={() => onChange(v)}
+          className={`py-1 rounded-md transition-all ${small ? 'px-2 text-xs' : 'px-3 text-sm'} font-medium`}
           style={{
-            backgroundColor: value === v ? 'var(--surface)' : 'transparent',
+            background: value === v ? '#fff' : 'transparent',
             color: value === v ? 'var(--text)' : 'var(--text3)',
-            boxShadow: value === v ? '0 1px 4px rgba(12,30,48,0.10)' : 'none',
-          }}>
+            boxShadow: value === v ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
+          }}
+        >
           {v ? 'Met spi' : 'Geen spi'}
         </button>
       ))}
@@ -20,232 +30,287 @@ function SpiToggle({ value, onChange }) {
   )
 }
 
-function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
-  const [open, setOpen] = useState(false)
+function BoatBrowser({ excludeIds = [], onSelect }) {
+  const [filter, setFilter] = useState('Alle')
   const [search, setSearch] = useState('')
-  const ref = useRef(null)
-
-  useEffect(() => {
-    const h = e => { if (ref.current && !ref.current.contains(e.target)) setOpen(false) }
-    document.addEventListener('mousedown', h)
-    return () => document.removeEventListener('mousedown', h)
-  }, [])
 
   const filtered = useMemo(() =>
     boats.boats
-      .filter(b => !excludeIds.includes(b.id) && b.type.toLowerCase().includes(search.toLowerCase()))
+      .filter(b => {
+        if (excludeIds.includes(b.id)) return false
+        if (filter !== 'Alle' && b.class !== filter) return false
+        if (search && !b.type.toLowerCase().includes(search.toLowerCase())) return false
+        return true
+      })
       .sort((a, b) => a.type.localeCompare(b.type))
-  , [search, excludeIds])
+  , [filter, search, excludeIds])
 
   return (
-    <div ref={ref} className="relative">
-      <input type="text" placeholder={placeholder} value={search}
-        onChange={e => { setSearch(e.target.value); setOpen(true) }}
-        onFocus={() => setOpen(true)}
-        className="w-full px-4 py-3.5 rounded-xl text-[15px] focus:outline-none"
-        style={{
-          backgroundColor: 'var(--surface)',
-          color: 'var(--text)',
-          boxShadow: '0 1px 4px rgba(12,30,48,0.06), 0 6px 20px rgba(12,30,48,0.05)',
-        }}
-      />
-      {open && filtered.length > 0 && (
-        <div className="absolute z-10 w-full rounded-xl mt-1.5 overflow-hidden"
-          style={{
-            backgroundColor: 'var(--surface)',
-            boxShadow: '0 4px 24px rgba(12,30,48,0.14)',
-            maxHeight: '256px', overflowY: 'auto',
-          }}>
-          {filtered.map(b => (
-            <button key={b.id}
-              onMouseDown={() => { onSelect(b); setSearch(''); setOpen(false) }}
-              className="row w-full text-left flex items-center justify-between">
-              <span className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>{b.type}</span>
-              <span className="text-xs font-['DM_Mono'] ml-2 shrink-0" style={{ color: 'var(--text2)' }}>
-                TR {b.trNoSpi}{b.trWithSpi ? `/${b.trWithSpi}` : ''}
+    <div>
+      {/* Search */}
+      <div className="mb-2">
+        <input
+          type="text"
+          placeholder="Zoek boot…"
+          value={search}
+          onChange={e => setSearch(e.target.value)}
+          className="w-full px-3 py-2.5 rounded-xl text-sm focus:outline-none"
+          style={{ background: '#fff', border: '1px solid var(--border)', color: 'var(--text)' }}
+        />
+      </div>
+
+      {/* Filter chips */}
+      <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-2">
+        {CLASSES.map(c => (
+          <button
+            key={c}
+            onClick={() => setFilter(c)}
+            className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+            style={{
+              background: filter === c ? 'var(--accent)' : '#fff',
+              color: filter === c ? '#fff' : 'var(--text2)',
+              border: `1px solid ${filter === c ? 'var(--accent)' : 'var(--border)'}`,
+            }}
+          >
+            {CLASS_SHORT[c] || c}
+          </button>
+        ))}
+      </div>
+
+      {/* Boat list */}
+      <div className="card overflow-hidden">
+        <div style={{ maxHeight: '240px', overflowY: 'auto' }} className="scrollbar-none">
+          {filtered.length === 0 ? (
+            <p className="px-4 py-6 text-sm text-center" style={{ color: 'var(--text3)' }}>
+              Geen boten gevonden
+            </p>
+          ) : filtered.map((b, i) => (
+            <button
+              key={b.id}
+              onClick={() => onSelect(b)}
+              className="w-full flex items-center justify-between px-4 py-3 text-left transition-colors"
+              style={{
+                borderTop: i > 0 ? '1px solid var(--border)' : 'none',
+              }}
+            >
+              <div>
+                <p className="text-sm font-medium" style={{ color: 'var(--text)' }}>{b.type}</p>
+                <p className="text-xs mt-0.5" style={{ color: 'var(--text3)' }}>{b.class}</p>
+              </div>
+              <span
+                className="text-sm font-medium ml-2 flex-shrink-0"
+                style={{ fontFamily: "'DM Mono', monospace", color: 'var(--accent)' }}
+              >
+                {b.trNoSpi}
               </span>
             </button>
           ))}
         </div>
-      )}
+      </div>
     </div>
   )
 }
 
-const getTR = (boat, spi) => spi && boat.trWithSpi ? boat.trWithSpi : boat.trNoSpi
-
 export default function RaceComparison() {
-  const [selectedBoat, setSelectedBoat] = useState(null)
-  const [ownSpi, setOwnSpi] = useState(false)
-  const [finishTime, setFinishTime] = useState('04:00')
+  const [myBoat, setMyBoat] = useState(null)
+  const [mySpi, setMySpi] = useState(false)
+  const [finishTime, setFinishTime] = useState('')
   const [compBoats, setCompBoats] = useState([])
+  const [addingBoat, setAddingBoat] = useState(false)
 
   const finishSec = useMemo(() => {
+    if (!finishTime) return 0
     const [h, m] = finishTime.split(':').map(Number)
     return (h * 60 + m) * 60
   }, [finishTime])
 
-  const ownTR = selectedBoat ? getTR(selectedBoat, ownSpi) : null
+  const myTR = myBoat ? getTR(myBoat, mySpi) : null
 
   const results = useMemo(() => {
-    if (!selectedBoat || !finishSec || !ownTR) return []
-    return compBoats.map(({ boat, spi }) => {
-      const compTR = getTR(boat, spi)
-      const allowed = finishSec * (compTR / ownTR)
-      const diff = allowed - finishSec
-      return { boat, spi, compTR, allowed, diff }
-    })
-  }, [selectedBoat, finishSec, compBoats, ownTR])
-
-  const fmtTime = s => {
-    const m = Math.round(s / 60), h = Math.floor(m / 60)
-    return `${h}:${String(m % 60).padStart(2, '0')}`
-  }
+    if (!myBoat || !finishSec || !myTR) return []
+    return compBoats
+      .map(({ boat, spi }) => {
+        const compTR = getTR(boat, spi)
+        const allowed = finishSec * (compTR / myTR)
+        const diff = allowed - finishSec
+        return { boat, spi, compTR, allowed, diff }
+      })
+      .sort((a, b) => b.diff - a.diff)
+  }, [myBoat, finishSec, compBoats, myTR])
 
   const fmtDiff = s => {
     const abs = Math.abs(Math.round(s / 60))
     const h = Math.floor(abs / 60), m = abs % 60
-    return h > 0 ? `${h}u ${m}m` : `${m} min`
+    return h > 0 ? `${h}u ${m}m` : `${m}`
   }
 
-  const excludeIds = [selectedBoat?.id, ...compBoats.map(b => b.boat.id)].filter(Boolean)
+  const fmtDiffLabel = s => {
+    const abs = Math.abs(Math.round(s / 60))
+    const h = Math.floor(abs / 60)
+    return h > 0 ? (s >= 0 ? 'voordeel' : 'nadeel') : (s >= 0 ? 'min voordeel' : 'min nadeel')
+  }
+
+  const excludeIds = [myBoat?.id, ...compBoats.map(b => b.boat.id)].filter(Boolean)
 
   return (
-    <div>
-      <p className="section-title">Eigen boot</p>
+    <div className="pt-4">
 
-      {!selectedBoat ? (
-        <BoatPicker placeholder="Zoek je boot…" excludeIds={[]} onSelect={setSelectedBoat} />
+      {/* Section 1: Jouw boot */}
+      <p className="section-title">Jouw boot</p>
+
+      {!myBoat ? (
+        <BoatBrowser excludeIds={[]} onSelect={b => { setMyBoat(b); setCompBoats([]) }} />
       ) : (
-        <div className="card">
-          <div className="row flex items-center justify-between">
+        <div
+          className="card p-4"
+          style={{ border: '1.5px solid var(--accent)', background: 'var(--accent-bg)' }}
+        >
+          <div className="flex items-center justify-between mb-3">
             <div>
-              <p className="text-[15px] font-semibold" style={{ color: 'var(--text)' }}>{selectedBoat.type}</p>
+              <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{myBoat.type}</p>
               <p className="text-xs mt-0.5" style={{ color: 'var(--text2)' }}>
-                {selectedBoat.class} · TR{' '}
-                <span className="font-['DM_Mono'] font-medium" style={{ color: 'var(--accent)' }}>{ownTR}</span>
+                {myBoat.class} ·{' '}
+                <span style={{ fontFamily: "'DM Mono', monospace", color: 'var(--accent)' }}>
+                  TR {myTR}
+                </span>
               </p>
             </div>
-            <button onClick={() => { setSelectedBoat(null); setCompBoats([]) }}
-              className="text-sm font-semibold px-3.5 py-1.5 rounded-lg"
-              style={{ backgroundColor: 'var(--accent-bg)', color: 'var(--accent)' }}>
+            <button
+              onClick={() => { setMyBoat(null); setCompBoats([]) }}
+              className="text-xs font-semibold px-3 py-1.5 rounded-lg"
+              style={{ background: '#fff', color: 'var(--accent)', border: '1px solid var(--accent)' }}
+            >
               Wijzig
             </button>
           </div>
-          <div className="row">
-            <SpiToggle value={ownSpi} onChange={setOwnSpi} />
-          </div>
-          <div className="row flex items-center justify-between">
-            <span className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>Racetijd</span>
-            <input type="time" value={finishTime}
+          <SpiToggle value={mySpi} onChange={setMySpi} />
+        </div>
+      )}
+
+      {/* Section 2: Jouw tijd */}
+      {myBoat && (
+        <>
+          <p className="section-title mt-4">Jouw tijd (uu:mm)</p>
+          <div className="flex items-center gap-2">
+            <input
+              type="time"
+              value={finishTime}
               onChange={e => setFinishTime(e.target.value)}
-              className="text-[15px] font-['DM_Mono'] focus:outline-none bg-transparent font-medium"
-              style={{ color: 'var(--accent)' }} />
+              placeholder="04:00"
+              className="flex-1 px-4 py-3 rounded-xl focus:outline-none text-center"
+              style={{
+                fontFamily: "'DM Mono', monospace",
+                fontSize: '18px',
+                fontWeight: 500,
+                color: finishTime ? 'var(--accent)' : 'var(--text3)',
+                background: '#fff',
+                border: '1px solid var(--border)',
+              }}
+            />
+            <button
+              onClick={() => setAddingBoat(v => !v)}
+              className="px-4 py-3 rounded-xl text-sm font-semibold flex-shrink-0"
+              style={{
+                background: addingBoat ? 'var(--accent)' : 'var(--accent-bg)',
+                color: addingBoat ? '#fff' : 'var(--accent)',
+              }}
+            >
+              {addingBoat ? '− Annuleer' : '+ Boot'}
+            </button>
           </div>
-        </div>
+
+          {addingBoat && (
+            <div className="mt-3">
+              <BoatBrowser
+                excludeIds={excludeIds}
+                onSelect={b => {
+                  setCompBoats(p => [...p, { boat: b, spi: false }])
+                  setAddingBoat(false)
+                }}
+              />
+            </div>
+          )}
+        </>
       )}
 
-      {/* Results */}
-      {results.map(({ boat, spi, compTR, allowed, diff }) => (
-        <div key={boat.id}>
-          <p className="section-title">{boat.type}</p>
-          <div className="card" style={{ backgroundColor: diff >= 0 ? 'var(--green-bg)' : 'var(--red-bg)' }}>
-            <div className="row flex items-center justify-between">
-              <div>
-                <p className="text-[15px] font-semibold" style={{ color: 'var(--text)' }}>{boat.type}</p>
-                <p className="text-xs mt-0.5 font-['DM_Mono']" style={{ color: 'var(--text2)' }}>TR {compTR}</p>
-              </div>
-              <button onClick={() => setCompBoats(p => p.filter(b => b.boat.id !== boat.id))}
-                className="w-8 h-8 rounded-full flex items-center justify-center text-lg leading-none"
-                style={{ backgroundColor: 'rgba(12,30,48,0.07)', color: 'var(--text2)' }}>
-                ×
-              </button>
-            </div>
-            <div className="row">
-              <SpiToggle value={spi}
-                onChange={() => setCompBoats(p => p.map(b => b.boat.id === boat.id ? { ...b, spi: !b.spi } : b))} />
-            </div>
-            <div className="row flex items-end justify-between">
-              <div>
-                <p className="text-[11px] font-semibold tracking-wide uppercase mb-1"
-                  style={{ color: diff >= 0 ? 'var(--green)' : 'var(--red)', opacity: 0.7 }}>
-                  Max. tijd
-                </p>
-                <p className="font-['DM_Mono'] text-xl font-medium"
-                  style={{ color: diff >= 0 ? 'var(--green)' : 'var(--red)' }}>
-                  {fmtTime(allowed)}
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="font-['Bebas_Neue'] text-[56px] leading-none tracking-wide"
-                  style={{ color: diff >= 0 ? 'var(--green)' : 'var(--red)' }}>
-                  {diff >= 0 ? '+' : '−'}{fmtDiff(diff)}
-                </p>
-                <p className="text-xs mt-0.5" style={{ color: 'var(--text2)' }}>
-                  {diff >= 0 ? 'mag langer doen' : 'eerder finishen'}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      ))}
+      {/* Section 3: Scoreboard */}
+      {myBoat && (
+        <>
+          <p className="section-title mt-4">Scoreboard</p>
 
-      {/* Add boat */}
-      {selectedBoat && (
-        <div>
-          <p className="section-title">
-            {compBoats.length === 0 ? 'Concurrent toevoegen' : 'Nog een toevoegen'}
-          </p>
-          <BoatPicker placeholder="Zoek boot…" excludeIds={excludeIds}
-            onSelect={b => !compBoats.find(c => c.boat.id === b.id) && setCompBoats(p => [...p, { boat: b, spi: false }])} />
-        </div>
+          {results.length === 0 ? (
+            <div
+              className="card px-4 py-8 text-center"
+              style={{ color: 'var(--text3)', fontSize: '14px' }}
+            >
+              Voeg een boot toe om te vergelijken
+            </div>
+          ) : (
+            <div className="flex flex-col gap-2">
+              {results.map(({ boat, spi, compTR, diff }) => {
+                const isAhead = diff >= 0
+                const color = isAhead ? 'var(--green)' : 'var(--red)'
+                return (
+                  <div
+                    key={boat.id}
+                    className="card overflow-hidden"
+                    style={{ borderLeft: `3px solid ${color}` }}
+                  >
+                    <div className="flex items-center justify-between px-4 pt-3 pb-2">
+                      <div className="flex-1">
+                        <p className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                          {boat.type}
+                        </p>
+                        <p className="text-xs mt-0.5" style={{ color: 'var(--text3)' }}>
+                          {boat.class} ·{' '}
+                          <span style={{ fontFamily: "'DM Mono', monospace" }}>TR {compTR}</span>
+                        </p>
+                        <div className="mt-1.5">
+                          <SpiToggle
+                            small
+                            value={spi}
+                            onChange={v =>
+                              setCompBoats(p =>
+                                p.map(b => b.boat.id === boat.id ? { ...b, spi: v } : b)
+                              )
+                            }
+                          />
+                        </div>
+                      </div>
+                      <div className="flex flex-col items-end ml-3">
+                        <span
+                          className="leading-none font-bold"
+                          style={{
+                            fontFamily: "'DM Mono', monospace",
+                            fontSize: '22px',
+                            color,
+                          }}
+                        >
+                          {isAhead ? '+' : '−'}{fmtDiff(diff)}
+                        </span>
+                        <span className="text-xs mt-0.5" style={{ color: 'var(--text3)' }}>
+                          {fmtDiffLabel(diff)}
+                        </span>
+                        <button
+                          onClick={() =>
+                            setCompBoats(p => p.filter(b => b.boat.id !== boat.id))
+                          }
+                          className="mt-2 text-xs"
+                          style={{ color: 'var(--text3)' }}
+                        >
+                          × verwijder
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </>
       )}
 
-      {/* Uitleg */}
-      <UitlegBlok />
-      <div className="pb-4" />
-    </div>
-  )
-}
-
-function UitlegBlok() {
-  const [open, setOpen] = useState(false)
-  return (
-    <div>
-      <p className="section-title">Uitleg</p>
-      <div className="card">
-        <button onClick={() => setOpen(o => !o)}
-          className="row w-full flex items-center justify-between text-left">
-          <span className="text-[15px] font-medium" style={{ color: 'var(--text)' }}>
-            Hoe werkt Texel Rating?
-          </span>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-            style={{ color: 'var(--text3)', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}>
-            <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        {open && <>
-          <div className="row">
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
-              Texel Rating (TR) is een handicapsysteem zodat boten van verschillende klassen eerlijk samen kunnen racen. Hogere TR = langzamere boot = meer tijd toegestaan.
-            </p>
-          </div>
-          <div className="row" style={{ backgroundColor: 'var(--surface2)' }}>
-            <p className="text-[11px] font-semibold tracking-wide uppercase mb-1.5" style={{ color: 'var(--text3)' }}>Formule</p>
-            <p className="text-xs font-['DM_Mono']" style={{ color: 'var(--accent)' }}>
-              TR = 100 / (1.15 × RL⁰·³ × RSA⁰·⁴ / RW⁰·³²⁵)
-            </p>
-          </div>
-          <div className="row" style={{ backgroundColor: 'var(--surface2)' }}>
-            <p className="text-[11px] font-semibold tracking-wide uppercase mb-1.5" style={{ color: 'var(--text3)' }}>Voorbeeld</p>
-            <p className="text-sm" style={{ color: 'var(--text2)' }}>Hobie 16 (jij) · TR 113 · 4:00</p>
-            <div className="flex justify-between mt-1">
-              <span className="text-sm" style={{ color: 'var(--text2)' }}>Hobie 14 · TR 119</span>
-              <span className="text-sm font-['DM_Mono'] font-medium" style={{ color: 'var(--green)' }}>max. 4:13 (+13 min)</span>
-            </div>
-          </div>
-        </>}
-      </div>
+      <div className="pb-6" />
     </div>
   )
 }
