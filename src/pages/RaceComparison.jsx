@@ -272,14 +272,14 @@ function MyBoatCard({ boat, reg, spi, setSpi, time, activeField, setActiveField,
       <div style={{ marginTop: 4, marginLeft: -8 }}>
         <SpiChipSmall value={spi} onChange={setSpi}/>
       </div>
-      <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '8px -16px' }}/>
+      <div style={{ borderTop: '1px dashed rgba(0,0,0,0.08)', margin: '8px -16px' }}/>
       <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8 }}>
         {t.finish_time}
       </div>
       <TimeField h={time.h} m={time.m} s={time.s} active={activeField} onTap={setActiveField} t={t}/>
       {timeComplete && (
         <>
-          <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '10px -16px' }}/>
+          <div style={{ borderTop: '1px dashed rgba(0,0,0,0.08)', margin: '10px -16px' }}/>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase' }}>
               TX RATING NETTO TIJD
