@@ -22,12 +22,12 @@ export default function TexelRatingInfo() {
     },
     {
       id: 'example',
-      title: 'Example: Why F18 beats Eagle 20',
-      content: 'Both boats finish at the same time, but F18 gets a better corrected time.',
+      title: 'Example: Hobie 14 vs Hobie 16',
+      content: 'Both boats finish in 4 hours. Who wins on handicap?',
       details: {
-        'F18': 'TR 605 - Small, light, efficient sails',
-        'Eagle 20': 'TR 665 - Larger, heavier, bigger sails',
-        'Result': 'F18 is 10% faster on handicap → wins the race'
+        'Hobie 14': 'TR 119 - Corrected: 4:00 × (119÷1000) = 28.4 min',
+        'Hobie 16': 'TR 113 - Corrected: 4:00 × (113÷1000) = 27.2 min',
+        'Result': 'Hobie 16 wins (lower TR = faster on handicap). Boat efficiency matters more than speed!'
       }
     },
     {
