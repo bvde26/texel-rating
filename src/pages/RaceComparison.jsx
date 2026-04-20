@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react'
+import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import boats from '../data/boats.json'
 
 function SpiToggle({ value, onChange }) {
@@ -233,6 +233,59 @@ export default function RaceComparison() {
         <p className="text-[10px] text-[var(--text3)] text-center font-['DM_Mono'] pb-1">
           max.tijd = jouw tijd × (TR concurrent ÷ TR jouw boot)
         </p>
+      )}
+
+      <UitlegBlok />
+    </div>
+  )
+}
+
+function UitlegBlok() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] overflow-hidden">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full px-4 py-3 flex items-center justify-between hover:bg-[var(--surface2)] transition-colors"
+      >
+        <span className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)]">
+          HOE WERKT TEXEL RATING?
+        </span>
+        <span className={`text-[var(--text3)] transition-transform duration-200 text-sm ${open ? 'rotate-180' : ''}`}>▾</span>
+      </button>
+
+      {open && (
+        <div className="px-4 pb-4 pt-1 border-t border-[var(--border)] space-y-3">
+          <p className="text-xs text-[var(--text2)] leading-relaxed">
+            Texel Rating (TR) is een handicapsysteem zodat boten van verschillende klassen eerlijk samen kunnen racen. Hogere TR = langzamere boot = meer tijd toegestaan.
+          </p>
+
+          <div className="bg-[var(--bg)] rounded-lg px-3 py-2 border border-[var(--border2)]">
+            <p className="text-[10px] text-[var(--text3)] mb-1 uppercase tracking-wide">Formule</p>
+            <p className="font-['DM_Mono'] text-xs text-[var(--accent)]">TR = 100 / (1.15 × RL⁰·³ × RSA⁰·⁴ / RW⁰·³²⁵)</p>
+          </div>
+
+          <div className="bg-[var(--bg)] rounded-lg px-3 py-2 border border-[var(--border2)]">
+            <p className="text-[10px] text-[var(--text3)] mb-1.5 uppercase tracking-wide">Voorbeeld</p>
+            <div className="space-y-1 text-xs">
+              <div className="flex justify-between">
+                <span className="text-[var(--text2)]">Hobie 16 (jij) · TR 113 · 4:00</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-[var(--text2)]">Hobie 14 · TR 119</span>
+                <span className="font-['DM_Mono'] text-[var(--green)]">max. 4:13 (+13 min)</span>
+              </div>
+              <p className="text-[10px] text-[var(--text3)] pt-0.5 font-['DM_Mono']">4:00 × (119 ÷ 113) = 4:13</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-[11px] text-[var(--text2)]">
+            <div><span className="text-[var(--text3)]">RL</span> · Ratinglengte (m)</div>
+            <div><span className="text-[var(--text3)]">RSA</span> · Zeiloppervlak (m²)</div>
+            <div><span className="text-[var(--text3)]">RW</span> · Gewicht incl. crew (kg)</div>
+            <div><span className="text-[var(--text3)]">Spi</span> · +1% op TR</div>
+          </div>
+        </div>
       )}
     </div>
   )
