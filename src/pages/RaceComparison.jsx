@@ -203,21 +203,20 @@ function SpiChipSmall({ value, onChange }) {
   return (
     <Pressable
       onClick={() => onChange(!value)}
-      style={{ position: 'relative', display: 'inline-flex', alignItems: 'center', padding: '4px 8px', borderRadius: 7 }}
+      style={{
+        display: 'inline-flex', alignItems: 'center',
+        padding: '3px 8px', borderRadius: 6,
+        background: value ? 'rgba(22,163,74,0.12)' : 'transparent',
+        border: `1px solid ${value ? 'rgba(22,163,74,0.35)' : 'rgba(0,0,0,0.18)'}`,
+        transition: 'background 200ms, border-color 200ms',
+      }}
     >
       <span style={{
         fontFamily: 'JetBrains Mono, monospace', fontSize: 10, fontWeight: 700,
         letterSpacing: 0.6,
-        color: value ? 'rgba(22,163,74,0.35)' : 'rgba(0,0,0,0.3)',
+        color: value ? '#16a34a' : 'rgba(0,0,0,0.35)',
         transition: 'color 200ms',
       }}>SPI</span>
-      <span style={{
-        position: 'absolute', right: -4, top: '50%',
-        transform: 'translateY(-52%) rotate(-10deg)',
-        fontSize: 26, lineHeight: 1,
-        color: value ? '#16a34a' : 'rgba(0,0,0,0.18)',
-        pointerEvents: 'none', transition: 'color 200ms',
-      }}>{value ? '✔' : '✘'}</span>
     </Pressable>
   )
 }
