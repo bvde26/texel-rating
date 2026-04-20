@@ -1,0 +1,12 @@
+{
+  "alerts": [
+    {
+      "id": "alert_001",
+      "timestamp": "2025-06-07T08:30:00Z",
+      "severity": "info",
+      "title": "Welcome to Round Texel 2025!",
+      "message": "Registration is now open. Check-in from 10:00 at Texel Marina.",
+      "postedBy": "admin"
+    }
+  ]
+}

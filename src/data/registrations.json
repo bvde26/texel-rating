@@ -1,0 +1,31 @@
+{
+  "boats": [
+    {
+      "id": "boat_001",
+      "boatName": "Blue Speed",
+      "skipper": "Jan de Vries",
+      "class": "F18",
+      "texelRating": 605,
+      "country": "NL",
+      "sailNumber": "NED 123"
+    },
+    {
+      "id": "boat_002",
+      "boatName": "Wave Rider",
+      "skipper": "Maria García",
+      "class": "Eagle 20",
+      "texelRating": 665,
+      "country": "ES",
+      "sailNumber": "ESP 456"
+    },
+    {
+      "id": "boat_003",
+      "boatName": "Tornado",
+      "skipper": "Peter Mueller",
+      "class": "Tornado",
+      "texelRating": 630,
+      "country": "DE",
+      "sailNumber": "GER 789"
+    }
+  ]
+}

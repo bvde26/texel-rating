@@ -1,0 +1,85 @@
+{
+  "eventName": "Round Texel",
+  "eventYear": 2025,
+  "eventDate": "2025-06-07",
+  "days": [
+    {
+      "day": 1,
+      "date": "2025-06-07",
+      "title": "Registration & Skippers Meeting",
+      "events": [
+        {
+          "time": "10:00",
+          "title": "Registration opens",
+          "location": "Texel Marina"
+        },
+        {
+          "time": "15:00",
+          "title": "Skippers Meeting",
+          "location": "Clubhouse"
+        },
+        {
+          "time": "18:00",
+          "title": "Welcome dinner",
+          "location": "Clubhouse"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2025-06-08",
+      "title": "Race Day 1",
+      "events": [
+        {
+          "time": "08:00",
+          "title": "Briefing",
+          "location": "On water"
+        },
+        {
+          "time": "10:00",
+          "title": "Start Race 1",
+          "location": "Start line"
+        },
+        {
+          "time": "15:00",
+          "title": "Expected finish",
+          "location": "Finish line"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2025-06-09",
+      "title": "Race Day 2",
+      "events": [
+        {
+          "time": "08:00",
+          "title": "Briefing",
+          "location": "On water"
+        },
+        {
+          "time": "10:00",
+          "title": "Start Race 2",
+          "location": "Start line"
+        },
+        {
+          "time": "15:00",
+          "title": "Expected finish",
+          "location": "Finish line"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    "All boats must comply with Texel Rating rule 2025",
+    "Class certificates are mandatory",
+    "Crew max 3 persons per boat",
+    "Safety equipment as per RRS"
+  ],
+  "contact": {
+    "organizerName": "Round Texel Organization",
+    "organizerEmail": "info@roundtexel.nl",
+    "organizerPhone": "+31 (0)222 XXX XXX",
+    "website": "roundtexel.nl"
+  }
+}
