@@ -1,88 +1,119 @@
 import { useState } from 'react'
 
+const SECTIONS = [
+  {
+    id: 'what',
+    title: 'Wat is Texel Rating?',
+    body: 'Texel Rating (TR) is een handicapsysteem waarmee boten van verschillende klassen eerlijk samen kunnen racen. Alle boten doen mee aan één race; de uitslag wordt berekend op basis van het TR-nummer.',
+  },
+  {
+    id: 'formula',
+    title: 'De formule',
+    formula: 'TR = 100 / (1.15 × RL⁰·³ × RSA⁰·⁴ / RW⁰·³²⁵)',
+    details: [
+      ['RL', 'Ratinglengte — effectieve lengte van de boot'],
+      ['RSA', 'Ratingzeiloppervlak — totaal zeiloppervlak (m²)'],
+      ['RW', 'Ratinggewicht — boot + crew (kg)'],
+      ['Hogere TR', 'Meer tijd toegestaan → langzamere boot'],
+    ],
+  },
+  {
+    id: 'example',
+    title: 'Voorbeeld: Hobie 14 vs Hobie 16',
+    body: 'Jij vaart op een Hobie 16 (TR 113) en finisht in 4:00. Hoeveel tijd mag een Hobie 14 (TR 119)?',
+    details: [
+      ['Hobie 16 (jij)', 'TR 113 — racetijd 4:00'],
+      ['Hobie 14', 'TR 119 — toegestaan: 4:00 × (119÷113) = 4:13'],
+      ['Resultaat', '+13 minuten voordeel voor de Hobie 14'],
+    ],
+  },
+  {
+    id: 'factors',
+    title: 'Correctiefactoren',
+    body: 'De basisformule wordt aangepast voor:',
+    details: [
+      ['Stabiliteit', 'Lage stabiliteitsratio → hogere TR (straf)'],
+      ['Zwaard', 'Zonder efficiënt zwaard → +4% TR'],
+      ['Spinnaker', 'Éénpersoons met spi → +1% TR'],
+    ],
+  },
+  {
+    id: 'how-to-use',
+    title: 'Hoe gebruik je deze app?',
+    body: '1. Zoek je boot in de Vergelijker en bekijk je TR. 2. Voer je racetijd in en voeg concurrenten toe. 3. Lagere gecorrigeerde tijden winnen!',
+  },
+]
+
+function Chevron({ open }) {
+  return (
+    <svg
+      width="16" height="16" viewBox="0 0 16 16" fill="none"
+      style={{ color: 'var(--text3)', transform: open ? 'rotate(90deg)' : 'rotate(0deg)', transition: 'transform 0.2s', flexShrink: 0 }}
+    >
+      <path d="M6 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  )
+}
+
 export default function TexelRatingInfo() {
   const [expanded, setExpanded] = useState(null)
 
-  const sections = [
-    {
-      id: 'what',
-      title: 'Wat is Texel Rating?',
-      content: 'Texel Rating (TR) is een handicapsysteem waarmee boten van verschillende klassen en groottes eerlijk samen kunnen racen. In plaats van aparte races per klasse doen alle boten mee aan één race. De uitslag wordt berekend op basis van het TR-nummer.'
-    },
-    {
-      id: 'formula',
-      title: 'De formule',
-      content: 'TR = 100 / (1.15 × RL⁰·³ × RSA⁰·⁴ / RW⁰·³²⁵)',
-      details: {
-        'RL (Ratinglengte)': 'Effectieve lengte van de boot (LOA minus overhangen)',
-        'RSA (Ratingzeiloppervlak)': 'Totaal zeiloppervlak inclusief grootzeil, fok en spinnaker (m²)',
-        'RW (Ratinggewicht)': 'Bootgewicht + crewgewicht (kg)',
-        'Resultaat': 'Hogere TR = meer tijd toegestaan. Lagere TR = minder tijd, de boot wordt verwacht sneller te zijn.'
-      }
-    },
-    {
-      id: 'example',
-      title: 'Voorbeeld: Hobie 14 vs Hobie 16',
-      content: 'Jij vaart op een Hobie 16 (TR 113) en finisht in 4:00 uur. Hoe lang mag een Hobie 14 (TR 119) doen?',
-      details: {
-        'Hobie 16 (jij)': 'TR 113 — racetijd: 4:00',
-        'Hobie 14': 'TR 119 — toegestane tijd: 4:00 × (119÷113) = 4:13',
-        'Resultaat': 'Hobie 14 mag 13 minuten langer doen. Hogere TR = meer tijd = langzamere boot met meer handicap.'
-      }
-    },
-    {
-      id: 'factors',
-      title: 'Extra correctiefactoren',
-      content: 'De basisformule wordt aangepast voor:',
-      details: {
-        'Stabiliteit': 'Boten met lage stabiliteitsratio krijgen hogere TR (langzamer)',
-        'Zwaard': 'Boten zonder efficiënt zwaard krijgen +4% TR-straf',
-        'Spinnaker': 'Éénpersoonsboten met spinnaker krijgen +1% op de TR'
-      }
-    },
-    {
-      id: 'how-to-use',
-      title: 'Hoe gebruik je deze app?',
-      content: '1. Zoek je boot in het Botenregister en bekijk je TR. 2. Gebruik de Vergelijker om je racetijd in te voeren en te zien wat andere boten mogen varen. 3. Lagere gecorrigeerde tijden winnen!'
-    }
-  ]
-
   return (
-    <div className="space-y-3">
-      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
-        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-2">TEXEL RATING UITGELEGD</p>
-        <p className="text-sm text-[var(--text2)] leading-relaxed">
-          Texel Rating maakt eerlijke competitie mogelijk tussen verschillende bootklassen via handicapcorrecties op basis van bootsspecificaties.
-        </p>
-      </div>
+    <div className="pt-4">
+      <p className="section-title">Texel Rating uitgelegd</p>
 
-      <div className="space-y-1.5">
-        {sections.map(section => (
-          <div key={section.id} className="bg-[var(--surface)] rounded-xl border border-[var(--border)] overflow-hidden">
+      <div className="card overflow-hidden mb-4">
+        {SECTIONS.map((s, i) => (
+          <div key={s.id} style={{ borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
             <button
-              onClick={() => setExpanded(expanded === section.id ? null : section.id)}
-              className="w-full px-4 py-3.5 text-left flex items-center justify-between hover:bg-[var(--surface2)] transition-colors"
+              onClick={() => setExpanded(expanded === s.id ? null : s.id)}
+              className="w-full flex items-center justify-between text-left px-4 py-3.5"
             >
-              <span className="font-semibold text-sm text-[var(--text)]">{section.title}</span>
-              <span className={`text-[var(--text3)] transition-transform duration-200 text-sm ml-2 shrink-0 ${expanded === section.id ? 'rotate-180' : ''}`}>▾</span>
+              <span className="text-sm font-semibold" style={{ color: 'var(--text)' }}>{s.title}</span>
+              <Chevron open={expanded === s.id} />
             </button>
 
-            {expanded === section.id && (
-              <div className="px-4 pb-4 border-t border-[var(--border)] space-y-3 pt-3">
-                {section.id === 'formula' ? (
-                  <div className="bg-[var(--bg)] rounded-lg px-3 py-2.5 border border-[var(--border2)]">
-                    <p className="font-['DM_Mono'] text-sm text-[var(--accent)]">{section.content}</p>
+            {expanded === s.id && (
+              <div
+                className="px-4 pb-4 pt-3 space-y-3"
+                style={{ borderTop: '1px solid var(--border)', background: 'var(--bg)' }}
+              >
+                {s.formula && (
+                  <div
+                    className="px-3 py-2.5 rounded-lg"
+                    style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}
+                  >
+                    <p
+                      className="text-sm"
+                      style={{ fontFamily: "'DM Mono', monospace", color: 'var(--accent)' }}
+                    >
+                      {s.formula}
+                    </p>
                   </div>
-                ) : (
-                  <p className="text-sm text-[var(--text2)]">{section.content}</p>
                 )}
 
-                {section.details && (
-                  <div className="bg-[var(--surface2)] rounded-lg p-3 space-y-2 border border-[var(--border)]">
-                    {Object.entries(section.details).map(([key, value]) => (
-                      <div key={key} className="flex gap-2">
-                        <span className="text-xs font-semibold text-[var(--accent)] min-w-28 shrink-0">{key}:</span>
-                        <span className="text-xs text-[var(--text2)]">{value}</span>
+                {s.body && (
+                  <p className="text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>{s.body}</p>
+                )}
+
+                {s.details && (
+                  <div
+                    className="rounded-lg overflow-hidden"
+                    style={{ border: '1px solid var(--border)' }}
+                  >
+                    {s.details.map(([key, val], j) => (
+                      <div
+                        key={key}
+                        className="flex gap-3 px-3 py-2.5"
+                        style={{ borderTop: j > 0 ? '1px solid var(--border)' : 'none', background: 'var(--surface)' }}
+                      >
+                        <span
+                          className="text-xs font-semibold shrink-0 w-24"
+                          style={{ color: 'var(--accent)' }}
+                        >
+                          {key}
+                        </span>
+                        <span className="text-xs" style={{ color: 'var(--text2)' }}>{val}</span>
                       </div>
                     ))}
                   </div>
@@ -93,12 +124,20 @@ export default function TexelRatingInfo() {
         ))}
       </div>
 
-      <div className="bg-[var(--surface)] rounded-xl p-4 border-l-4 border-[var(--accent)] border border-[var(--border)]">
-        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--accent)] mb-1">KERNPUNT</p>
-        <p className="text-sm text-[var(--text2)] leading-relaxed">
-          Texel Rating zorgt voor een gelijk speelveld. Een langzamere boot met hoge TR kan via eerlijke handicap toch winnen van een snellere boot met lage TR.
+      {/* Kernpunt */}
+      <div
+        className="card px-4 py-3.5"
+        style={{ borderLeft: '3px solid var(--accent)' }}
+      >
+        <p className="text-xs font-semibold tracking-wider uppercase mb-1" style={{ color: 'var(--accent)' }}>
+          Kernpunt
+        </p>
+        <p className="text-sm leading-relaxed" style={{ color: 'var(--text2)' }}>
+          Een langzamere boot met hoge TR kan via eerlijke handicap toch winnen van een snellere boot met lage TR.
         </p>
       </div>
+
+      <div className="pb-6" />
     </div>
   )
 }
