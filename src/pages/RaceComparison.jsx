@@ -561,7 +561,7 @@ export default function RaceComparison({ t, onBack }) {
               <div style={{ margin: '8px 16px 20px', padding: '16px', background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)' }}>
                 <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8 }}>HOE WERKT HET</div>
                 <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13.5, lineHeight: 1.55, color: 'rgba(0,0,0,0.7)' }}>
-                  Kies je boot, geef aan of je met spinnaker vaart, vul je eindtijd in en voeg concurrenten toe. Je ziet direct wie tijd voor of achter heeft.
+                  Kies je boot, geef aan of je met spinnaker vaart, zeilnummer, skipper of fokkemaat. Je ziet direct hoeveel tijdsmarge je hebt door de cat-handicap (Texel Rating).
                 </div>
               </div>
             )}
