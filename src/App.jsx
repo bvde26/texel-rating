@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import Home from './pages/Home'
-import Info from './pages/Info'
 import TexelRatingInfo from './pages/TexelRatingInfo'
 import BoatCatalog from './pages/BoatCatalog'
 import RaceComparison from './pages/RaceComparison'
-import Registrations from './pages/Registrations'
+import Info from './pages/Info'
 import './App.css'
 
 function App() {
@@ -12,44 +11,46 @@ function App() {
 
   const navItems = [
     { id: 'home', label: '🏠', title: 'Home', page: <Home /> },
-    { id: 'info', label: 'ℹ️', title: 'Info', page: <TexelRatingInfo /> },
-    { id: 'catalog', label: '⛵', title: 'Boats', page: <BoatCatalog /> },
-    { id: 'compare', label: '⏱️', title: 'Compare', page: <RaceComparison /> },
-    { id: 'schedule', label: '📅', title: 'Schedule', page: <Info /> },
+    { id: 'info', label: 'ℹ️', title: 'Uitleg', page: <TexelRatingInfo /> },
+    { id: 'catalog', label: '⛵', title: 'Boten', page: <BoatCatalog /> },
+    { id: 'compare', label: '⏱️', title: 'Vergelijk', page: <RaceComparison /> },
+    { id: 'schedule', label: '📅', title: 'Schema', page: <Info /> },
   ]
 
-  const currentNavItem = navItems.find(item => item.id === currentPage)
+  const active = navItems.find(i => i.id === currentPage)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 flex flex-col">
-      {/* Header */}
-      <header className="bg-blue-900 text-white shadow-lg px-4 py-4">
-        <h1 className="text-2xl font-bold">Round Texel</h1>
-        <p className="text-sm text-blue-100">{currentNavItem?.title || 'Catamaran Race'}</p>
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <header className="bg-blue-900 text-white px-4 py-3 shadow-md flex items-center gap-3">
+        <div className="flex-1 min-w-0">
+          <h1 className="text-base font-bold tracking-wide leading-tight">Round Texel 2025</h1>
+          <p className="text-xs text-blue-300 leading-tight">{active?.title}</p>
+        </div>
+        <span className="text-2xl opacity-70">{active?.label}</span>
       </header>
 
-      {/* Main Content - grows to fill space */}
-      <main className="flex-1 overflow-y-auto px-4 py-4 pb-20">
-        {navItems.map(item => (
-          currentPage === item.id && <div key={item.id}>{item.page}</div>
-        ))}
+      <main className="flex-1 overflow-y-auto px-3 py-3 pb-24">
+        <div className="max-w-lg mx-auto">
+          {navItems.map(item =>
+            currentPage === item.id && <div key={item.id}>{item.page}</div>
+          )}
+        </div>
       </main>
 
-      {/* Bottom Navigation - fixed */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
-        <div className="flex justify-around max-w-full">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
+        <div className="flex max-w-lg mx-auto" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
           {navItems.map(item => (
             <button
               key={item.id}
               onClick={() => setCurrentPage(item.id)}
-              className={`flex-1 py-3 text-center transition flex flex-col items-center gap-1 ${
+              className={`flex-1 pt-2 pb-2.5 flex flex-col items-center gap-0.5 border-t-2 transition-colors ${
                 currentPage === item.id
-                  ? 'text-blue-600 border-t-2 border-blue-600'
-                  : 'text-gray-600 hover:text-blue-500'
+                  ? 'border-blue-600 text-blue-600'
+                  : 'border-transparent text-gray-400 hover:text-gray-600'
               }`}
             >
-              <span className="text-xl">{item.label}</span>
-              <span className="text-xs font-semibold">{item.title}</span>
+              <span className="text-xl leading-none">{item.label}</span>
+              <span className="text-[10px] font-semibold leading-tight">{item.title}</span>
             </button>
           ))}
         </div>

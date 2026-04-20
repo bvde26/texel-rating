@@ -3,16 +3,16 @@ import boats from '../data/boats.json'
 
 function SpiToggle({ value, onChange }) {
   return (
-    <div className="flex rounded-lg border border-gray-300 overflow-hidden text-xs font-semibold">
+    <div className="flex rounded-lg border border-gray-200 overflow-hidden text-xs font-semibold">
       <button
         onClick={() => onChange(false)}
-        className={`flex-1 py-1.5 px-2 transition ${!value ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+        className={`flex-1 py-1.5 px-3 transition-colors ${!value ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}
       >
         Geen spi
       </button>
       <button
         onClick={() => onChange(true)}
-        className={`flex-1 py-1.5 px-2 transition ${value ? 'bg-blue-600 text-white' : 'bg-white text-gray-600 hover:bg-gray-50'}`}
+        className={`flex-1 py-1.5 px-3 transition-colors ${value ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}
       >
         Met spi
       </button>
@@ -33,10 +33,7 @@ function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
 
   const filtered = useMemo(() =>
     boats.boats
-      .filter(b =>
-        !excludeIds.includes(b.id) &&
-        b.type.toLowerCase().includes(search.toLowerCase())
-      )
+      .filter(b => !excludeIds.includes(b.id) && b.type.toLowerCase().includes(search.toLowerCase()))
       .sort((a, b) => a.type.localeCompare(b.type))
   , [search, excludeIds])
 
@@ -48,21 +45,23 @@ function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
         value={search}
         onChange={e => { setSearch(e.target.value); setOpen(true) }}
         onFocus={() => setOpen(true)}
-        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-gray-50"
       />
       {open && (
-        <div className="absolute z-10 w-full bg-white border border-gray-300 rounded-lg shadow-lg mt-1 max-h-56 overflow-y-auto">
+        <div className="absolute z-10 w-full bg-white border border-gray-200 rounded-xl shadow-lg mt-1 max-h-60 overflow-y-auto">
           {filtered.length === 0 && (
-            <p className="px-4 py-3 text-sm text-gray-500">Geen boten gevonden</p>
+            <p className="px-4 py-3 text-sm text-gray-400">Geen boten gevonden</p>
           )}
           {filtered.map(boat => (
             <button
               key={boat.id}
               onMouseDown={() => { onSelect(boat); setSearch(''); setOpen(false) }}
-              className="w-full text-left px-4 py-2 hover:bg-blue-50 border-b border-gray-100 last:border-0"
+              className="w-full text-left px-3 py-2.5 hover:bg-blue-50 border-b border-gray-50 last:border-0"
             >
-              <span className="font-semibold text-blue-900 text-sm">{boat.type}</span>
-              <span className="text-xs text-gray-500 ml-2">TR {boat.trNoSpi} / {boat.trWithSpi ?? '—'} · {boat.class}</span>
+              <span className="font-semibold text-sm text-gray-900">{boat.type}</span>
+              <span className="text-xs text-gray-400 ml-2">
+                TR {boat.trNoSpi}{boat.trWithSpi ? `/${boat.trWithSpi}` : ''} · {boat.class}
+              </span>
             </button>
           ))}
         </div>
@@ -77,7 +76,7 @@ export default function RaceComparison() {
   const [selectedBoat, setSelectedBoat] = useState(null)
   const [ownSpi, setOwnSpi] = useState(false)
   const [finishTime, setFinishTime] = useState('04:00')
-  const [comparisonBoats, setComparisonBoats] = useState([]) // [{ boat, spi }]
+  const [comparisonBoats, setComparisonBoats] = useState([])
 
   const finishTimeSeconds = useMemo(() => {
     const [h, m] = finishTime.split(':').map(Number)
@@ -107,7 +106,7 @@ export default function RaceComparison() {
     const abs = Math.abs(Math.round(diffSeconds / 60))
     const h = Math.floor(abs / 60)
     const m = abs % 60
-    if (h > 0) return `${h}u ${m}min`
+    if (h > 0) return `${h}u ${m}m`
     return `${m} min`
   }
 
@@ -117,38 +116,42 @@ export default function RaceComparison() {
     }
   }
 
-  const removeBoat = (boatId) => {
-    setComparisonBoats(prev => prev.filter(b => b.boat.id !== boatId))
-  }
+  const removeBoat = (boatId) => setComparisonBoats(prev => prev.filter(b => b.boat.id !== boatId))
 
   const toggleSpi = (boatId) => {
-    setComparisonBoats(prev =>
-      prev.map(b => b.boat.id === boatId ? { ...b, spi: !b.spi } : b)
-    )
+    setComparisonBoats(prev => prev.map(b => b.boat.id === boatId ? { ...b, spi: !b.spi } : b))
   }
 
   const excludeIds = [selectedBoat?.id, ...comparisonBoats.map(b => b.boat.id)].filter(Boolean)
 
   return (
-    <div className="space-y-4">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-blue-900 mb-4">Race Time Comparison</h2>
+    <div className="space-y-3">
+      {/* Own boat card */}
+      <div className="bg-white rounded-xl shadow-sm p-4">
+        <h2 className="text-base font-bold text-gray-900 mb-3">Tijdvergelijker</h2>
 
         {!selectedBoat ? (
           <div>
-            <p className="text-sm text-gray-600 mb-2">Selecteer je eigen boot:</p>
+            <p className="text-xs text-gray-400 mb-2">Selecteer je eigen boot:</p>
             <BoatPicker placeholder="Zoek je boot..." excludeIds={[]} onSelect={setSelectedBoat} />
           </div>
         ) : (
-          <div className="bg-blue-50 border-2 border-blue-500 rounded-lg p-4 space-y-3">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="font-bold text-blue-900">{selectedBoat.type}</p>
-                <p className="text-xs text-gray-500">{selectedBoat.class}</p>
+          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 space-y-2.5">
+            <div className="flex items-start justify-between">
+              <div className="min-w-0 flex-1">
+                <p className="font-bold text-blue-900 text-sm leading-tight">{selectedBoat.type}</p>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  {selectedBoat.class}
+                  <span className="mx-1">·</span>
+                  TR <span className="font-bold text-blue-700">{ownTR}</span>
+                  {selectedBoat.trWithSpi && (
+                    <span className="text-gray-400 ml-1">({selectedBoat.trNoSpi}/{selectedBoat.trWithSpi})</span>
+                  )}
+                </p>
               </div>
               <button
                 onClick={() => { setSelectedBoat(null); setComparisonBoats([]) }}
-                className="text-xs px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+                className="text-xs px-2.5 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-3 shrink-0"
               >
                 Wijzig
               </button>
@@ -156,83 +159,74 @@ export default function RaceComparison() {
 
             <SpiToggle value={ownSpi} onChange={setOwnSpi} />
 
-            <div className="bg-white rounded border border-blue-200 px-3 py-2 text-sm">
-              <span className="text-gray-500">TR: </span>
-              <span className="font-bold text-blue-700">{ownTR}</span>
-              {selectedBoat.trWithSpi && (
-                <span className="text-xs text-gray-400 ml-2">
-                  (no spi: {selectedBoat.trNoSpi} / met spi: {selectedBoat.trWithSpi})
-                </span>
-              )}
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold text-blue-900 mb-1">Jouw racetijd</label>
+            <div className="flex items-center gap-2">
+              <label className="text-xs font-semibold text-blue-900 shrink-0">Racetijd</label>
               <input
                 type="time"
                 value={finishTime}
                 onChange={e => setFinishTime(e.target.value)}
-                className="w-full px-3 py-2 border border-blue-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
+                className="flex-1 px-2.5 py-1.5 border border-blue-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 text-sm"
               />
             </div>
           </div>
         )}
       </div>
 
+      {/* Comparison cards */}
       {selectedBoat && (
-        <div className="bg-white rounded-lg shadow-lg p-6 space-y-3">
-          <h3 className="text-lg font-bold text-blue-900">Vergelijk met andere boten</h3>
-
+        <>
           {results.map(({ boat, spi, compTR, allowedSeconds, diff }) => (
             <div
               key={boat.id}
-              className={`rounded-lg p-4 border-l-4 ${diff >= 0 ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}`}
+              className={`bg-white rounded-xl shadow-sm border-l-4 p-3 ${diff >= 0 ? 'border-green-500' : 'border-red-400'}`}
             >
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm">{boat.type}</p>
-                  <p className="text-xs text-gray-500">TR {compTR}</p>
+              <div className="flex items-center justify-between mb-2">
+                <div className="min-w-0 flex-1">
+                  <span className="font-semibold text-sm text-gray-900">{boat.type}</span>
+                  <span className="text-xs text-gray-400 ml-2">TR {compTR}</span>
                 </div>
-                <button onClick={() => removeBoat(boat.id)} className="text-xs px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded">✕</button>
+                <button
+                  onClick={() => removeBoat(boat.id)}
+                  className="text-gray-300 hover:text-gray-500 text-2xl leading-none w-7 h-7 flex items-center justify-center shrink-0"
+                >
+                  ×
+                </button>
               </div>
 
               <div className="mb-3">
                 <SpiToggle value={spi} onChange={() => toggleSpi(boat.id)} />
               </div>
 
-              <div className="flex justify-between items-end">
+              <div className={`rounded-lg px-3 py-2.5 flex items-center justify-between ${diff >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
                 <div>
-                  <p className="text-xs text-gray-500">Max. tijd voor gelijke uitslag</p>
-                  <p className="text-xl font-bold text-gray-900">{formatTime(allowedSeconds)}</p>
+                  <p className="text-[10px] text-gray-400 uppercase tracking-wide">Max. tijd</p>
+                  <p className="text-xl font-bold text-gray-800 leading-tight">{formatTime(allowedSeconds)}</p>
                 </div>
                 <div className="text-right">
-                  <p className={`font-bold ${diff >= 0 ? 'text-green-700' : 'text-red-700'}`}>
-                    {diff >= 0 ? `+${formatDiff(diff)}` : `−${formatDiff(diff)}`}
+                  <p className={`text-2xl font-bold leading-none ${diff >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                    {diff >= 0 ? '+' : '−'}{formatDiff(diff)}
                   </p>
-                  <p className="text-xs text-gray-500">
-                    {diff >= 0 ? 'mag langer doen' : 'moet eerder finishen'}
+                  <p className="text-[11px] text-gray-500 mt-0.5">
+                    {diff >= 0 ? 'mag langer doen' : 'eerder finishen'}
                   </p>
                 </div>
               </div>
             </div>
           ))}
 
-          <div>
-            <p className="text-sm text-gray-600 mb-2">
-              {comparisonBoats.length === 0 ? 'Voeg een boot toe:' : 'Nog een boot toevoegen:'}
+          {/* Add boat */}
+          <div className="bg-white rounded-xl shadow-sm p-4">
+            <p className="text-xs text-gray-400 mb-2">
+              {comparisonBoats.length === 0 ? 'Voeg een boot toe om te vergelijken:' : 'Nog een boot toevoegen:'}
             </p>
-            <BoatPicker
-              placeholder="Zoek boot om toe te voegen..."
-              excludeIds={excludeIds}
-              onSelect={addBoat}
-            />
+            <BoatPicker placeholder="Zoek boot..." excludeIds={excludeIds} onSelect={addBoat} />
           </div>
-        </div>
+        </>
       )}
 
       {results.length > 0 && (
-        <p className="text-xs text-gray-400 text-center pb-4">
-          Toegestane tijd = jouw tijd × (TR concurrent ÷ TR jouw boot)
+        <p className="text-[11px] text-gray-300 text-center pb-1">
+          Max. tijd = jouw tijd × (TR concurrent ÷ TR jouw boot)
         </p>
       )}
     </div>
