@@ -283,7 +283,7 @@ function MyBoatCard({ boat, reg, spi, setSpi, time, activeField, setActiveField,
           <div style={{ height: 1, background: 'rgba(0,0,0,0.08)', margin: '10px -16px' }}/>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase' }}>
-              TX {myTR} NETTO
+              TX RATING NETTO TIJD
             </div>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 18, fontWeight: 700, letterSpacing: -0.8, color: '#000' }}>
               {fmtTime(Math.round(elapsed * 100 / myTR))}
