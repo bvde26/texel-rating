@@ -1,18 +1,26 @@
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import boats from '../data/boats.json'
 
 function SpiToggle({ value, onChange }) {
   return (
-    <div className="flex rounded-lg border border-[var(--border2)] overflow-hidden text-xs font-semibold">
+    <div className="flex rounded-xl overflow-hidden" style={{ border: '1px solid var(--border2)' }}>
       <button
         onClick={() => onChange(false)}
-        className={`flex-1 py-1.5 px-3 transition-colors ${!value ? 'bg-[var(--accent)] text-white' : 'bg-[var(--surface2)] text-[var(--text2)] hover:text-[var(--text)]'}`}
+        className="flex-1 py-3 px-3 text-xs font-semibold transition-colors"
+        style={{
+          backgroundColor: !value ? 'var(--accent)' : 'var(--surface2)',
+          color: !value ? '#fff' : 'var(--text2)',
+        }}
       >
         Geen spi
       </button>
       <button
         onClick={() => onChange(true)}
-        className={`flex-1 py-1.5 px-3 transition-colors ${value ? 'bg-[var(--accent)] text-white' : 'bg-[var(--surface2)] text-[var(--text2)] hover:text-[var(--text)]'}`}
+        className="flex-1 py-3 px-3 text-xs font-semibold transition-colors"
+        style={{
+          backgroundColor: value ? 'var(--accent)' : 'var(--surface2)',
+          color: value ? '#fff' : 'var(--text2)',
+        }}
       >
         Met spi
       </button>
@@ -45,24 +53,36 @@ function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
         value={search}
         onChange={e => { setSearch(e.target.value); setOpen(true) }}
         onFocus={() => setOpen(true)}
-        className="w-full px-3 py-2.5 bg-[var(--surface2)] border border-[var(--border2)] rounded-lg text-sm text-[var(--text)] placeholder-[var(--text3)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
+        className="w-full px-4 py-3 rounded-xl text-sm focus:outline-none"
+        style={{
+          backgroundColor: 'var(--surface2)',
+          border: '1px solid var(--border2)',
+          color: 'var(--text)',
+        }}
       />
       {open && (
-        <div className="absolute z-10 w-full bg-[var(--surface2)] border border-[var(--border2)] rounded-xl shadow-2xl mt-1 max-h-60 overflow-y-auto">
+        <div
+          className="absolute z-10 w-full rounded-xl shadow-xl mt-1 max-h-64 overflow-y-auto"
+          style={{
+            backgroundColor: 'var(--surface)',
+            border: '1px solid var(--border2)',
+          }}
+        >
           {filtered.length === 0 && (
-            <p className="px-4 py-3 text-sm text-[var(--text3)]">Geen boten gevonden</p>
+            <p className="px-4 py-3 text-sm" style={{ color: 'var(--text3)' }}>Geen boten gevonden</p>
           )}
           {filtered.map(boat => (
             <button
               key={boat.id}
               onMouseDown={() => { onSelect(boat); setSearch(''); setOpen(false) }}
-              className="w-full text-left px-3 py-2.5 hover:bg-[var(--surface)] border-b border-[var(--border)] last:border-0 transition-colors"
+              className="w-full text-left px-4 py-3.5 transition-colors"
+              style={{ borderBottom: '1px solid var(--border)' }}
             >
-              <span className="font-semibold text-sm text-[var(--text)]">{boat.type}</span>
-              <span className="text-xs text-[var(--text2)] ml-2 font-['DM_Mono']">
+              <span className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{boat.type}</span>
+              <span className="text-xs font-['DM_Mono'] ml-2" style={{ color: 'var(--text2)' }}>
                 TR {boat.trNoSpi}{boat.trWithSpi ? `/${boat.trWithSpi}` : ''}
               </span>
-              <span className="text-xs text-[var(--text3)] ml-1">· {boat.class}</span>
+              <span className="text-xs ml-1" style={{ color: 'var(--text3)' }}>· {boat.class}</span>
             </button>
           ))}
         </div>
@@ -128,32 +148,49 @@ export default function RaceComparison() {
   return (
     <div className="space-y-3">
       {/* Own boat */}
-      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
-        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-3">TIJDVERGELIJKER</p>
+      <div className="card p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] mb-3" style={{ color: 'var(--text2)' }}>
+          TIJDVERGELIJKER
+        </p>
 
         {!selectedBoat ? (
           <div>
-            <p className="text-xs text-[var(--text3)] mb-2">Selecteer je eigen boot:</p>
+            <p className="text-xs mb-2" style={{ color: 'var(--text3)' }}>Selecteer je eigen boot:</p>
             <BoatPicker placeholder="Zoek je boot..." excludeIds={[]} onSelect={setSelectedBoat} />
           </div>
         ) : (
           <div className="space-y-3">
-            <div className="bg-[var(--surface2)] border border-l-2 border-[var(--border2)] border-l-[var(--accent)] rounded-xl p-3">
-              <div className="flex items-start justify-between mb-2.5">
+            <div
+              className="rounded-xl p-3"
+              style={{
+                backgroundColor: 'var(--surface2)',
+                borderLeft: '3px solid var(--accent)',
+                border: '1px solid var(--border2)',
+              }}
+            >
+              <div className="flex items-start justify-between mb-3">
                 <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-[var(--text)] text-sm leading-tight">{selectedBoat.type}</p>
-                  <p className="text-xs text-[var(--text2)] mt-0.5">
+                  <p className="font-semibold text-sm leading-tight" style={{ color: 'var(--text)' }}>
+                    {selectedBoat.type}
+                  </p>
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text2)' }}>
                     {selectedBoat.class}
-                    <span className="mx-1.5 text-[var(--text3)]">·</span>
-                    TR <span className="font-['DM_Mono'] font-medium text-[var(--accent)]">{ownTR}</span>
+                    <span className="mx-1.5" style={{ color: 'var(--text3)' }}>·</span>
+                    TR{' '}
+                    <span className="font-['DM_Mono'] font-medium" style={{ color: 'var(--accent-text)' }}>
+                      {ownTR}
+                    </span>
                     {selectedBoat.trWithSpi && (
-                      <span className="text-[var(--text3)] ml-1 font-['DM_Mono']">({selectedBoat.trNoSpi}/{selectedBoat.trWithSpi})</span>
+                      <span className="ml-1 font-['DM_Mono']" style={{ color: 'var(--text3)' }}>
+                        ({selectedBoat.trNoSpi}/{selectedBoat.trWithSpi})
+                      </span>
                     )}
                   </p>
                 </div>
                 <button
                   onClick={() => { setSelectedBoat(null); setComparisonBoats([]) }}
-                  className="text-xs px-3 py-1 rounded-full bg-[var(--accent)] text-white hover:opacity-80 ml-3 shrink-0 transition-opacity"
+                  className="text-xs px-3 py-1.5 rounded-full ml-3 shrink-0 font-semibold transition-opacity hover:opacity-80"
+                  style={{ backgroundColor: 'var(--accent)', color: '#fff' }}
                 >
                   Wijzig
                 </button>
@@ -161,13 +198,20 @@ export default function RaceComparison() {
 
               <SpiToggle value={ownSpi} onChange={setOwnSpi} />
 
-              <div className="flex items-center gap-3 mt-2.5">
-                <label className="text-xs font-semibold text-[var(--text2)] shrink-0">Racetijd</label>
+              <div className="flex items-center gap-3 mt-3">
+                <label className="text-xs font-semibold shrink-0" style={{ color: 'var(--text2)' }}>
+                  Racetijd
+                </label>
                 <input
                   type="time"
                   value={finishTime}
                   onChange={e => setFinishTime(e.target.value)}
-                  className="flex-1 px-2.5 py-1.5 bg-[var(--bg)] border border-[var(--border2)] rounded-lg text-sm font-['DM_Mono'] text-[var(--text)] focus:outline-none focus:border-[var(--accent)]"
+                  className="flex-1 px-3 py-2 rounded-lg text-sm font-['DM_Mono'] focus:outline-none"
+                  style={{
+                    backgroundColor: 'var(--surface)',
+                    border: '1px solid var(--border2)',
+                    color: 'var(--text)',
+                  }}
                 />
               </div>
             </div>
@@ -181,16 +225,23 @@ export default function RaceComparison() {
           {results.map(({ boat, spi, compTR, allowedSeconds, diff }) => (
             <div
               key={boat.id}
-              className={`bg-[var(--surface)] rounded-xl p-3 border-l-4 border border-[var(--border)] ${diff >= 0 ? 'border-l-[var(--green)]' : 'border-l-[var(--red)]'}`}
+              className="card p-4"
+              style={{
+                borderLeft: `4px solid ${diff >= 0 ? 'var(--green)' : 'var(--red)'}`,
+                backgroundColor: diff >= 0 ? 'var(--green-light)' : 'var(--red-light)',
+              }}
             >
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-3">
                 <div className="min-w-0 flex-1">
-                  <span className="font-semibold text-sm text-[var(--text)]">{boat.type}</span>
-                  <span className="text-xs font-['DM_Mono'] text-[var(--text2)] ml-2">TR {compTR}</span>
+                  <span className="font-semibold text-sm" style={{ color: 'var(--text)' }}>{boat.type}</span>
+                  <span className="text-xs font-['DM_Mono'] ml-2" style={{ color: 'var(--text2)' }}>
+                    TR {compTR}
+                  </span>
                 </div>
                 <button
                   onClick={() => removeBoat(boat.id)}
-                  className="text-[var(--text3)] hover:text-[var(--text2)] text-2xl leading-none w-7 h-7 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-xl leading-none transition-colors shrink-0 ml-2"
+                  style={{ backgroundColor: 'var(--surface)', color: 'var(--text3)' }}
                 >
                   ×
                 </button>
@@ -202,16 +253,24 @@ export default function RaceComparison() {
 
               <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-[10px] text-[var(--text3)] uppercase tracking-wide mb-0.5">Max. tijd</p>
-                  <p className={`text-xl font-['DM_Mono'] font-medium leading-none ${diff >= 0 ? 'text-[var(--green)]' : 'text-[var(--red)]'}`}>
+                  <p className="text-[10px] uppercase tracking-wide mb-0.5" style={{ color: 'var(--text3)' }}>
+                    Max. tijd
+                  </p>
+                  <p
+                    className="text-xl font-['DM_Mono'] font-medium leading-none"
+                    style={{ color: diff >= 0 ? 'var(--green)' : 'var(--red)' }}
+                  >
                     {formatTime(allowedSeconds)}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className={`font-['Bebas_Neue'] text-4xl leading-none tracking-wide ${diff >= 0 ? 'text-[var(--green)] glow-green' : 'text-[var(--red)] glow-red'}`}>
+                  <p
+                    className="font-['Bebas_Neue'] text-5xl leading-none tracking-wide"
+                    style={{ color: diff >= 0 ? 'var(--green)' : 'var(--red)' }}
+                  >
                     {diff >= 0 ? '+' : '−'}{formatDiff(diff)}
                   </p>
-                  <p className="text-xs text-[var(--text2)] mt-0.5">
+                  <p className="text-xs mt-0.5" style={{ color: 'var(--text2)' }}>
                     {diff >= 0 ? 'mag langer doen' : 'eerder finishen'}
                   </p>
                 </div>
@@ -220,8 +279,8 @@ export default function RaceComparison() {
           ))}
 
           {/* Add boat */}
-          <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
-            <p className="text-xs text-[var(--text3)] mb-2">
+          <div className="card p-4">
+            <p className="text-xs mb-2" style={{ color: 'var(--text3)' }}>
               {comparisonBoats.length === 0 ? 'Voeg een boot toe om te vergelijken:' : 'Nog een boot toevoegen:'}
             </p>
             <BoatPicker placeholder="Zoek boot..." excludeIds={excludeIds} onSelect={addBoat} />
@@ -230,7 +289,7 @@ export default function RaceComparison() {
       )}
 
       {results.length > 0 && (
-        <p className="text-[10px] text-[var(--text3)] text-center font-['DM_Mono'] pb-1">
+        <p className="text-[10px] text-center font-['DM_Mono'] pb-1" style={{ color: 'var(--text3)' }}>
           max.tijd = jouw tijd × (TR concurrent ÷ TR jouw boot)
         </p>
       )}
@@ -243,47 +302,53 @@ export default function RaceComparison() {
 function UitlegBlok() {
   const [open, setOpen] = useState(false)
   return (
-    <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] overflow-hidden">
+    <div className="card overflow-hidden">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full px-4 py-3 flex items-center justify-between hover:bg-[var(--surface2)] transition-colors"
+        className="w-full px-4 py-4 flex items-center justify-between transition-colors"
+        style={{ backgroundColor: open ? 'var(--surface2)' : 'transparent' }}
       >
-        <span className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)]">
+        <span className="text-xs font-['Bebas_Neue'] tracking-[0.15em]" style={{ color: 'var(--text2)' }}>
           HOE WERKT TEXEL RATING?
         </span>
-        <span className={`text-[var(--text3)] transition-transform duration-200 text-sm ${open ? 'rotate-180' : ''}`}>▾</span>
+        <span
+          className="text-sm transition-transform duration-200"
+          style={{ color: 'var(--text3)', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
+        >▾</span>
       </button>
 
       {open && (
-        <div className="px-4 pb-4 pt-1 border-t border-[var(--border)] space-y-3">
-          <p className="text-xs text-[var(--text2)] leading-relaxed">
+        <div className="px-4 pb-4 pt-3 space-y-3" style={{ borderTop: '1px solid var(--border)' }}>
+          <p className="text-xs leading-relaxed" style={{ color: 'var(--text2)' }}>
             Texel Rating (TR) is een handicapsysteem zodat boten van verschillende klassen eerlijk samen kunnen racen. Hogere TR = langzamere boot = meer tijd toegestaan.
           </p>
 
-          <div className="bg-[var(--bg)] rounded-lg px-3 py-2 border border-[var(--border2)]">
-            <p className="text-[10px] text-[var(--text3)] mb-1 uppercase tracking-wide">Formule</p>
-            <p className="font-['DM_Mono'] text-xs text-[var(--accent)]">TR = 100 / (1.15 × RL⁰·³ × RSA⁰·⁴ / RW⁰·³²⁵)</p>
+          <div className="rounded-xl px-3 py-2.5" style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border2)' }}>
+            <p className="text-[10px] mb-1 uppercase tracking-wide" style={{ color: 'var(--text3)' }}>Formule</p>
+            <p className="font-['DM_Mono'] text-xs" style={{ color: 'var(--accent-text)' }}>
+              TR = 100 / (1.15 × RL⁰·³ × RSA⁰·⁴ / RW⁰·³²⁵)
+            </p>
           </div>
 
-          <div className="bg-[var(--bg)] rounded-lg px-3 py-2 border border-[var(--border2)]">
-            <p className="text-[10px] text-[var(--text3)] mb-1.5 uppercase tracking-wide">Voorbeeld</p>
+          <div className="rounded-xl px-3 py-2.5" style={{ backgroundColor: 'var(--surface2)', border: '1px solid var(--border2)' }}>
+            <p className="text-[10px] mb-1.5 uppercase tracking-wide" style={{ color: 'var(--text3)' }}>Voorbeeld</p>
             <div className="space-y-1 text-xs">
+              <p style={{ color: 'var(--text2)' }}>Hobie 16 (jij) · TR 113 · 4:00</p>
               <div className="flex justify-between">
-                <span className="text-[var(--text2)]">Hobie 16 (jij) · TR 113 · 4:00</span>
+                <span style={{ color: 'var(--text2)' }}>Hobie 14 · TR 119</span>
+                <span className="font-['DM_Mono']" style={{ color: 'var(--green)' }}>max. 4:13 (+13 min)</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-[var(--text2)]">Hobie 14 · TR 119</span>
-                <span className="font-['DM_Mono'] text-[var(--green)]">max. 4:13 (+13 min)</span>
-              </div>
-              <p className="text-[10px] text-[var(--text3)] pt-0.5 font-['DM_Mono']">4:00 × (119 ÷ 113) = 4:13</p>
+              <p className="text-[10px] pt-0.5 font-['DM_Mono']" style={{ color: 'var(--text3)' }}>
+                4:00 × (119 ÷ 113) = 4:13
+              </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-2 text-[11px] text-[var(--text2)]">
-            <div><span className="text-[var(--text3)]">RL</span> · Ratinglengte (m)</div>
-            <div><span className="text-[var(--text3)]">RSA</span> · Zeiloppervlak (m²)</div>
-            <div><span className="text-[var(--text3)]">RW</span> · Gewicht incl. crew (kg)</div>
-            <div><span className="text-[var(--text3)]">Spi</span> · +1% op TR</div>
+          <div className="grid grid-cols-2 gap-2 text-[11px]" style={{ color: 'var(--text2)' }}>
+            <div><span style={{ color: 'var(--text3)' }}>RL</span> · Ratinglengte (m)</div>
+            <div><span style={{ color: 'var(--text3)' }}>RSA</span> · Zeiloppervlak (m²)</div>
+            <div><span style={{ color: 'var(--text3)' }}>RW</span> · Gewicht incl. crew (kg)</div>
+            <div><span style={{ color: 'var(--text3)' }}>Spi</span> · +1% op TR</div>
           </div>
         </div>
       )}
