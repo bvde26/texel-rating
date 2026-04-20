@@ -588,7 +588,7 @@ export default function RaceComparison({ t, onBack }) {
                               <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
                                 {boat.type}
                               </div>
-                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.4)', letterSpacing: 0.1, flexShrink: 0 }}>
+                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', letterSpacing: 0.2, flexShrink: 0 }}>
                                 TX {compTR}
                               </div>
                             </div>
