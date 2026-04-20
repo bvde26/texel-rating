@@ -434,6 +434,12 @@ export default function RaceComparison({ t, onBack }) {
     setEditUid(null)
   }
 
+  const resetRank = () => {
+    setEntries([])
+    setRankOrder([])
+    setEditUid(null)
+  }
+
   const hasState = myBoat || timeComplete || competitors.length > 0 || entries.length > 0
 
   const results = useMemo(() => {
@@ -477,7 +483,7 @@ export default function RaceComparison({ t, onBack }) {
           </div>
           {hasState && (
             <Pressable
-              onClick={resetAll}
+              onClick={mode === 'rank' ? resetRank : resetAll}
               style={{
                 padding: '6px 10px', borderRadius: 8, background: 'rgba(0,0,0,0.05)',
                 fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.65)', letterSpacing: 0.5, fontWeight: 600,
