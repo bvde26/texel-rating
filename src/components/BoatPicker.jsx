@@ -36,7 +36,7 @@ export default function BoatPicker({ t, boats, registrations = [], excludeIds, o
 
   const pickReg = (reg) => {
     const boat = boats.find(b => b.id === reg.boatId)
-    if (boat) onPick(boat)
+    if (boat) onPick(boat, reg)
   }
 
   return (
