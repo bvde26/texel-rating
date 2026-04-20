@@ -5,6 +5,8 @@ export default function RaceComparison() {
   const [selectedBoat, setSelectedBoat] = useState(null)
   const [finishTime, setFinishTime] = useState('4:00:00')
   const [comparisonBoats, setComparisonBoats] = useState([])
+  const [searchOwn, setSearchOwn] = useState('')
+  const [searchCompare, setSearchCompare] = useState('')
 
   // Parse time string to seconds
   const timeToSeconds = (timeStr) => {
@@ -88,9 +90,17 @@ export default function RaceComparison() {
 
         {!selectedBoat ? (
           <div>
-            <p className="text-gray-600 mb-4">Select your boat first:</p>
+            <p className="text-gray-600 mb-3">Select your boat first:</p>
+            <input
+              type="text"
+              placeholder="Zoek boot..."
+              value={searchOwn}
+              onChange={e => setSearchOwn(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              autoFocus
+            />
             <div className="grid grid-cols-1 gap-2 max-h-48 overflow-y-auto">
-              {boats.boats.map(boat => (
+              {boats.boats.filter(b => b.type.toLowerCase().includes(searchOwn.toLowerCase())).map(boat => (
                 <button
                   key={boat.id}
                   onClick={() => setSelectedBoat(boat)}
@@ -145,12 +155,19 @@ export default function RaceComparison() {
       {/* Add Comparison Boats */}
       {selectedBoat && (
         <div className="bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-lg font-bold text-blue-900 mb-4">Compare With Other Boats</h3>
+          <h3 className="text-lg font-bold text-blue-900 mb-3">Compare With Other Boats</h3>
+
+          <input
+            type="text"
+            placeholder="Zoek boot..."
+            value={searchCompare}
+            onChange={e => setSearchCompare(e.target.value)}
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
 
           <div className="space-y-2 max-h-40 overflow-y-auto mb-4">
             {boats.boats
-              .filter(b => b.id !== selectedBoat.id)
-              .slice(0, 15)
+              .filter(b => b.id !== selectedBoat.id && b.type.toLowerCase().includes(searchCompare.toLowerCase()))
               .map(boat => (
                 <button
                   key={boat.id}
