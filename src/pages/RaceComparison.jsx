@@ -657,8 +657,13 @@ export default function RaceComparison({ t, onBack }) {
                         {hasTime ? `#${idx + 1}` : '—'}
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {boat.type}
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, overflow: 'hidden' }}>
+                          <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+                            {boat.type}
+                          </div>
+                          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', letterSpacing: 0.2, flexShrink: 0 }}>
+                            TX {tr}
+                          </div>
                         </div>
                         {entry.skipper && (
                           <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -681,9 +686,6 @@ export default function RaceComparison({ t, onBack }) {
                             ))}
                           </div>
                         </div>
-                      </div>
-                      <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 13, fontWeight: 700, color: '#000', letterSpacing: -0.3, flexShrink: 0 }}>
-                        TX {tr}
                       </div>
                     </div>
 
