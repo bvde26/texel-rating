@@ -6,31 +6,31 @@ export default function Info() {
 
   return (
     <div className="space-y-3">
-      <div className="bg-white rounded-xl shadow-sm p-4">
-        <h2 className="text-base font-bold text-gray-900 mb-3">Programma</h2>
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-3">PROGRAMMA</p>
 
         <div className="space-y-1.5">
           {schedule.days.map(day => (
-            <div key={day.day} className="border border-gray-100 rounded-xl overflow-hidden">
+            <div key={day.day} className="border border-[var(--border)] rounded-xl overflow-hidden">
               <button
                 onClick={() => setExpandedDay(expandedDay === day.day ? null : day.day)}
-                className="w-full px-4 py-3 flex items-center justify-between"
+                className="w-full px-4 py-3 flex items-center justify-between hover:bg-[var(--surface2)] transition-colors"
               >
                 <div className="text-left">
-                  <p className="font-semibold text-sm text-gray-900">Dag {day.day}: {day.title}</p>
-                  <p className="text-xs text-gray-400">{day.date}</p>
+                  <p className="font-semibold text-sm text-[var(--text)]">Dag {day.day}: {day.title}</p>
+                  <p className="text-xs text-[var(--text2)]">{day.date}</p>
                 </div>
-                <span className={`text-gray-400 text-xl leading-none transition-transform ${expandedDay === day.day ? 'rotate-180' : ''}`}>▾</span>
+                <span className={`text-[var(--text3)] transition-transform duration-200 text-sm ml-2 shrink-0 ${expandedDay === day.day ? 'rotate-180' : ''}`}>▾</span>
               </button>
 
               {expandedDay === day.day && (
-                <div className="border-t border-gray-100">
+                <div className="border-t border-[var(--border)]">
                   {day.events.map((event, idx) => (
-                    <div key={idx} className="flex gap-3 px-4 py-3 border-b border-gray-50 last:border-0">
-                      <span className="font-mono text-xs font-semibold text-blue-700 min-w-12 shrink-0 pt-0.5">{event.time}</span>
+                    <div key={idx} className="flex gap-3 px-4 py-3 border-b border-[var(--border)] last:border-0">
+                      <span className="font-['DM_Mono'] text-xs font-medium text-[var(--accent)] min-w-12 shrink-0 pt-0.5">{event.time}</span>
                       <div>
-                        <p className="text-sm font-semibold text-gray-800">{event.title}</p>
-                        <p className="text-xs text-gray-400">{event.location}</p>
+                        <p className="text-sm font-semibold text-[var(--text)]">{event.title}</p>
+                        <p className="text-xs text-[var(--text2)]">{event.location}</p>
                       </div>
                     </div>
                   ))}
@@ -41,35 +41,41 @@ export default function Info() {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-4">
-        <h2 className="text-base font-bold text-gray-900 mb-3">Regels</h2>
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-3">REGELS</p>
         <ul className="space-y-2">
           {schedule.rules.map((rule, idx) => (
-            <li key={idx} className="flex gap-2 text-sm text-gray-700">
-              <span className="text-blue-400 shrink-0 mt-0.5">·</span>
+            <li key={idx} className="flex gap-2 text-sm text-[var(--text2)]">
+              <span className="text-[var(--accent)] shrink-0 mt-0.5">·</span>
               {rule}
             </li>
           ))}
         </ul>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm p-4">
-        <h2 className="text-base font-bold text-gray-900 mb-3">Contact</h2>
-        <div className="space-y-2 text-sm text-gray-700">
-          <p><span className="font-semibold text-gray-500 text-xs">Organisatie</span><br />{schedule.contact.organizerName}</p>
-          <p>
-            <span className="font-semibold text-gray-500 text-xs">E-mail</span><br />
-            <a href={`mailto:${schedule.contact.organizerEmail}`} className="text-blue-600 hover:underline">
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-3">CONTACT</p>
+        <div className="space-y-3 text-sm">
+          <div>
+            <p className="text-xs text-[var(--text3)] mb-0.5">Organisatie</p>
+            <p className="text-[var(--text)]">{schedule.contact.organizerName}</p>
+          </div>
+          <div>
+            <p className="text-xs text-[var(--text3)] mb-0.5">E-mail</p>
+            <a href={`mailto:${schedule.contact.organizerEmail}`} className="text-[var(--accent)] hover:underline">
               {schedule.contact.organizerEmail}
             </a>
-          </p>
-          <p><span className="font-semibold text-gray-500 text-xs">Telefoon</span><br />{schedule.contact.organizerPhone}</p>
-          <p>
-            <span className="font-semibold text-gray-500 text-xs">Website</span><br />
-            <a href={`https://${schedule.contact.website}`} className="text-blue-600 hover:underline">
+          </div>
+          <div>
+            <p className="text-xs text-[var(--text3)] mb-0.5">Telefoon</p>
+            <p className="text-[var(--text)] font-['DM_Mono']">{schedule.contact.organizerPhone}</p>
+          </div>
+          <div>
+            <p className="text-xs text-[var(--text3)] mb-0.5">Website</p>
+            <a href={`https://${schedule.contact.website}`} className="text-[var(--accent)] hover:underline">
               {schedule.contact.website}
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </div>

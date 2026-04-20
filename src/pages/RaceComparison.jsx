@@ -3,16 +3,16 @@ import boats from '../data/boats.json'
 
 function SpiToggle({ value, onChange }) {
   return (
-    <div className="flex rounded-lg border border-gray-200 overflow-hidden text-xs font-semibold">
+    <div className="flex rounded-lg border border-[var(--border2)] overflow-hidden text-xs font-semibold">
       <button
         onClick={() => onChange(false)}
-        className={`flex-1 py-1.5 px-3 transition-colors ${!value ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}
+        className={`flex-1 py-1.5 px-3 transition-colors ${!value ? 'bg-[var(--accent)] text-white' : 'bg-[var(--surface2)] text-[var(--text2)] hover:text-[var(--text)]'}`}
       >
         Geen spi
       </button>
       <button
         onClick={() => onChange(true)}
-        className={`flex-1 py-1.5 px-3 transition-colors ${value ? 'bg-blue-600 text-white' : 'bg-gray-50 text-gray-500 hover:bg-gray-100'}`}
+        className={`flex-1 py-1.5 px-3 transition-colors ${value ? 'bg-[var(--accent)] text-white' : 'bg-[var(--surface2)] text-[var(--text2)] hover:text-[var(--text)]'}`}
       >
         Met spi
       </button>
@@ -45,23 +45,24 @@ function BoatPicker({ placeholder, excludeIds = [], onSelect }) {
         value={search}
         onChange={e => { setSearch(e.target.value); setOpen(true) }}
         onFocus={() => setOpen(true)}
-        className="w-full px-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm bg-gray-50"
+        className="w-full px-3 py-2.5 bg-[var(--surface2)] border border-[var(--border2)] rounded-lg text-sm text-[var(--text)] placeholder-[var(--text3)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)]"
       />
       {open && (
-        <div className="absolute z-10 w-full bg-white border border-gray-200 rounded-xl shadow-lg mt-1 max-h-60 overflow-y-auto">
+        <div className="absolute z-10 w-full bg-[var(--surface2)] border border-[var(--border2)] rounded-xl shadow-2xl mt-1 max-h-60 overflow-y-auto">
           {filtered.length === 0 && (
-            <p className="px-4 py-3 text-sm text-gray-400">Geen boten gevonden</p>
+            <p className="px-4 py-3 text-sm text-[var(--text3)]">Geen boten gevonden</p>
           )}
           {filtered.map(boat => (
             <button
               key={boat.id}
               onMouseDown={() => { onSelect(boat); setSearch(''); setOpen(false) }}
-              className="w-full text-left px-3 py-2.5 hover:bg-blue-50 border-b border-gray-50 last:border-0"
+              className="w-full text-left px-3 py-2.5 hover:bg-[var(--surface)] border-b border-[var(--border)] last:border-0 transition-colors"
             >
-              <span className="font-semibold text-sm text-gray-900">{boat.type}</span>
-              <span className="text-xs text-gray-400 ml-2">
-                TR {boat.trNoSpi}{boat.trWithSpi ? `/${boat.trWithSpi}` : ''} · {boat.class}
+              <span className="font-semibold text-sm text-[var(--text)]">{boat.type}</span>
+              <span className="text-xs text-[var(--text2)] ml-2 font-['DM_Mono']">
+                TR {boat.trNoSpi}{boat.trWithSpi ? `/${boat.trWithSpi}` : ''}
               </span>
+              <span className="text-xs text-[var(--text3)] ml-1">· {boat.class}</span>
             </button>
           ))}
         </div>
@@ -106,8 +107,8 @@ export default function RaceComparison() {
     const abs = Math.abs(Math.round(diffSeconds / 60))
     const h = Math.floor(abs / 60)
     const m = abs % 60
-    if (h > 0) return `${h}u ${m}m`
-    return `${m} min`
+    if (h > 0) return `${h}U ${m}M`
+    return `${m} MIN`
   }
 
   const addBoat = (boat) => {
@@ -126,47 +127,49 @@ export default function RaceComparison() {
 
   return (
     <div className="space-y-3">
-      {/* Own boat card */}
-      <div className="bg-white rounded-xl shadow-sm p-4">
-        <h2 className="text-base font-bold text-gray-900 mb-3">Tijdvergelijker</h2>
+      {/* Own boat */}
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-3">TIJDVERGELIJKER</p>
 
         {!selectedBoat ? (
           <div>
-            <p className="text-xs text-gray-400 mb-2">Selecteer je eigen boot:</p>
+            <p className="text-xs text-[var(--text3)] mb-2">Selecteer je eigen boot:</p>
             <BoatPicker placeholder="Zoek je boot..." excludeIds={[]} onSelect={setSelectedBoat} />
           </div>
         ) : (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 space-y-2.5">
-            <div className="flex items-start justify-between">
-              <div className="min-w-0 flex-1">
-                <p className="font-bold text-blue-900 text-sm leading-tight">{selectedBoat.type}</p>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  {selectedBoat.class}
-                  <span className="mx-1">·</span>
-                  TR <span className="font-bold text-blue-700">{ownTR}</span>
-                  {selectedBoat.trWithSpi && (
-                    <span className="text-gray-400 ml-1">({selectedBoat.trNoSpi}/{selectedBoat.trWithSpi})</span>
-                  )}
-                </p>
+          <div className="space-y-3">
+            <div className="bg-[var(--surface2)] border border-l-2 border-[var(--border2)] border-l-[var(--accent)] rounded-xl p-3">
+              <div className="flex items-start justify-between mb-2.5">
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-[var(--text)] text-sm leading-tight">{selectedBoat.type}</p>
+                  <p className="text-xs text-[var(--text2)] mt-0.5">
+                    {selectedBoat.class}
+                    <span className="mx-1.5 text-[var(--text3)]">·</span>
+                    TR <span className="font-['DM_Mono'] font-medium text-[var(--accent)]">{ownTR}</span>
+                    {selectedBoat.trWithSpi && (
+                      <span className="text-[var(--text3)] ml-1 font-['DM_Mono']">({selectedBoat.trNoSpi}/{selectedBoat.trWithSpi})</span>
+                    )}
+                  </p>
+                </div>
+                <button
+                  onClick={() => { setSelectedBoat(null); setComparisonBoats([]) }}
+                  className="text-xs px-3 py-1 rounded-full bg-[var(--accent)] text-white hover:opacity-80 ml-3 shrink-0 transition-opacity"
+                >
+                  Wijzig
+                </button>
               </div>
-              <button
-                onClick={() => { setSelectedBoat(null); setComparisonBoats([]) }}
-                className="text-xs px-2.5 py-1 bg-blue-600 text-white rounded-lg hover:bg-blue-700 ml-3 shrink-0"
-              >
-                Wijzig
-              </button>
-            </div>
 
-            <SpiToggle value={ownSpi} onChange={setOwnSpi} />
+              <SpiToggle value={ownSpi} onChange={setOwnSpi} />
 
-            <div className="flex items-center gap-2">
-              <label className="text-xs font-semibold text-blue-900 shrink-0">Racetijd</label>
-              <input
-                type="time"
-                value={finishTime}
-                onChange={e => setFinishTime(e.target.value)}
-                className="flex-1 px-2.5 py-1.5 border border-blue-200 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 text-sm"
-              />
+              <div className="flex items-center gap-3 mt-2.5">
+                <label className="text-xs font-semibold text-[var(--text2)] shrink-0">Racetijd</label>
+                <input
+                  type="time"
+                  value={finishTime}
+                  onChange={e => setFinishTime(e.target.value)}
+                  className="flex-1 px-2.5 py-1.5 bg-[var(--bg)] border border-[var(--border2)] rounded-lg text-sm font-['DM_Mono'] text-[var(--text)] focus:outline-none focus:border-[var(--accent)]"
+                />
+              </div>
             </div>
           </div>
         )}
@@ -178,16 +181,16 @@ export default function RaceComparison() {
           {results.map(({ boat, spi, compTR, allowedSeconds, diff }) => (
             <div
               key={boat.id}
-              className={`bg-white rounded-xl shadow-sm border-l-4 p-3 ${diff >= 0 ? 'border-green-500' : 'border-red-400'}`}
+              className={`bg-[var(--surface)] rounded-xl p-3 border-l-4 border border-[var(--border)] ${diff >= 0 ? 'border-l-[var(--green)]' : 'border-l-[var(--red)]'}`}
             >
               <div className="flex items-center justify-between mb-2">
                 <div className="min-w-0 flex-1">
-                  <span className="font-semibold text-sm text-gray-900">{boat.type}</span>
-                  <span className="text-xs text-gray-400 ml-2">TR {compTR}</span>
+                  <span className="font-semibold text-sm text-[var(--text)]">{boat.type}</span>
+                  <span className="text-xs font-['DM_Mono'] text-[var(--text2)] ml-2">TR {compTR}</span>
                 </div>
                 <button
                   onClick={() => removeBoat(boat.id)}
-                  className="text-gray-300 hover:text-gray-500 text-2xl leading-none w-7 h-7 flex items-center justify-center shrink-0"
+                  className="text-[var(--text3)] hover:text-[var(--text2)] text-2xl leading-none w-7 h-7 flex items-center justify-center transition-colors"
                 >
                   ×
                 </button>
@@ -197,16 +200,18 @@ export default function RaceComparison() {
                 <SpiToggle value={spi} onChange={() => toggleSpi(boat.id)} />
               </div>
 
-              <div className={`rounded-lg px-3 py-2.5 flex items-center justify-between ${diff >= 0 ? 'bg-green-50' : 'bg-red-50'}`}>
+              <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-[10px] text-gray-400 uppercase tracking-wide">Max. tijd</p>
-                  <p className="text-xl font-bold text-gray-800 leading-tight">{formatTime(allowedSeconds)}</p>
+                  <p className="text-[10px] text-[var(--text3)] uppercase tracking-wide mb-0.5">Max. tijd</p>
+                  <p className={`text-xl font-['DM_Mono'] font-medium leading-none ${diff >= 0 ? 'text-[var(--green)]' : 'text-[var(--red)]'}`}>
+                    {formatTime(allowedSeconds)}
+                  </p>
                 </div>
                 <div className="text-right">
-                  <p className={`text-2xl font-bold leading-none ${diff >= 0 ? 'text-green-600' : 'text-red-500'}`}>
+                  <p className={`font-['Bebas_Neue'] text-4xl leading-none tracking-wide ${diff >= 0 ? 'text-[var(--green)] glow-green' : 'text-[var(--red)] glow-red'}`}>
                     {diff >= 0 ? '+' : '−'}{formatDiff(diff)}
                   </p>
-                  <p className="text-[11px] text-gray-500 mt-0.5">
+                  <p className="text-xs text-[var(--text2)] mt-0.5">
                     {diff >= 0 ? 'mag langer doen' : 'eerder finishen'}
                   </p>
                 </div>
@@ -215,8 +220,8 @@ export default function RaceComparison() {
           ))}
 
           {/* Add boat */}
-          <div className="bg-white rounded-xl shadow-sm p-4">
-            <p className="text-xs text-gray-400 mb-2">
+          <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+            <p className="text-xs text-[var(--text3)] mb-2">
               {comparisonBoats.length === 0 ? 'Voeg een boot toe om te vergelijken:' : 'Nog een boot toevoegen:'}
             </p>
             <BoatPicker placeholder="Zoek boot..." excludeIds={excludeIds} onSelect={addBoat} />
@@ -225,8 +230,8 @@ export default function RaceComparison() {
       )}
 
       {results.length > 0 && (
-        <p className="text-[11px] text-gray-300 text-center pb-1">
-          Max. tijd = jouw tijd × (TR concurrent ÷ TR jouw boot)
+        <p className="text-[10px] text-[var(--text3)] text-center font-['DM_Mono'] pb-1">
+          max.tijd = jouw tijd × (TR concurrent ÷ TR jouw boot)
         </p>
       )}
     </div>

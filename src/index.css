@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --bg:          #07101a;
+  --surface:     #0f1e2d;
+  --surface2:    #162637;
+  --border:      rgba(255,255,255,0.07);
+  --border2:     rgba(255,255,255,0.13);
+  --accent:      #02aaff;
+  --accent-dim:  rgba(2,170,255,0.15);
+  --accent-glow: rgba(2,170,255,0.30);
+  --text:        #dde4f0;
+  --text2:       #6b85a8;
+  --text3:       #364d66;
+  --green:       #4ade80;
+  --green-glow:  rgba(74,222,128,0.25);
+  --red:         #f87171;
+  --red-glow:    rgba(248,113,113,0.25);
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Instrument Sans', 'Inter', system-ui, sans-serif;
+}
+
+.nav-glass {
+  background: rgba(7, 16, 26, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.hero-bg {
+  background: radial-gradient(ellipse at 50% 110%, rgba(2,170,255,0.18) 0%, #07101a 65%);
+}
+
+.glow-green {
+  text-shadow: 0 0 24px var(--green-glow), 0 0 48px rgba(74,222,128,0.10);
+}
+
+.glow-red {
+  text-shadow: 0 0 24px var(--red-glow), 0 0 48px rgba(248,113,113,0.10);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192">
+  <rect width="192" height="192" rx="40" fill="#07101a"/>
+  <rect width="192" height="192" rx="40" fill="url(#g)" opacity="0.6"/>
+  <text x="96" y="118" font-family="'Bebas Neue', Arial Black, sans-serif" font-size="80" font-weight="700" fill="#02aaff" text-anchor="middle" letter-spacing="4">TR</text>
+  <defs>
+    <radialGradient id="g" cx="50%" cy="30%" r="60%">
+      <stop offset="0%" stop-color="#02aaff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#07101a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

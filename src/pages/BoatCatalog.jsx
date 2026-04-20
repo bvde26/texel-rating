@@ -27,55 +27,57 @@ export default function BoatCatalog() {
     return ['all', ...new Set(boats.boats.map(b => b.class))].sort()
   }, [])
 
-  const reset = () => { setSearchTerm(''); setFilterClass('all'); setSortBy('name'); setSelectedBoat(null) }
-
   return (
     <div className="space-y-2">
       {/* Filters */}
-      <div className="bg-white rounded-xl shadow-sm p-4">
-        <h2 className="text-base font-bold text-gray-900 mb-3">Boten</h2>
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-3">BOTEN</p>
 
-        <div className="space-y-2">
-          <input
-            type="text"
-            placeholder="Zoek op naam of klasse..."
-            value={searchTerm}
-            onChange={e => setSearchTerm(e.target.value)}
-            className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-gray-50"
-          />
+        <input
+          type="text"
+          placeholder="Zoek op naam of klasse..."
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          className="w-full px-3 py-2.5 bg-[var(--surface2)] border border-[var(--border2)] rounded-lg text-sm text-[var(--text)] placeholder-[var(--text3)] focus:outline-none focus:border-[var(--accent)] focus:ring-1 focus:ring-[var(--accent)] mb-3"
+        />
 
-          <div className="flex gap-2">
-            <select
-              value={filterClass}
-              onChange={e => setFilterClass(e.target.value)}
-              className="flex-1 px-2.5 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-gray-50"
-            >
-              {classes.map(cls => (
-                <option key={cls} value={cls}>{cls === 'all' ? 'Alle klassen' : cls}</option>
-              ))}
-            </select>
-
-            <select
-              value={sortBy}
-              onChange={e => setSortBy(e.target.value)}
-              className="flex-1 px-2.5 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 bg-gray-50"
-            >
-              <option value="name">Naam ↑</option>
-              <option value="tr">TR ↑</option>
-              <option value="crew">Crew ↑</option>
-            </select>
-
+        {/* Class filter pills */}
+        <div className="flex gap-1.5 overflow-x-auto scrollbar-none pb-1 mb-2">
+          {classes.map(cls => (
             <button
-              onClick={reset}
-              title="Reset filters"
-              className="px-3 py-2 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 hover:bg-gray-100 text-sm"
+              key={cls}
+              onClick={() => setFilterClass(cls)}
+              className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-colors border ${
+                filterClass === cls
+                  ? 'bg-[var(--accent)] text-white border-transparent'
+                  : 'bg-[var(--surface2)] text-[var(--text2)] border-[var(--border2)] hover:text-[var(--text)]'
+              }`}
             >
-              ↺
+              {cls === 'all' ? 'Alle' : cls}
             </button>
-          </div>
+          ))}
         </div>
 
-        <p className="text-xs text-gray-400 mt-2.5">{filtered.length} van {boats.boats.length} boten</p>
+        {/* Sort pills */}
+        <div className="flex gap-1.5">
+          {[['name','Naam'],['tr','TR ↑'],['crew','Crew']].map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setSortBy(key)}
+              className={`flex-1 py-1.5 rounded-full text-xs font-semibold transition-colors border ${
+                sortBy === key
+                  ? 'bg-[var(--surface2)] text-[var(--accent)] border-[var(--accent)]'
+                  : 'bg-transparent text-[var(--text3)] border-[var(--border)] hover:text-[var(--text2)]'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
+        <p className="text-xs text-[var(--text3)] mt-2.5 font-['DM_Mono']">
+          {filtered.length} / {boats.boats.length}
+        </p>
       </div>
 
       {/* Boat list */}
@@ -85,65 +87,65 @@ export default function BoatCatalog() {
           return (
             <div
               key={boat.id}
-              className={`bg-white rounded-xl border transition-colors cursor-pointer ${
-                isOpen ? 'border-blue-300 shadow-sm' : 'border-gray-100 shadow-sm'
+              className={`bg-[var(--surface)] rounded-xl border transition-colors cursor-pointer ${
+                isOpen ? 'border-[var(--accent)]' : 'border-[var(--border)] hover:border-[var(--border2)]'
               }`}
               onClick={() => setSelectedBoat(isOpen ? null : boat)}
             >
               <div className="flex items-center p-3">
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-gray-900 text-sm truncate">{boat.type}</p>
-                  <p className="text-xs text-gray-400 mt-0.5">{boat.class} · {boat.crew} pers</p>
+                  <p className="font-semibold text-[var(--text)] text-sm truncate">{boat.type}</p>
+                  <p className="text-xs text-[var(--text2)] mt-0.5">{boat.class} · {boat.crew} pers</p>
                 </div>
                 <div className="text-right ml-3 shrink-0 flex items-center gap-2">
                   <div>
-                    <p className="text-lg font-bold text-blue-600 leading-none">{boat.trNoSpi}</p>
-                    <p className="text-[10px] text-gray-400 text-center">TR</p>
+                    <p className="font-['DM_Mono'] text-lg font-medium text-[var(--accent)] leading-none">{boat.trNoSpi}</p>
+                    <p className="text-[10px] text-[var(--text3)] text-center">TR</p>
                   </div>
-                  <span className={`text-gray-300 text-lg transition-transform ${isOpen ? 'rotate-180' : ''}`}>▾</span>
+                  <span className={`text-[var(--text3)] transition-transform duration-200 text-sm ${isOpen ? 'rotate-180' : ''}`}>▾</span>
                 </div>
               </div>
 
               {isOpen && (
-                <div className="px-3 pb-3 pt-0 border-t border-gray-100">
+                <div className="px-3 pb-3 border-t border-[var(--border)]">
                   <div className="grid grid-cols-2 gap-2 mt-3">
-                    <div className="bg-gray-50 rounded-lg p-2.5">
-                      <p className="text-[10px] text-gray-400">Klasse</p>
-                      <p className="text-sm font-semibold text-gray-800">{boat.class}</p>
+                    <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)]">
+                      <p className="text-[10px] text-[var(--text3)]">Klasse</p>
+                      <p className="text-sm font-semibold text-[var(--text)] mt-0.5">{boat.class}</p>
                     </div>
-                    <div className="bg-gray-50 rounded-lg p-2.5">
-                      <p className="text-[10px] text-gray-400">Bemanning</p>
-                      <p className="text-sm font-semibold text-gray-800">{boat.crew} pers</p>
+                    <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)]">
+                      <p className="text-[10px] text-[var(--text3)]">Bemanning</p>
+                      <p className="text-sm font-semibold text-[var(--text)] mt-0.5">{boat.crew} pers</p>
                     </div>
-                    <div className="bg-green-50 rounded-lg p-2.5">
-                      <p className="text-[10px] text-gray-400">TR geen spi</p>
-                      <p className="text-base font-bold text-green-700">{boat.trNoSpi}</p>
+                    <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)]">
+                      <p className="text-[10px] text-[var(--text3)]">TR geen spi</p>
+                      <p className="font-['DM_Mono'] text-lg font-medium text-[var(--green)] mt-0.5">{boat.trNoSpi}</p>
                     </div>
-                    <div className="bg-orange-50 rounded-lg p-2.5">
-                      <p className="text-[10px] text-gray-400">TR met spi</p>
-                      <p className="text-base font-bold text-orange-600">{boat.trWithSpi ?? '—'}</p>
+                    <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)]">
+                      <p className="text-[10px] text-[var(--text3)]">TR met spi</p>
+                      <p className="font-['DM_Mono'] text-lg font-medium text-amber-400 mt-0.5">{boat.trWithSpi ?? '—'}</p>
                     </div>
                     {boat.rl && (
-                      <div className="bg-gray-50 rounded-lg p-2.5">
-                        <p className="text-[10px] text-gray-400">Ratinglengte</p>
-                        <p className="text-sm font-semibold text-gray-800">{boat.rl} m</p>
+                      <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)]">
+                        <p className="text-[10px] text-[var(--text3)]">Ratinglengte</p>
+                        <p className="text-sm font-['DM_Mono'] text-[var(--text)] mt-0.5">{boat.rl} m</p>
                       </div>
                     )}
                     {boat.rsa && (
-                      <div className="bg-gray-50 rounded-lg p-2.5">
-                        <p className="text-[10px] text-gray-400">Zeiloppervlak</p>
-                        <p className="text-sm font-semibold text-gray-800">{boat.rsa} m²</p>
+                      <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)]">
+                        <p className="text-[10px] text-[var(--text3)]">Zeiloppervlak</p>
+                        <p className="text-sm font-['DM_Mono'] text-[var(--text)] mt-0.5">{boat.rsa} m²</p>
                       </div>
                     )}
                     {boat.rw && (
-                      <div className="bg-gray-50 rounded-lg p-2.5 col-span-2">
-                        <p className="text-[10px] text-gray-400">Gewicht (incl. crew)</p>
-                        <p className="text-sm font-semibold text-gray-800">{boat.rw} kg</p>
+                      <div className="bg-[var(--surface2)] rounded-lg p-2.5 border border-[var(--border)] col-span-2">
+                        <p className="text-[10px] text-[var(--text3)]">Gewicht (incl. crew)</p>
+                        <p className="text-sm font-['DM_Mono'] text-[var(--text)] mt-0.5">{boat.rw} kg</p>
                       </div>
                     )}
                   </div>
                   {boat.notes && (
-                    <p className="mt-2 text-xs text-gray-500 italic">{boat.notes}</p>
+                    <p className="mt-2 text-xs text-[var(--text2)] italic">{boat.notes}</p>
                   )}
                 </div>
               )}
@@ -152,7 +154,7 @@ export default function BoatCatalog() {
         })}
 
         {filtered.length === 0 && (
-          <div className="text-center text-gray-400 py-12 text-sm bg-white rounded-xl">
+          <div className="text-center text-[var(--text3)] py-12 text-sm bg-[var(--surface)] rounded-xl border border-[var(--border)]">
             Geen boten gevonden
           </div>
         )}

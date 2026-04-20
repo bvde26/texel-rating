@@ -49,34 +49,40 @@ export default function TexelRatingInfo() {
 
   return (
     <div className="space-y-3">
-      <div className="bg-white rounded-xl shadow-sm p-4">
-        <h2 className="text-base font-bold text-gray-900 mb-2">Texel Rating uitgelegd</h2>
-        <p className="text-sm text-gray-600">
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--text2)] mb-2">TEXEL RATING UITGELEGD</p>
+        <p className="text-sm text-[var(--text2)] leading-relaxed">
           Texel Rating maakt eerlijke competitie mogelijk tussen verschillende bootklassen via handicapcorrecties op basis van bootsspecificaties.
         </p>
       </div>
 
       <div className="space-y-1.5">
         {sections.map(section => (
-          <div key={section.id} className="bg-white rounded-xl shadow-sm overflow-hidden">
+          <div key={section.id} className="bg-[var(--surface)] rounded-xl border border-[var(--border)] overflow-hidden">
             <button
               onClick={() => setExpanded(expanded === section.id ? null : section.id)}
-              className="w-full px-4 py-3.5 text-left flex items-center justify-between"
+              className="w-full px-4 py-3.5 text-left flex items-center justify-between hover:bg-[var(--surface2)] transition-colors"
             >
-              <span className="font-semibold text-sm text-gray-900">{section.title}</span>
-              <span className={`text-gray-400 text-xl leading-none transition-transform ${expanded === section.id ? 'rotate-180' : ''}`}>▾</span>
+              <span className="font-semibold text-sm text-[var(--text)]">{section.title}</span>
+              <span className={`text-[var(--text3)] transition-transform duration-200 text-sm ml-2 shrink-0 ${expanded === section.id ? 'rotate-180' : ''}`}>▾</span>
             </button>
 
             {expanded === section.id && (
-              <div className="px-4 pb-4 border-t border-gray-100 space-y-3 pt-3">
-                <p className="text-sm text-gray-700">{section.content}</p>
+              <div className="px-4 pb-4 border-t border-[var(--border)] space-y-3 pt-3">
+                {section.id === 'formula' ? (
+                  <div className="bg-[var(--bg)] rounded-lg px-3 py-2.5 border border-[var(--border2)]">
+                    <p className="font-['DM_Mono'] text-sm text-[var(--accent)]">{section.content}</p>
+                  </div>
+                ) : (
+                  <p className="text-sm text-[var(--text2)]">{section.content}</p>
+                )}
 
                 {section.details && (
-                  <div className="bg-gray-50 rounded-lg p-3 space-y-2">
+                  <div className="bg-[var(--surface2)] rounded-lg p-3 space-y-2 border border-[var(--border)]">
                     {Object.entries(section.details).map(([key, value]) => (
                       <div key={key} className="flex gap-2">
-                        <span className="font-semibold text-xs text-gray-700 min-w-32 shrink-0">{key}:</span>
-                        <span className="text-xs text-gray-600">{value}</span>
+                        <span className="text-xs font-semibold text-[var(--accent)] min-w-28 shrink-0">{key}:</span>
+                        <span className="text-xs text-[var(--text2)]">{value}</span>
                       </div>
                     ))}
                   </div>
@@ -87,9 +93,9 @@ export default function TexelRatingInfo() {
         ))}
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4">
-        <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-1">Kernpunt</p>
-        <p className="text-sm text-amber-900 leading-relaxed">
+      <div className="bg-[var(--surface)] rounded-xl p-4 border-l-4 border-[var(--accent)] border border-[var(--border)]">
+        <p className="text-xs font-['Bebas_Neue'] tracking-[0.15em] text-[var(--accent)] mb-1">KERNPUNT</p>
+        <p className="text-sm text-[var(--text2)] leading-relaxed">
           Texel Rating zorgt voor een gelijk speelveld. Een langzamere boot met hoge TR kan via eerlijke handicap toch winnen van een snellere boot met lage TR.
         </p>
       </div>
