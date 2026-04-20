@@ -581,24 +581,26 @@ export default function RaceComparison({ t, onBack }) {
                         onRight={() => addToRanking(boat.id, cSpi, emptyTime(), skipper ? { skipper, crew, sailNumber } : null)}
                         onDelete={() => setCompetitors(cs => cs.filter(c => c.uid !== uid))}
                       >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                        {/* Row 1: naam + TX grijs | diff rechts */}
+                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                           <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                              {boat.type}
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 5, overflow: 'hidden' }}>
+                              <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
+                                {boat.type}
+                              </div>
+                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.4)', letterSpacing: 0.1, flexShrink: 0 }}>
+                                TX {compTR}
+                              </div>
                             </div>
-                            {skipper ? (
+                            {skipper && (
                               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 {sailNumber && `${sailNumber} · `}{skipper}{crew ? ` / ${crew}` : ''}
-                              </div>
-                            ) : (
-                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 2, letterSpacing: 0.2 }}>
-                                TX {compTR}
                               </div>
                             )}
                           </div>
                           {diff !== null ? (
                             <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 20, fontWeight: 600, color, letterSpacing: -0.5, lineHeight: 1 }}>
+                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 18, fontWeight: 600, color, letterSpacing: -0.5, lineHeight: 1 }}>
                                 {fmtDelta(diff)}
                               </div>
                               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, color, letterSpacing: 0.6, textTransform: 'uppercase', marginTop: 3, opacity: 0.8 }}>
@@ -608,6 +610,9 @@ export default function RaceComparison({ t, onBack }) {
                           ) : (
                             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.3)', flexShrink: 0 }}>—</div>
                           )}
+                        </div>
+                        {/* Row 3: SPI chip linksonder */}
+                        <div style={{ marginTop: 4, marginLeft: -8 }}>
                           <SpiChipSmall value={cSpi} onChange={toggleSpi}/>
                         </div>
                       </SwipeableCard>
