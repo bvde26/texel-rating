@@ -59,21 +59,17 @@ export default function RaceComparison() {
     return (h * 60 + m) * 60
   }, [finishTime])
 
-  // Corrected time for your own boat
-  const yourCorrectedSeconds = useMemo(() => {
-    if (!selectedBoat || !finishTimeSeconds) return 0
-    return finishTimeSeconds * (selectedBoat.trNoSpi / 1000)
-  }, [selectedBoat, finishTimeSeconds])
-
   // For each comparison boat: max actual time to tie on corrected time
+  // Allowed = your_time × (TR_competitor / TR_you)
+  // Higher TR competitor → may take longer ✓
   const results = useMemo(() => {
     if (!selectedBoat || !finishTimeSeconds) return []
     return comparisonBoats.map(boat => {
-      const allowedSeconds = yourCorrectedSeconds / (boat.trNoSpi / 1000)
+      const allowedSeconds = finishTimeSeconds * (boat.trNoSpi / selectedBoat.trNoSpi)
       const diff = allowedSeconds - finishTimeSeconds
       return { boat, allowedSeconds, diff }
     })
-  }, [selectedBoat, finishTimeSeconds, comparisonBoats, yourCorrectedSeconds])
+  }, [selectedBoat, finishTimeSeconds, comparisonBoats])
 
   const formatTime = (seconds) => {
     const totalMin = Math.round(seconds / 60)
@@ -195,7 +191,7 @@ export default function RaceComparison() {
 
       {results.length > 0 && (
         <p className="text-xs text-gray-400 text-center pb-4">
-          Berekening: Toegestane tijd = jouw gecorrigeerde tijd ÷ (TR vergelijkingsboot ÷ 1000)
+          Berekening: Toegestane tijd = jouw tijd × (TR concurrent ÷ TR jouw boot). Hogere TR = meer tijd toegestaan.
         </p>
       )}
     </div>

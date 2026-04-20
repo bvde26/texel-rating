@@ -17,17 +17,17 @@ export default function TexelRatingInfo() {
         'RL (Rated Length)': 'The boat\'s effective length (Length Overall minus overhangs)',
         'RSA (Rated Sail Area)': 'Total sail area including main, jib, and spinnaker (in m²)',
         'RW (Rated Weight)': 'Boat weight + crew weight (in kg)',
-        'Result': 'Lower TR number = faster allowance = better handicap'
+        'Result': 'Hogere TR = meer tijd toegestaan. Lagere TR = minder tijd, boot wordt verwacht sneller te zijn.'
       }
     },
     {
       id: 'example',
-      title: 'Example: Hobie 14 vs Hobie 16',
-      content: 'Both boats finish in 4 hours. Who wins on handicap?',
+      title: 'Voorbeeld: Hobie 14 vs Hobie 16',
+      content: 'Jij vaart op een Hobie 16 (TR 113) en finish in 4:00 uur. Hoe lang mag een Hobie 14 (TR 119) doen?',
       details: {
-        'Hobie 14': 'TR 119 - Corrected: 4:00 × (119÷1000) = 28.4 min',
-        'Hobie 16': 'TR 113 - Corrected: 4:00 × (113÷1000) = 27.2 min',
-        'Result': 'Hobie 16 wins (lower TR = faster on handicap). Boat efficiency matters more than speed!'
+        'Hobie 16 (jij)': 'TR 113 — racetijd: 4:00',
+        'Hobie 14': 'TR 119 — toegestane tijd: 4:00 × (119÷113) = 4:13',
+        'Resultaat': 'Hobie 14 mag 13 minuten langer doen. Hogere TR = meer tijd = langzamere boot met meer handicap.'
       }
     },
     {
