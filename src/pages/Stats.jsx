@@ -1,0 +1,344 @@
+import Pressable from '../components/Pressable'
+import { Icon } from '../components/icons'
+import registrationsData from '../data/registrations.json'
+
+const allBoats = registrationsData.boats
+const categoriesTotal = Object.values(registrationsData.categories).reduce((s, c) => s + c.count, 0)
+const CREW_SIZE = { catamaran_duo: 2, wingfoil: 1, windsurf: 1, catamaran_single: 1 }
+const totalPeople = Object.entries(registrationsData.categories).reduce(
+  (s, [id, c]) => s + c.count * (CREW_SIZE[id] ?? 1), 0
+)
+
+const COPY = {
+  nl: {
+    title: 'Weetjes',
+    subtitle_suffix: 'deelnemers · 4 categorieën',
+    section_field: 'Het veld',
+    section_countries: 'Top landen',
+    section_fleet: 'De vloot',
+    section_sailors: 'De zeilers',
+    section_sails: 'Zeilnummers',
+    total_people: 'watersporters totaal',
+    total_boats: 'inschrijvingen',
+    countries: 'nationaliteiten vertegenwoordigd',
+    classes: 'verschillende bootsklassen',
+    popular_class_sub: 'populairste bootsklasse',
+    popular_class_count: '× ingeschreven',
+    rare_classes: 'zeldzame klassen',
+    rare_sub: 'slechts 1 deelnemer per klasse',
+    fastest: 'Snelste handicap',
+    slowest: 'Traagste handicap',
+    spi: 'vaart met spinnaker',
+    family: "duo's varen waarschijnlijk als familie",
+    longest_name: 'letters — langste achternaam',
+    tussenvoegsel: 'namen met een tussenvoegsel',
+    alliteratie: "duo's met dezelfde beginletter",
+    lowest_sail: 'Laagste zeilnummer',
+    highest_sail: 'Hoogste zeilnummer',
+  },
+  en: {
+    title: 'Fun facts',
+    subtitle_suffix: 'participants · 4 categories',
+    section_field: 'The fleet',
+    section_countries: 'Top countries',
+    section_fleet: 'The boats',
+    section_sailors: 'The sailors',
+    section_sails: 'Sail numbers',
+    total_people: 'water sports athletes total',
+    total_boats: 'registrations (boats)',
+    countries: 'nationalities represented',
+    classes: 'different boat classes',
+    popular_class_sub: 'most popular boat class',
+    popular_class_count: '× registered',
+    rare_classes: 'rare classes',
+    rare_sub: 'only 1 entrant per class',
+    fastest: 'Fastest rating',
+    slowest: 'Slowest rating',
+    spi: 'sail with spinnaker',
+    family: 'duos are probably family',
+    longest_name: 'letters — longest surname',
+    tussenvoegsel: 'names with a particle',
+    alliteratie: 'duos sharing the same initial',
+    lowest_sail: 'Lowest sail number',
+    highest_sail: 'Highest sail number',
+  },
+  de: {
+    title: 'Fakten',
+    subtitle_suffix: 'Teilnehmer · 4 Kategorien',
+    section_field: 'Das Feld',
+    section_countries: 'Top Länder',
+    section_fleet: 'Die Boote',
+    section_sailors: 'Die Segler',
+    section_sails: 'Segelnummern',
+    total_people: 'Wassersportler gesamt',
+    total_boats: 'Anmeldungen (Boote)',
+    countries: 'Nationalitäten vertreten',
+    classes: 'verschiedene Bootsklassen',
+    popular_class_sub: 'beliebteste Bootsklasse',
+    popular_class_count: '× angemeldet',
+    rare_classes: 'seltene Klassen',
+    rare_sub: 'nur 1 Teilnehmer je Klasse',
+    fastest: 'Schnellste Wertung',
+    slowest: 'Langsamste Wertung',
+    spi: 'segeln mit Spinnaker',
+    family: 'Duos fahren wahrscheinlich als Familie',
+    longest_name: 'Zeichen — längster Nachname',
+    tussenvoegsel: 'Namen mit Namenszusatz',
+    alliteratie: 'Duos mit gleichem Anfangsbuchstaben',
+    lowest_sail: 'Niedrigste Segelnummer',
+    highest_sail: 'Höchste Segelnummer',
+  },
+  fr: {
+    title: 'Chiffres',
+    subtitle_suffix: 'participants · 4 catégories',
+    section_field: 'Le plateau',
+    section_countries: 'Top pays',
+    section_fleet: 'Les bateaux',
+    section_sailors: 'Les marins',
+    section_sails: 'Numéros de voile',
+    total_people: 'sportifs nautiques au total',
+    total_boats: 'inscriptions (bateaux)',
+    countries: 'nationalités représentées',
+    classes: 'classes de bateaux différentes',
+    popular_class_sub: 'classe la plus populaire',
+    popular_class_count: '× inscrit',
+    rare_classes: 'classes rares',
+    rare_sub: '1 seul participant par classe',
+    fastest: 'Rating le plus rapide',
+    slowest: 'Rating le plus lent',
+    spi: 'naviguent avec spinnaker',
+    family: 'duos probablement en famille',
+    longest_name: 'lettres — nom le plus long',
+    tussenvoegsel: 'noms avec particule',
+    alliteratie: 'duos avec la même initiale',
+    lowest_sail: 'Numéro de voile le plus bas',
+    highest_sail: 'Numéro de voile le plus élevé',
+  },
+}
+
+const COUNTRY_CODE = {
+  Netherlands: 'NED', Germany: 'GER', France: 'FRA', Belgium: 'BEL',
+  'United Kingdom': 'GBR', 'United Kingdom of Great Britain and Northern Ireland': 'GBR',
+  Spain: 'ESP', Italy: 'ITA', Denmark: 'DEN',
+  Sweden: 'SWE', Switzerland: 'SUI', Austria: 'AUT', Aruba: 'ARU',
+  'United States': 'USA', 'United States of America': 'USA', Norway: 'NOR', Poland: 'POL',
+}
+
+const COUNTRY_DISPLAY = {
+  'United Kingdom of Great Britain and Northern Ireland': 'United Kingdom',
+  'United States of America': 'United States',
+}
+
+function buildStats() {
+  const countryCount = {}
+  allBoats.forEach(b => { if (b.country) countryCount[b.country] = (countryCount[b.country] || 0) + 1 })
+  const topCountries = Object.entries(countryCount).sort((a, b) => b[1] - a[1]).slice(0, 3)
+
+  const classCount = {}
+  allBoats.forEach(b => { if (b.boatClass) classCount[b.boatClass] = (classCount[b.boatClass] || 0) + 1 })
+  const sortedClasses = Object.entries(classCount).sort((a, b) => b[1] - a[1])
+
+  const ratings = allBoats.map(b => b.rating).filter(n => n >= 50)
+
+  const lastName = n => n?.trim().split(/\s+/).pop()?.toLowerCase() || ''
+  const allNames = allBoats.flatMap(b => [b.skipper, b.crew].filter(Boolean))
+  const allLastNames = allNames.map(lastName)
+
+  const TV = ['van', 'de', 'den', 'der', 'het', 'ter', 'te']
+  const hasTv = n => n?.toLowerCase().split(/\s+/).some(w => TV.includes(w))
+
+  const numSails = allBoats
+    .map(b => parseInt((b.sailNumber || '').replace(/\D/g, '')))
+    .filter(n => n > 0 && !isNaN(n))
+
+  const catamarans = allBoats.filter(b => b.category?.includes('catamaran'))
+  const withSpi = catamarans.filter(b => b.spinnaker).length
+  const spiPct = catamarans.length > 0 ? Math.round(withSpi / catamarans.length * 100) : 0
+
+  return {
+    total: allBoats.length,
+    countries: Object.keys(countryCount).length,
+    topCountries,
+    classes: Object.keys(classCount).length,
+    popularClass: sortedClasses[0],
+    maxRating: Math.max(...ratings),
+    minRating: Math.min(...ratings),
+    spiPct,
+    longestLastName: Math.max(...allLastNames.map(n => n.length)),
+    familyDuos: allBoats.filter(b => b.crew && lastName(b.skipper) === lastName(b.crew)).length,
+    alliDuos: allBoats.filter(b => b.crew && b.skipper?.[0]?.toLowerCase() === b.crew?.[0]?.toLowerCase()).length,
+    tvNames: allNames.filter(hasTv).length,
+    lowestSail: Math.min(...numSails),
+    highestSail: Math.max(...numSails),
+  }
+}
+
+const S = buildStats()
+
+function SectionLabel({ text }) {
+  return (
+    <div style={{
+      fontFamily: 'JetBrains Mono, monospace',
+      fontSize: 10, letterSpacing: 1,
+      textTransform: 'uppercase',
+      color: 'rgba(0,0,0,0.35)',
+      marginBottom: 6, paddingLeft: 2,
+    }}>{text}</div>
+  )
+}
+
+function Card({ children }) {
+  return (
+    <div style={{
+      background: '#fff',
+      borderRadius: 16,
+      border: '1px solid rgba(0,0,0,0.06)',
+      boxShadow: '0 2px 8px -4px rgba(0,0,0,0.08)',
+      overflow: 'hidden',
+      marginBottom: 20,
+    }}>
+      {children}
+    </div>
+  )
+}
+
+function Row({ label, sub, value, last }) {
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: sub ? 'flex-start' : 'center',
+      justifyContent: 'space-between',
+      padding: '13px 16px',
+      borderBottom: last ? 'none' : '1px solid rgba(0,0,0,0.05)',
+      gap: 12,
+    }}>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{
+          fontFamily: 'Outfit, sans-serif',
+          fontSize: 14, color: '#000', letterSpacing: -0.1,
+        }}>{label}</div>
+        {sub && (
+          <div style={{
+            fontFamily: 'Outfit, sans-serif',
+            fontSize: 12, color: 'rgba(0,0,0,0.4)',
+            marginTop: 2,
+          }}>{sub}</div>
+        )}
+      </div>
+      <div style={{
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 16, fontWeight: 700,
+        color: '#000', letterSpacing: -0.3,
+        textAlign: 'right', flexShrink: 0,
+        maxWidth: '50%',
+      }}>{value}</div>
+    </div>
+  )
+}
+
+function CountryRow({ country, count, last }) {
+  const code = COUNTRY_CODE[country] || country.slice(0, 3).toUpperCase()
+  const display = COUNTRY_DISPLAY[country] || country
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      padding: '12px 16px',
+      borderBottom: last ? 'none' : '1px solid rgba(0,0,0,0.05)',
+      gap: 12,
+    }}>
+      <div style={{
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 11, letterSpacing: 0.5, fontWeight: 600,
+        color: 'rgba(0,0,0,0.4)',
+        minWidth: 32,
+      }}>{code}</div>
+      <div style={{
+        flex: 1,
+        fontFamily: 'Outfit, sans-serif',
+        fontSize: 14, color: '#000',
+      }}>{display}</div>
+      <div style={{
+        fontFamily: 'JetBrains Mono, monospace',
+        fontSize: 16, fontWeight: 700, color: '#000',
+      }}>{count}</div>
+    </div>
+  )
+}
+
+export default function Stats({ lang, onBack }) {
+  const c = COPY[lang] || COPY.nl
+
+  return (
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+      {/* Header — consistent met Info/RaceComparison */}
+      <div style={{ position: 'sticky', top: 0, zIndex: 10, background: 'var(--surface)', borderBottom: '1px solid var(--border2)' }}>
+        <div style={{ padding: '18px 20px 14px', display: 'flex', alignItems: 'center', gap: 14 }}>
+          <Pressable
+            onClick={onBack}
+            style={{
+              width: 36, height: 36, borderRadius: 10,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'var(--chip)', border: '1px solid var(--border3)', marginLeft: -4, flexShrink: 0,
+            }}
+          >
+            <Icon.Back size={18} color="#000" />
+          </Pressable>
+          <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 18, letterSpacing: -0.2 }}>
+            {c.title}
+          </div>
+        </div>
+      </div>
+
+      {/* Scrollable content */}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 16px 40px' }}>
+
+        <SectionLabel text={c.section_field} />
+        <Card>
+          <Row label={c.total_people} value={totalPeople} />
+          <Row label={c.total_boats} value={categoriesTotal} />
+          <Row label={c.countries} value={S.countries} last />
+        </Card>
+
+        <SectionLabel text={c.section_countries} />
+        <Card>
+          {S.topCountries.map(([country, count], i) => (
+            <CountryRow
+              key={country}
+              country={country}
+              count={count}
+              last={i === S.topCountries.length - 1}
+            />
+          ))}
+        </Card>
+
+        <SectionLabel text={c.section_fleet} />
+        <Card>
+          <Row
+            label={S.popularClass[0]}
+            sub={`${S.popularClass[1]}${c.popular_class_count} — ${c.popular_class_sub}`}
+            value={S.popularClass[1]}
+          />
+          <Row label={c.fastest} value={S.minRating} />
+          <Row label={c.slowest} value={S.maxRating} last />
+        </Card>
+
+        <SectionLabel text={c.section_sailors} />
+        <Card>
+          <Row label={c.spi} value={`${S.spiPct}%`} />
+          <Row label={c.family} value={S.familyDuos} />
+          <Row label={c.longest_name} value={S.longestLastName} />
+          <Row label={c.tussenvoegsel} value={S.tvNames} />
+          <Row label={c.alliteratie} value={S.alliDuos} last />
+        </Card>
+
+        <SectionLabel text={c.section_sails} />
+        <Card>
+          <Row label={c.lowest_sail} value={S.lowestSail.toLocaleString()} />
+          <Row label={c.highest_sail} value={S.highestSail.toLocaleString()} last />
+        </Card>
+
+      </div>
+    </div>
+  )
+}

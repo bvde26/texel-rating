@@ -2,15 +2,16 @@ import { useState } from 'react'
 import Home from './pages/Home'
 import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
+import Stats from './pages/Stats'
 
 const COPY = {
   nl: {
-    tile_compare_title: 'Vergelijker',
-    tile_compare_sub: 'Bereken wie tijd over heeft',
+    tile_compare_title: 'Texel Rating Scores',
+    tile_compare_sub: 'Texel Rating tijdcalculator. Gecorrigeerde racetijden op basis van handicap.',
     tile_agenda_title: 'Programma',
     tile_agenda_sub: 'Tijden, regels, contact',
     home_footer: 'Werkt zonder internet',
-    compare_title: 'Vergelijker',
+    compare_title: 'Texel Rating Scores',
     agenda_title: 'Programma',
     search_placeholder: 'Schipper, zeilnummer of type',
     no_results: 'Geen boot gevonden',
@@ -38,24 +39,27 @@ const COPY = {
     done: 'Klaar',
     reset: 'Reset',
     edition: 'Editie 2026',
+    edition_word: 'Editie',
+    days_label: 'dagen',
     meta_compare: '290 BOTEN · OFFLINE',
     meta_agenda: '4 DAGEN · REGELS · CONTACT',
     ranking: 'Uitslag',
     add_boat: 'Boot toevoegen',
     competitors: 'Concurrenten',
     tile_reg_eyebrow: 'Inschrijvingen',
+    how_it_works: 'Kies je boot op zeilnummer, skipper of fokkemaat. Je ziet direct hoeveel tijdsmarge je hebt door de cat-handicap (Texel Rating).',
     cat_catamaran_duo: 'Catamaran duo',
     cat_wingfoil: 'Wingfoil',
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Catamaran solo',
   },
   en: {
-    tile_compare_title: 'Comparator',
-    tile_compare_sub: 'See who owes time',
+    tile_compare_title: 'Texel Rating Scores',
+    tile_compare_sub: 'Texel Rating Time Calculator. Net racing times according to handicaps.',
     tile_agenda_title: 'Programme',
     tile_agenda_sub: 'Schedule, rules, contacts',
     home_footer: 'Works offline',
-    compare_title: 'Comparator',
+    compare_title: 'Texel Rating Scores',
     agenda_title: 'Programme',
     search_placeholder: 'Skipper, sail number or type',
     no_results: 'No boats found',
@@ -83,6 +87,8 @@ const COPY = {
     done: 'Done',
     reset: 'Reset',
     edition: 'Edition 2026',
+    edition_word: 'Edition',
+    days_label: 'days',
     meta_compare: '290 BOATS · OFFLINE',
     meta_agenda: '4 DAYS · RULES · CONTACT',
     ranking: 'Results',
@@ -93,14 +99,15 @@ const COPY = {
     cat_wingfoil: 'Wingfoil',
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Catamaran single',
+    how_it_works: 'Find your boat by sail number, skipper or crew. See instantly how much time you gain or lose based on the catamaran handicap (Texel Rating).',
   },
   de: {
-    tile_compare_title: 'Vergleicher',
-    tile_compare_sub: 'Wer hat Zeitgutschrift',
+    tile_compare_title: 'Texel Rating Scores',
+    tile_compare_sub: 'Texel Rating Zeitrechner. Netto-Rennzeiten nach Handicap.',
     tile_agenda_title: 'Programm',
     tile_agenda_sub: 'Zeiten, Regeln, Kontakt',
     home_footer: 'Funktioniert offline',
-    compare_title: 'Vergleicher',
+    compare_title: 'Texel Rating Scores',
     agenda_title: 'Programm',
     search_placeholder: 'Skipper, Segelnummer oder Typ',
     no_results: 'Kein Boot gefunden',
@@ -128,6 +135,8 @@ const COPY = {
     done: 'Fertig',
     reset: 'Reset',
     edition: 'Ausgabe 2026',
+    edition_word: 'Ausgabe',
+    days_label: 'Tage',
     meta_compare: '290 BOOTE · OFFLINE',
     meta_agenda: '4 TAGE · REGELN · KONTAKT',
     ranking: 'Ergebnis',
@@ -138,14 +147,15 @@ const COPY = {
     cat_wingfoil: 'Wingfoil',
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Katamaran Solo',
+    how_it_works: 'Wähle dein Boot nach Segelnummer, Skipper oder Crew. Sieh sofort, wie viel Zeit du durch das Katamaran-Handicap (Texel Rating) gewinnst oder verlierst.',
   },
   fr: {
-    tile_compare_title: 'Comparateur',
-    tile_compare_sub: 'Qui a un avantage de temps',
+    tile_compare_title: 'Texel Rating Scores',
+    tile_compare_sub: 'Calculateur Texel Rating. Temps de course nets selon les handicaps.',
     tile_agenda_title: 'Programme',
     tile_agenda_sub: 'Horaires, règles, contact',
     home_footer: 'Fonctionne hors ligne',
-    compare_title: 'Comparateur',
+    compare_title: 'Texel Rating Scores',
     agenda_title: 'Programme',
     search_placeholder: 'Skipper, numéro ou type',
     no_results: 'Aucun bateau trouvé',
@@ -173,6 +183,8 @@ const COPY = {
     done: 'OK',
     reset: 'Reset',
     edition: 'Édition 2026',
+    edition_word: 'Édition',
+    days_label: 'jours',
     meta_compare: '290 BATEAUX · HORS LIGNE',
     meta_agenda: '4 JOURS · RÈGLES · CONTACT',
     ranking: 'Résultats',
@@ -183,6 +195,7 @@ const COPY = {
     cat_wingfoil: 'Wingfoil',
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Catamaran solo',
+    how_it_works: 'Trouvez votre bateau par numéro de voile, skipper ou équipier. Voyez immédiatement votre avantage ou retard selon le handicap catamaran (Texel Rating).',
   },
 }
 
@@ -206,6 +219,7 @@ export default function App() {
           {page === 'home'    && <Home    {...props} />}
           {page === 'compare' && <RaceComparison {...props} />}
           {page === 'agenda'  && <Info    {...props} />}
+          {page === 'stats'   && <Stats   {...props} />}
         </div>
       </div>
     </div>

@@ -1,0 +1,90 @@
+{
+  "nl": [
+    {
+      "q": "Wat is de TX-rating?",
+      "a": "De TX-rating is een getal dat aangeeft hoe snel een boot theoretisch is. Een lager getal = een snellere boot. Door je eindtijd te corrigeren met je rating, kunnen boten van verschillende klassen eerlijk vergeleken worden."
+    },
+    {
+      "q": "Hoe wordt mijn gecorrigeerde tijd berekend?",
+      "a": "Gecorrigeerde tijd = (Eindtijd × 600) / TX-rating. De boot met de laagste gecorrigeerde tijd wint, ongeacht klasse."
+    },
+    {
+      "q": "Waarom heeft spinnaker invloed?",
+      "a": "Boten met spinnaker zijn sneller op ruime koersen en krijgen een iets lagere rating. De app corrigeert automatisch op basis van jouw keuze bij de start."
+    },
+    {
+      "q": "Wat als mijn boot niet in de lijst staat?",
+      "a": "Stuur een bericht naar de wedstrijdleiding met de officiële TX-rating van je klasse. Nieuwe boten worden dagelijks toegevoegd tijdens het evenement."
+    },
+    {
+      "q": "Hoe nauwkeurig is de vergelijking?",
+      "a": "De uitkomst is indicatief. De officiële uitslag wordt vastgesteld door de jury op basis van GPS-tracks en finishtijden."
+    }
+  ],
+  "en": [
+    {
+      "q": "What is the TX-rating?",
+      "a": "The TX-rating indicates how fast a boat theoretically is. A lower number = a faster boat. By correcting your finish time with your rating, boats from different classes can be fairly compared."
+    },
+    {
+      "q": "How is my corrected time calculated?",
+      "a": "Corrected time = (Finish time × 600) / TX-rating. The boat with the lowest corrected time wins, regardless of class."
+    },
+    {
+      "q": "Why does the spinnaker matter?",
+      "a": "Boats with a spinnaker are faster on broad reaches and receive a slightly lower rating. The app automatically adjusts based on your choice at the start."
+    },
+    {
+      "q": "What if my boat isn't in the list?",
+      "a": "Contact race management with the official TX-rating for your class. New boats are added daily during the event."
+    },
+    {
+      "q": "How accurate is the comparison?",
+      "a": "The result is indicative. The official results are determined by the jury based on GPS tracks and finish times."
+    }
+  ],
+  "de": [
+    {
+      "q": "Was ist die TX-Wertung?",
+      "a": "Die TX-Wertung gibt an, wie schnell ein Boot theoretisch ist. Eine niedrigere Zahl = ein schnelleres Boot. Durch die Korrektur der Endzeit mit der Wertung können Boote verschiedener Klassen fair verglichen werden."
+    },
+    {
+      "q": "Wie wird meine korrigierte Zeit berechnet?",
+      "a": "Korrigierte Zeit = (Endzeit × 600) / TX-Wertung. Das Boot mit der niedrigsten korrigierten Zeit gewinnt, unabhängig von der Klasse."
+    },
+    {
+      "q": "Warum beeinflusst der Spinnaker die Wertung?",
+      "a": "Boote mit Spinnaker sind auf breiten Kursen schneller und erhalten eine etwas niedrigere Wertung. Die App korrigiert automatisch basierend auf der Wahl beim Start."
+    },
+    {
+      "q": "Was, wenn mein Boot nicht in der Liste steht?",
+      "a": "Wende dich an die Rennleitung mit der offiziellen TX-Wertung deiner Klasse. Neue Boote werden täglich während der Veranstaltung hinzugefügt."
+    },
+    {
+      "q": "Wie genau ist der Vergleich?",
+      "a": "Das Ergebnis ist indikativ. Die offizielle Wertung wird von der Jury anhand von GPS-Tracks und Zielzeiten festgestellt."
+    }
+  ],
+  "fr": [
+    {
+      "q": "Qu'est-ce que le TX-rating?",
+      "a": "Le TX-rating indique la vitesse théorique d'un bateau. Un chiffre plus bas = un bateau plus rapide. En corrigeant votre temps d'arrivée avec votre rating, les bateaux de différentes classes peuvent être comparés équitablement."
+    },
+    {
+      "q": "Comment mon temps corrigé est-il calculé?",
+      "a": "Temps corrigé = (Temps d'arrivée × 600) / TX-rating. Le bateau avec le temps corrigé le plus bas gagne, quelle que soit la classe."
+    },
+    {
+      "q": "Pourquoi le spinnaker a-t-il une influence?",
+      "a": "Les bateaux avec spinnaker sont plus rapides aux allures portantes et reçoivent un rating légèrement inférieur. L'application corrige automatiquement selon votre choix au départ."
+    },
+    {
+      "q": "Que faire si mon bateau n'est pas dans la liste?",
+      "a": "Contactez la direction de course avec le TX-rating officiel de votre classe. De nouveaux bateaux sont ajoutés quotidiennement pendant l'événement."
+    },
+    {
+      "q": "Quelle est la précision de la comparaison?",
+      "a": "Le résultat est indicatif. Les résultats officiels sont établis par le jury sur la base de traces GPS et des temps d'arrivée."
+    }
+  ]
+}

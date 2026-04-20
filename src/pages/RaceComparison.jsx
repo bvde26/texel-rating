@@ -1,6 +1,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react'
 import boats from '../data/boats.json'
 import registrations from '../data/registrations.json'
+import faqData from '../data/faq.json'
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
 import BoatPicker from '../components/BoatPicker'
@@ -204,19 +205,13 @@ function SpiChipSmall({ value, onChange }) {
     <Pressable
       onClick={() => onChange(!value)}
       style={{
-        display: 'inline-flex', alignItems: 'center',
-        padding: '3px 8px', borderRadius: 6,
-        background: value ? 'rgba(22,163,74,0.12)' : 'transparent',
-        border: `1px solid ${value ? 'rgba(22,163,74,0.35)' : 'rgba(0,0,0,0.18)'}`,
-        transition: 'background 200ms, border-color 200ms',
-      }}
-    >
-      <span style={{
-        fontFamily: 'JetBrains Mono, monospace', fontSize: 10, fontWeight: 700,
-        letterSpacing: 0.6,
+        fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: 0.2,
+        flexShrink: 0, whiteSpace: 'nowrap',
         color: value ? '#16a34a' : 'rgba(0,0,0,0.35)',
         transition: 'color 200ms',
-      }}>SPI</span>
+      }}
+    >
+      {value ? '●' : '○'} SPI
     </Pressable>
   )
 }
@@ -256,22 +251,20 @@ function MyBoatCard({ boat, reg, spi, setSpi, time, activeField, setActiveField,
   return (
     <SwipeableCard onRight={onRight} onDelete={onDelete} radius={16} cardPadding="14px 16px">
       {/* Naam + TX inline, namen eronder, SPI klein */}
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, overflow: 'hidden' }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, overflow: 'hidden' }}>
         <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 18, letterSpacing: -0.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
           {boat.type}
         </div>
         <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', letterSpacing: 0.2, flexShrink: 0 }}>
           TX {myTR}
         </div>
+        <SpiChipSmall value={spi} onChange={setSpi}/>
       </div>
       {reg?.skipper && (
-        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 4, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
           {reg.sailNumber && `${reg.sailNumber} · `}{reg.skipper}{reg.crew ? ` / ${reg.crew}` : ''}
         </div>
       )}
-      <div style={{ marginTop: 4, marginLeft: -8 }}>
-        <SpiChipSmall value={spi} onChange={setSpi}/>
-      </div>
       <div style={{ borderTop: '1px dashed rgba(0,0,0,0.08)', margin: '8px -16px' }}/>
       <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8 }}>
         {t.finish_time}
@@ -294,7 +287,43 @@ function MyBoatCard({ boat, reg, spi, setSpi, time, activeField, setActiveField,
   )
 }
 
-export default function RaceComparison({ t, onBack }) {
+function FaqTab({ lang }) {
+  const [open, setOpen] = useState(0)
+  const items = faqData[lang] || faqData.nl
+  return (
+    <div style={{ padding: '16px 16px 32px' }}>
+      <div style={{ background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)', overflow: 'hidden' }}>
+        {items.map((item, i) => {
+          const isOpen = open === i
+          return (
+            <div key={i} style={{ borderTop: i > 0 ? '1px solid var(--border)' : 'none' }}>
+              <Pressable
+                onClick={() => setOpen(isOpen ? -1 : i)}
+                style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', gap: 12 }}
+              >
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 14.5, color: '#000', letterSpacing: -0.1 }}>
+                  {item.q}
+                </div>
+                <div style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 280ms', flexShrink: 0 }}>
+                  <Icon.ChevronDown size={16} color="rgba(0,0,0,0.4)" />
+                </div>
+              </Pressable>
+              {isOpen && (
+                <div style={{ padding: '0 16px 16px', borderTop: '1px solid var(--border)', background: 'var(--bg)' }}>
+                  <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, lineHeight: 1.6, color: 'rgba(0,0,0,0.7)', paddingTop: 14 }}>
+                    {item.a}
+                  </div>
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+export default function RaceComparison({ t, lang, onBack }) {
   // Compare mode state
   const [myBoat, setMyBoat] = useState(null)
   const [myReg, setMyReg] = useState(null)
@@ -428,9 +457,6 @@ export default function RaceComparison({ t, onBack }) {
     setActiveField('h')
     setCompetitors([])
     setSpi(false)
-    setEntries([])
-    setRankOrder([])
-    setEditUid(null)
   }
 
   const resetRank = () => {
@@ -493,7 +519,7 @@ export default function RaceComparison({ t, onBack }) {
 
         {/* Mode tabs */}
         <div style={{ display: 'flex' }}>
-          {[['compare', t.compare_title], ['rank', t.ranking]].map(([m, label]) => (
+          {[['compare', t.compare_title], ['rank', t.ranking], ['faq', t.rating_faq]].map(([m, label]) => (
             <Pressable
               key={m}
               onClick={() => setMode(m)}
@@ -560,7 +586,7 @@ export default function RaceComparison({ t, onBack }) {
               <div style={{ margin: '8px 16px 20px', padding: '16px', background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)' }}>
                 <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 8 }}>HOE WERKT HET</div>
                 <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13.5, lineHeight: 1.55, color: 'rgba(0,0,0,0.7)' }}>
-                  Kies je boot op zeilnummer, skipper of fokkemaat. Je ziet direct hoeveel tijdsmarge je hebt door de cat-handicap (Texel Rating).
+                  {t.how_it_works}
                 </div>
               </div>
             )}
@@ -581,19 +607,20 @@ export default function RaceComparison({ t, onBack }) {
                         onRight={() => addToRanking(boat.id, cSpi, emptyTime(), skipper ? { skipper, crew, sailNumber } : null)}
                         onDelete={() => setCompetitors(cs => cs.filter(c => c.uid !== uid))}
                       >
-                        {/* Row 1: naam + TX grijs | diff rechts */}
+                        {/* Row 1: naam + TX + SPI | diff rechts */}
                         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
                           <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, overflow: 'hidden' }}>
+                            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, overflow: 'hidden' }}>
                               <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
                                 {boat.type}
                               </div>
                               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', letterSpacing: 0.2, flexShrink: 0 }}>
                                 TX {compTR}
                               </div>
+                              <SpiChipSmall value={cSpi} onChange={toggleSpi}/>
                             </div>
                             {skipper && (
-                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 4, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                                 {sailNumber && `${sailNumber} · `}{skipper}{crew ? ` / ${crew}` : ''}
                               </div>
                             )}
@@ -610,10 +637,6 @@ export default function RaceComparison({ t, onBack }) {
                           ) : (
                             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.3)', flexShrink: 0 }}>—</div>
                           )}
-                        </div>
-                        {/* Row 3: SPI chip linksonder */}
-                        <div style={{ marginTop: 4, marginLeft: -8 }}>
-                          <SpiChipSmall value={cSpi} onChange={toggleSpi}/>
                         </div>
                       </SwipeableCard>
                     )
@@ -656,20 +679,13 @@ export default function RaceComparison({ t, onBack }) {
                         {hasTime ? `#${idx + 1}` : '—'}
                       </div>
                       <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 24, overflow: 'hidden' }}>
+                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, overflow: 'hidden' }}>
                           <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, letterSpacing: -0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0 }}>
                             {boat.type}
                           </div>
                           <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', letterSpacing: 0.2, flexShrink: 0 }}>
                             TX {tr}
                           </div>
-                        </div>
-                        {entry.skipper && (
-                          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 1, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                            {entry.sailNumber && `${entry.sailNumber} · `}{entry.skipper}{entry.crew ? ` / ${entry.crew}` : ''}
-                          </div>
-                        )}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: -8 }}>
                           <SpiChipSmall
                             value={entry.spi}
                             onChange={(v) => {
@@ -679,12 +695,17 @@ export default function RaceComparison({ t, onBack }) {
                               setSelectedUid(entry.uid)
                             }}
                           />
-                          <div style={{ display: 'flex', gap: 0, paddingBottom: 1 }}>
-                            {Array.from({ length: boat.crew ?? 1 }).map((_, i) => (
-                              <Icon.Person key={i} size={13} color="rgba(0,0,0,0.3)"/>
-                            ))}
-                          </div>
+                          {(boat.crew ?? 1) === 1 && (
+                            <div style={{ alignSelf: 'center', display: 'flex', marginBottom: 1 }}>
+                              <Icon.Person size={13} color="rgba(0,0,0,0.3)"/>
+                            </div>
+                          )}
                         </div>
+                        {entry.skipper && (
+                          <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.5)', marginTop: 4, letterSpacing: 0.2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {entry.sailNumber && `${entry.sailNumber} · `}{entry.skipper}{entry.crew ? ` / ${entry.crew}` : ''}
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -731,6 +752,11 @@ export default function RaceComparison({ t, onBack }) {
               </Pressable>
             </div>
           </div>
+        )}
+
+        {/* ── FAQ MODE ── */}
+        {mode === 'faq' && (
+          <FaqTab lang={lang} />
         )}
       </div>
 

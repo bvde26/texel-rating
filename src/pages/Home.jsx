@@ -1,5 +1,6 @@
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
+
 import registrationsData from '../data/registrations.json'
 
 const EVENT_DATE = new Date('2026-05-25')
@@ -89,16 +90,21 @@ const CAT_LABELS = {
   catamaran_single: { nl: 'Catamaran solo', en: 'Catamaran single', de: 'Katamaran Solo', fr: 'Catamaran solo' },
 }
 
-function RegistrationsTile({ t, categories }) {
+function RegistrationsTile({ t, categories, onClick }) {
   const total = Object.values(categories).reduce((s, c) => s + c.count, 0)
   return (
-    <div style={{
-      background: '#fff',
-      borderRadius: 20,
-      padding: '22px 22px 20px',
-      border: '1px solid rgba(0,0,0,0.06)',
-      boxShadow: '0 2px 8px -4px rgba(0,0,0,0.08)',
-    }}>
+    <Pressable
+      onClick={onClick}
+      style={{
+        background: '#fff',
+        borderRadius: 20,
+        padding: '22px 22px 20px',
+        border: '1px solid rgba(0,0,0,0.06)',
+        boxShadow: '0 2px 8px -4px rgba(0,0,0,0.08)',
+        width: '100%',
+        textAlign: 'left',
+      }}
+    >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
         <div style={{
           fontFamily: 'JetBrains Mono, monospace',
@@ -106,11 +112,20 @@ function RegistrationsTile({ t, categories }) {
           textTransform: 'uppercase',
           color: 'rgba(0,0,0,0.5)',
         }}>03 / {t.tile_reg_eyebrow}</div>
-        <div style={{
-          fontFamily: 'Space Grotesk, sans-serif',
-          fontWeight: 700, fontSize: 20,
-          letterSpacing: -0.6, color: '#000',
-        }}>{total}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div style={{
+            fontFamily: 'Space Grotesk, sans-serif',
+            fontWeight: 700, fontSize: 20,
+            letterSpacing: -0.6, color: '#000',
+          }}>{total}</div>
+          <div style={{
+            width: 30, height: 30, borderRadius: 999,
+            border: '1px solid rgba(0,0,0,0.12)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <Icon.ArrowRight size={14} color="#000" />
+          </div>
+        </div>
       </div>
       <div style={{ display: 'grid', gap: 8 }}>
         {Object.entries(categories).map(([id, cat]) => (
@@ -127,7 +142,7 @@ function RegistrationsTile({ t, categories }) {
           </div>
         ))}
       </div>
-    </div>
+    </Pressable>
   )
 }
 
@@ -160,7 +175,7 @@ export default function Home({ t, lang, setLang, go }) {
             fontFamily: 'Outfit, sans-serif',
             fontWeight: 500, fontSize: 15,
             color: 'rgba(0,0,0,0.55)', marginTop: 2, letterSpacing: -0.2,
-          }}>{t.edition} · Editie {EVENT_EDITIE}{days > 0 ? ` · ${days} dagen` : ''}</div>
+          }}>{t.edition} · {t.edition_word} {EVENT_EDITIE}{days > 0 ? ` · ${days} ${t.days_label}` : ''}</div>
         </div>
 
         {/* Lang toggle */}
@@ -197,7 +212,7 @@ export default function Home({ t, lang, setLang, go }) {
           meta={t.meta_agenda}
           onClick={() => go('agenda')}
         />
-        <RegistrationsTile t={t} categories={registrationsData.categories} />
+        <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
       </div>
 
       <div style={{ flex: 1 }}/>
