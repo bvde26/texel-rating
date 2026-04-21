@@ -16,7 +16,8 @@ function timeAgo(ts) {
 export default function Nieuws({ onBack, lang }) {
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
-  const [pushStatus, setPushStatus] = useState('idle') // idle | requested | granted | denied
+  const [pushStatus, setPushStatus] = useState('idle') // idle | requested | granted | denied | unsupported
+  const [showDeniedInfo, setShowDeniedInfo] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 8000)
@@ -27,26 +28,62 @@ export default function Nieuws({ onBack, lang }) {
     return () => { unsub(); clearTimeout(timer) }
   }, [])
 
+  useEffect(() => {
+    const init = async () => {
+      if (typeof Notification === 'undefined') {
+        setPushStatus('unsupported')
+        return
+      }
+      const { isSupported } = await import('firebase/messaging')
+      const supported = await isSupported()
+      if (!supported) {
+        setPushStatus('unsupported')
+        return
+      }
+      if (Notification.permission === 'granted') setPushStatus('granted')
+      else if (Notification.permission === 'denied') setPushStatus('denied')
+    }
+    init()
+  }, [])
+
   const handlePush = async () => {
-    const { isSupported } = await import('firebase/messaging')
-    const supported = await isSupported()
-    if (!supported) {
-      setPushStatus('unsupported')
+    if (pushStatus === 'denied') {
+      setShowDeniedInfo(true)
       return
     }
+    if (pushStatus === 'unsupported') return
     setPushStatus('requested')
     const token = await requestPushPermission()
     setPushStatus(token ? 'granted' : 'denied')
   }
 
   const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone
-  const pushLabel = {
-    idle: lang === 'nl' ? 'Meldingen aan' : 'Enable notifications',
-    requested: '...',
-    granted: lang === 'nl' ? 'Meldingen actief ✓' : 'Notifications on ✓',
-    denied: lang === 'nl' ? 'Niet toegestaan' : 'Permission denied',
-    unsupported: lang === 'nl' ? (isStandalone ? 'Niet ondersteund' : 'Zet op beginscherm') : (isStandalone ? 'Not supported' : 'Add to home screen'),
+  const pushConfig = {
+    idle: {
+      label: lang === 'nl' ? 'Meldingen aan' : 'Enable notifications',
+      bg: '#000', color: '#fff', icon: 'Bell',
+    },
+    requested: {
+      label: lang === 'nl' ? 'Even geduld...' : 'Please wait...',
+      bg: 'rgba(0,0,0,0.4)', color: '#fff', icon: 'Bell',
+    },
+    granted: {
+      label: lang === 'nl' ? 'Meldingen aan' : 'Notifications on',
+      bg: '#d1f4dd', color: '#0a6b2e', icon: 'Check',
+    },
+    denied: {
+      label: lang === 'nl' ? 'Geblokkeerd' : 'Blocked',
+      bg: '#fde2e2', color: '#a01010', icon: 'BellOff',
+    },
+    unsupported: {
+      label: isStandalone
+        ? (lang === 'nl' ? 'Niet ondersteund' : 'Not supported')
+        : (lang === 'nl' ? 'Zet op beginscherm' : 'Add to home screen'),
+      bg: 'rgba(0,0,0,0.05)', color: 'rgba(0,0,0,0.55)', icon: 'Bell',
+    },
   }
+  const current = pushConfig[pushStatus]
+  const IconComp = Icon[current.icon]
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>
@@ -67,18 +104,19 @@ export default function Nieuws({ onBack, lang }) {
           <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 18, letterSpacing: -0.2, flex: 1 }}>
             {lang === 'nl' ? 'Nieuws' : 'News'}
           </div>
-          {pushStatus !== 'granted' && (
-            <Pressable
-              onClick={handlePush}
-              style={{
-                padding: '6px 12px', borderRadius: 20,
-                background: '#000', color: '#fff',
-                fontFamily: 'Outfit, sans-serif', fontSize: 12, fontWeight: 600,
-              }}
-            >
-              {pushLabel[pushStatus]}
-            </Pressable>
-          )}
+          <Pressable
+            onClick={handlePush}
+            style={{
+              padding: '6px 12px 6px 10px', borderRadius: 20,
+              background: current.bg, color: current.color,
+              fontFamily: 'Outfit, sans-serif', fontSize: 12, fontWeight: 600,
+              display: 'flex', alignItems: 'center', gap: 6,
+              flexShrink: 0,
+            }}
+          >
+            <IconComp size={14} color={current.color} />
+            {current.label}
+          </Pressable>
         </div>
       </div>
 
@@ -92,6 +130,25 @@ export default function Nieuws({ onBack, lang }) {
         {!loading && items.length === 0 && (
           <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, color: 'rgba(0,0,0,0.4)', textAlign: 'center', paddingTop: 40 }}>
             {lang === 'nl' ? 'Nog geen berichten.' : 'No messages yet.'}
+          </div>
+        )}
+        {showDeniedInfo && (
+          <div style={{
+            background: '#fff8e6', border: '1px solid #f5d878', borderRadius: 12,
+            padding: '12px 14px', marginBottom: 14,
+            fontFamily: 'Outfit, sans-serif', fontSize: 13, lineHeight: 1.5, color: '#5a4200',
+          }}>
+            <div style={{ fontWeight: 600, marginBottom: 4 }}>
+              {lang === 'nl' ? 'Meldingen staan uit' : 'Notifications are blocked'}
+            </div>
+            <div style={{ marginBottom: 6 }}>
+              {lang === 'nl'
+                ? 'Zet ze aan via je browser-instellingen: tik op het slotje (of info-icoon) in de adresbalk → Meldingen → Toestaan. Ververs daarna de pagina.'
+                : 'Enable in browser settings: tap the lock (or info icon) in the address bar → Notifications → Allow. Then reload.'}
+            </div>
+            <Pressable onClick={() => setShowDeniedInfo(false)} style={{ fontSize: 11, fontWeight: 600, textDecoration: 'underline', color: '#5a4200' }}>
+              {lang === 'nl' ? 'Sluiten' : 'Close'}
+            </Pressable>
           </div>
         )}
         {items.map((item) => (

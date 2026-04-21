@@ -89,22 +89,22 @@ export default function BoatPicker({ t, boats, registrations = [], excludeIds, o
 
         {/* Search */}
         <div style={{ padding: '0 16px 10px' }}>
-          <div style={{
+          <div className="search-box" style={{
             display: 'flex', alignItems: 'center', gap: 10,
-            background: 'var(--surface)', borderRadius: 12,
+            background: 'var(--surface)', borderRadius: 14,
             border: '1px solid var(--border2)',
-            padding: '12px 14px', height: 48,
+            padding: '14px 16px', minHeight: 52,
           }}>
-            <Icon.Search size={16} color="rgba(0,0,0,0.45)"/>
+            <Icon.Search size={18} color="rgba(0,0,0,0.45)"/>
             <input
               autoFocus
               value={query}
               onChange={e => setQuery(e.target.value)}
               placeholder={t.search_placeholder}
               style={{
-                flex: 1, background: 'transparent', border: 'none',
+                flex: 1, background: 'transparent', border: 'none', outline: 'none',
                 fontFamily: 'Outfit, sans-serif', fontSize: 16, color: '#000',
-                letterSpacing: -0.2,
+                letterSpacing: -0.2, minWidth: 0,
               }}
             />
             {query && (

@@ -77,4 +77,22 @@ export const Icon = {
       <path d="M10 11v6M14 11v6" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
     </svg>
   ),
+  Bell: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M10 21a2 2 0 004 0" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+  ),
+  BellOff: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M6 8a6 6 0 019.5-4.9M18 8c0 7 3 9 3 9H6" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+      <path d="M10 21a2 2 0 004 0" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+      <path d="M3 3l18 18" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+  ),
+  Check: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M5 12l5 5L20 7" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
 }

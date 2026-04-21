@@ -98,21 +98,29 @@ function RegistrationsTile({ t, categories, onClick }) {
       style={{
         background: '#fff',
         borderRadius: 20,
-        padding: '22px 22px 20px',
+        padding: '20px 20px 18px',
         border: '1px solid rgba(0,0,0,0.06)',
         boxShadow: '0 2px 8px -4px rgba(0,0,0,0.08)',
         width: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
+        overflow: 'hidden',
         textAlign: 'left',
       }}
     >
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 16 }}>
+      <div style={{
+        display: 'flex', justifyContent: 'space-between',
+        alignItems: 'flex-start', gap: 12, marginBottom: 14, minWidth: 0,
+      }}>
         <div style={{
           fontFamily: 'JetBrains Mono, monospace',
           fontSize: 11, letterSpacing: 0.6,
           textTransform: 'uppercase',
           color: 'rgba(0,0,0,0.5)',
+          flex: 1, minWidth: 0,
+          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
         }}>03 / {t.tile_reg_eyebrow}</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
           <div style={{
             fontFamily: 'Space Grotesk, sans-serif',
             fontWeight: 700, fontSize: 20,
@@ -122,23 +130,31 @@ function RegistrationsTile({ t, categories, onClick }) {
             width: 30, height: 30, borderRadius: 999,
             border: '1px solid rgba(0,0,0,0.12)',
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            flexShrink: 0,
           }}>
             <Icon.ArrowRight size={14} color="#000" />
           </div>
         </div>
       </div>
-      <div style={{ display: 'grid', gap: 8 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 7, minWidth: 0 }}>
         {Object.entries(categories).map(([id, cat]) => (
-          <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <div key={id} style={{
+            display: 'flex', alignItems: 'baseline', gap: 10,
+            minWidth: 0, width: '100%',
+          }}>
             <div style={{
               fontFamily: 'Outfit, sans-serif',
               fontSize: 13, color: 'rgba(0,0,0,0.65)',
-              flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+              flex: '1 1 auto', minWidth: 0,
+              overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>{t[`cat_${id}`] || cat.nameNl}</div>
             <div style={{
               fontFamily: 'JetBrains Mono, monospace',
               fontSize: 13, fontWeight: 600,
-              color: '#000', flexShrink: 0,
+              color: '#000',
+              flex: '0 0 auto',
+              textAlign: 'right',
+              fontVariantNumeric: 'tabular-nums',
             }}>{cat.count}</div>
           </div>
         ))}
@@ -196,8 +212,8 @@ export default function Home({ t, lang, setLang, go }) {
       </div>
 
       {/* Tiles */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px 12px' }} className="scrollbar-none">
-        <div style={{ display: 'grid', gap: 12 }}>
+      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '0 16px 12px' }} className="scrollbar-none">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, minWidth: 0, width: '100%' }}>
           <HomeTile
             variant="light"
             eyebrow="01 / Rating"
