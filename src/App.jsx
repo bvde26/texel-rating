@@ -210,7 +210,8 @@ const COPY = {
 }
 
 export default function App() {
-  const [page, setPage] = useState('home')
+  const initialPage = window.location.pathname === '/beheer' ? 'beheer' : 'home'
+  const [page, setPage] = useState(initialPage)
   const [dir, setDir] = useState('fwd')
   const [lang, setLang] = useState('nl')
 
