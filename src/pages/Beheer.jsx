@@ -198,7 +198,7 @@ export default function Beheer({ onBack }) {
           <div key={item.id} style={{ background: '#fff', borderRadius: 14, border: '1px solid rgba(0,0,0,0.06)', padding: '14px 16px', marginBottom: 10, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, color: '#000', marginBottom: 4 }}>{item.title}</div>
-              <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: 'rgba(0,0,0,0.6)', lineHeight: 1.4 }}>{item.body}</div>
+              <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: 'rgba(0,0,0,0.6)', lineHeight: 1.4, whiteSpace: 'pre-wrap' }}>{item.body}</div>
               <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.35)', marginTop: 6 }}>{timeAgo(item.createdAt)}</div>
             </div>
             <Pressable

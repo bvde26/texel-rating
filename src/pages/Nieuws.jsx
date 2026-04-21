@@ -109,7 +109,7 @@ export default function Nieuws({ onBack, lang }) {
                 {timeAgo(item.createdAt)}
               </div>
             </div>
-            <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, lineHeight: 1.55, color: 'rgba(0,0,0,0.75)' }}>
+            <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, lineHeight: 1.55, color: 'rgba(0,0,0,0.75)', whiteSpace: 'pre-wrap' }}>
               {item.body}
             </div>
           </div>
