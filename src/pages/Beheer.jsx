@@ -50,8 +50,8 @@ export default function Beheer({ onBack }) {
     setLoginError('')
     try {
       await signInWithEmailAndPassword(auth, email, password)
-    } catch {
-      setLoginError('Verkeerd e-mailadres of wachtwoord.')
+    } catch (err) {
+      setLoginError(`Login fout: ${err?.code || err?.message || 'onbekend'}`)
     }
     setLoginLoading(false)
   }
