@@ -13,7 +13,10 @@ const firebaseConfig = {
 }
 
 const app = initializeApp(firebaseConfig)
-export const db = initializeFirestore(app, { localCache: memoryLocalCache() })
+export const db = initializeFirestore(app, {
+  localCache: memoryLocalCache(),
+  experimentalForceLongPolling: true,
+})
 export const auth = getAuth(app)
 export const getMessagingInstance = async () => {
   const supported = await isSupported()
