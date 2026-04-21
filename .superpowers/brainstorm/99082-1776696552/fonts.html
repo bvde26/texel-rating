@@ -1,0 +1,90 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@500&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+.font-preview {
+  background: #ffffff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.font-preview:hover { border-color: #0066FF; box-shadow: 0 0 0 3px rgba(0,102,255,0.1); }
+.font-preview.selected { border-color: #0066FF; box-shadow: 0 0 0 3px rgba(0,102,255,0.15); }
+
+.fp-tag { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #6b7280; margin-bottom: 12px; }
+.fp-title { font-size: 26px; font-weight: 800; color: #111827; margin-bottom: 4px; line-height: 1.2; }
+.fp-sub { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+.fp-row { display: flex; gap: 12px; align-items: center; }
+.fp-stat { background: #f0f5ff; border-radius: 10px; padding: 10px 14px; text-align: center; }
+.fp-stat-num { font-size: 28px; font-weight: 700; color: #0066FF; line-height: 1; }
+.fp-stat-label { font-size: 11px; color: #6b7280; margin-top: 2px; }
+.fp-body { font-size: 14px; color: #374151; line-height: 1.5; flex: 1; }
+.fp-badge { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+.fp-badge.green { background: #d1fae5; color: #065f46; }
+.fp-badge.red { background: #fee2e2; color: #991b1b; }
+</style>
+
+<h2>Welke typografie voelt goed?</h2>
+<p class="subtitle">Drie combinaties — zelfde inhoud, ander karakter. Klik om te selecteren.</p>
+
+<!-- OPTIE A -->
+<div class="font-preview option" data-choice="a" onclick="toggleSelect(this)" style="font-family: 'Syne', sans-serif;">
+  <div class="fp-tag">A — Syne + DM Sans + DM Mono</div>
+  <div class="fp-title" style="font-family: 'Syne', sans-serif;">Texel Rating 2025</div>
+  <div class="fp-sub" style="font-family: 'DM Sans', sans-serif;">Editie 50 · 290 deelnemende boten</div>
+  <div class="fp-row">
+    <div class="fp-stat">
+      <div class="fp-stat-num" style="font-family: 'DM Mono', monospace;">+13</div>
+      <div class="fp-stat-label" style="font-family: 'DM Sans', sans-serif;">min voordeel</div>
+    </div>
+    <div class="fp-body" style="font-family: 'DM Sans', sans-serif;">
+      Hobie 16 · TR zonder spi: <strong>113</strong><br>
+      <span class="fp-badge green" style="font-family: 'DM Sans', sans-serif;">Voordeel</span>
+    </div>
+  </div>
+  <div style="margin-top: 12px; font-size: 12px; color: #9ca3af; font-family: 'DM Sans', sans-serif;">
+    Syne: geometrisch, kosmisch, onderscheidend · DM Sans: neutraal leesbaar · DM Mono: precise getallen
+  </div>
+</div>
+
+<!-- OPTIE B -->
+<div class="font-preview option" data-choice="b" onclick="toggleSelect(this)" style="font-family: 'Plus Jakarta Sans', sans-serif;">
+  <div class="fp-tag">B — Plus Jakarta Sans + Inter + DM Mono</div>
+  <div class="fp-title" style="font-family: 'Plus Jakarta Sans', sans-serif;">Texel Rating 2025</div>
+  <div class="fp-sub" style="font-family: 'Inter', sans-serif;">Editie 50 · 290 deelnemende boten</div>
+  <div class="fp-row">
+    <div class="fp-stat">
+      <div class="fp-stat-num" style="font-family: 'DM Mono', monospace;">+13</div>
+      <div class="fp-stat-label" style="font-family: 'Inter', sans-serif;">min voordeel</div>
+    </div>
+    <div class="fp-body" style="font-family: 'Inter', sans-serif;">
+      Hobie 16 · TR zonder spi: <strong>113</strong><br>
+      <span class="fp-badge green" style="font-family: 'Inter', sans-serif;">Voordeel</span>
+    </div>
+  </div>
+  <div style="margin-top: 12px; font-size: 12px; color: #9ca3af; font-family: 'Inter', sans-serif;">
+    Plus Jakarta: modern, warm · Inter: industrie-standaard · DM Mono: precise getallen
+  </div>
+</div>
+
+<!-- OPTIE C -->
+<div class="font-preview option" data-choice="c" onclick="toggleSelect(this)" style="font-family: 'Space Grotesk', sans-serif;">
+  <div class="fp-tag">C — Space Grotesk + Outfit + DM Mono</div>
+  <div class="fp-title" style="font-family: 'Space Grotesk', sans-serif;">Texel Rating 2025</div>
+  <div class="fp-sub" style="font-family: 'Outfit', sans-serif;">Editie 50 · 290 deelnemende boten</div>
+  <div class="fp-row">
+    <div class="fp-stat">
+      <div class="fp-stat-num" style="font-family: 'DM Mono', monospace;">+13</div>
+      <div class="fp-stat-label" style="font-family: 'Outfit', sans-serif;">min voordeel</div>
+    </div>
+    <div class="fp-body" style="font-family: 'Outfit', sans-serif;">
+      Hobie 16 · TR zonder spi: <strong>113</strong><br>
+      <span class="fp-badge green" style="font-family: 'Outfit', sans-serif;">Voordeel</span>
+    </div>
+  </div>
+  <div style="margin-top: 12px; font-size: 12px; color: #9ca3af; font-family: 'Outfit', sans-serif;">
+    Space Grotesk: technisch, scherp · Outfit: speels maar strak · DM Mono: precise getallen
+  </div>
+</div>

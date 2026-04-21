@@ -13,8 +13,18 @@ export const subscribeToNews = (callback, onError) => {
   })
 }
 
-export const addNewsItem = (title, body) =>
-  addDoc(collection(db, 'news'), { title, body, createdAt: serverTimestamp() })
+export const addNewsItem = async (title, body) => {
+  const res = await fetch('/api/post-news', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title, body, secret: import.meta.env.VITE_PUSH_SECRET }),
+  })
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}))
+    throw new Error(data.error || `HTTP ${res.status}`)
+  }
+  return res.json()
+}
 
 export const deleteNewsItem = (id) =>
   deleteDoc(doc(db, 'news', id))

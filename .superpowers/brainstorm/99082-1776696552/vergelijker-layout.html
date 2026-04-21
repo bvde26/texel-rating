@@ -1,0 +1,225 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@500&display=swap');
+
+* { box-sizing: border-box; }
+
+.col3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .col3 { grid-template-columns: 1fr; } }
+
+.phone-frame {
+  background: #f8f9fa;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 2px solid #e5e7eb;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.phone-frame:hover { border-color: #0066FF; }
+.phone-frame.selected { border-color: #0066FF; box-shadow: 0 0 0 4px rgba(0,102,255,0.12); }
+.frame-label { padding: 10px 14px 4px; font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #6b7280; }
+
+/* shared header */
+.mini-hdr {
+  background: #fff;
+  padding: 10px 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+.mini-hdr-top { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.logo-sq { width: 22px; height: 22px; background: #0066FF; border-radius: 6px; display:flex;align-items:center;justify-content:center; }
+.logo-sq svg { width: 12px; height: 12px; fill: white; }
+.logo-name { font-size: 13px; font-weight: 800; color: #111827; }
+.pill-row { display: flex; background: #f3f4f6; border-radius: 8px; padding: 2px; gap: 2px; }
+.pill-item { flex: 1; text-align: center; padding: 5px 0; font-size: 11px; font-weight: 500; color: #6b7280; border-radius: 6px; }
+.pill-item.on { background: #fff; color: #111827; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+
+.body { padding: 12px 12px; }
+
+/* --- VARIANT A: Stap-voor-stap wizard --- */
+.step-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; color: #0066FF; background: #eff6ff; border-radius: 99px; padding: 3px 8px; margin-bottom: 6px; }
+.step-num { width: 16px; height: 16px; background: #0066FF; color: white; border-radius: 50%; font-size: 9px; font-weight: 800; display:flex;align-items:center;justify-content:center; }
+.filter-row { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; }
+.chip { padding: 4px 9px; border-radius: 99px; font-size: 10px; font-weight: 600; border: 1px solid #e5e7eb; color: #6b7280; background: #fff; }
+.chip.on { background: #0066FF; color: #fff; border-color: #0066FF; }
+.boat-list { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; overflow: hidden; margin-bottom: 10px; }
+.boat-row { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; border-bottom: 1px solid #f3f4f6; }
+.boat-row:last-child { border-bottom: none; }
+.boat-row.selected-boat { background: #eff6ff; }
+.boat-name { font-size: 12px; font-weight: 600; color: #111827; }
+.boat-meta { font-size: 10px; color: #9ca3af; font-family: 'Inter', sans-serif; }
+.tr-pill { font-size: 11px; font-weight: 700; color: #0066FF; font-family: 'DM Mono', monospace; }
+
+/* scoreboard */
+.score-card { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; padding: 9px 10px; margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+.score-card.win { border-left: 3px solid #10b981; }
+.score-card.lose { border-left: 3px solid #ef4444; }
+.sc-name { font-size: 12px; font-weight: 700; color: #111827; }
+.sc-meta { font-size: 10px; color: #9ca3af; font-family: 'Inter', sans-serif; }
+.sc-diff { font-size: 20px; font-weight: 700; font-family: 'DM Mono', monospace; line-height: 1; }
+.sc-diff.pos { color: #10b981; }
+.sc-diff.neg { color: #ef4444; }
+.sc-diff small { display: block; font-size: 9px; font-weight: 500; color: #9ca3af; font-family: 'Inter', sans-serif; text-align: right; }
+
+/* --- VARIANT B: Inline alles op één scherm --- */
+.section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: #9ca3af; margin-bottom: 6px; font-family: 'Inter', sans-serif; }
+.selected-boot-card { background: #fff; border: 1.5px solid #0066FF; border-radius: 10px; padding: 8px 10px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+.sb-name { font-size: 13px; font-weight: 700; color: #0066FF; }
+.sb-tr { font-size: 11px; font-family: 'DM Mono', monospace; color: #0066FF; font-weight: 700; }
+.time-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.time-input { flex: 1; background: #fff; border: 1.5px solid #e5e7eb; border-radius: 8px; padding: 8px 10px; font-size: 18px; font-weight: 700; font-family: 'DM Mono', monospace; color: #111827; text-align: center; }
+.add-btn { padding: 7px 12px; background: #0066FF; color: white; border-radius: 8px; font-size: 11px; font-weight: 700; }
+
+/* --- VARIANT C: Split screen (filters links, scoreboard rechts) --- */
+.split2 { display: grid; grid-template-columns: 40% 60%; min-height: 180px; }
+.panel-left { background: #f8f9fa; border-right: 1px solid #e5e7eb; padding: 8px; }
+.panel-right { background: #fff; padding: 8px; }
+.mini-boat { padding: 5px 7px; border-radius: 7px; font-size: 11px; font-weight: 600; color: #374151; cursor: pointer; }
+.mini-boat.sel { background: #eff6ff; color: #0066FF; }
+.mini-class-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: #9ca3af; padding: 4px 7px 2px; font-family: 'Inter', sans-serif; }
+</style>
+
+<h2>Vergelijker-layout — welke aanpak?</h2>
+<p class="subtitle">Boot selecteren + scoreboard. Drie varianten van dezelfde functionaliteit.</p>
+
+<div class="col3">
+
+  <!-- VARIANT A: Wizard stappen -->
+  <div class="phone-frame option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="frame-label">A — Wizard: stap voor stap</div>
+    <div class="mini-hdr">
+      <div class="mini-hdr-top">
+        <div class="logo-sq"><svg viewBox="0 0 16 16"><path d="M8 1L14 13H2Z"/></svg></div>
+        <span class="logo-name">Texel Rating</span>
+      </div>
+      <div class="pill-row">
+        <div class="pill-item on">Vergelijk</div>
+        <div class="pill-item">Schema</div>
+        <div class="pill-item">Uitleg</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="step-badge"><div class="step-num">1</div> Kies jouw boot</div>
+      <div class="filter-row">
+        <div class="chip on">Alle</div>
+        <div class="chip">Foiler</div>
+        <div class="chip">Perf.</div>
+        <div class="chip">High P.</div>
+      </div>
+      <div class="boat-list">
+        <div class="boat-row selected-boat">
+          <div><div class="boat-name">Hobie 16</div><div class="boat-meta">Performance · 2p</div></div>
+          <div class="tr-pill">113</div>
+        </div>
+        <div class="boat-row">
+          <div><div class="boat-name">Dart 18</div><div class="boat-meta">High Perf. · 2p</div></div>
+          <div class="tr-pill">119</div>
+        </div>
+        <div class="boat-row">
+          <div><div class="boat-name">Nacra 17</div><div class="boat-meta">Foiler · 2p</div></div>
+          <div class="tr-pill">98</div>
+        </div>
+      </div>
+      <div class="step-badge"><div class="step-num">2</div> Scoreboard</div>
+      <div class="score-card win">
+        <div><div class="sc-name">Dart 18</div><div class="sc-meta">TR 119</div></div>
+        <div class="sc-diff pos">+13<small>voordeel</small></div>
+      </div>
+      <div class="score-card lose">
+        <div><div class="sc-name">Nacra 17</div><div class="sc-meta">TR 98</div></div>
+        <div class="sc-diff neg">−8<small>nadeel</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT B: Alles inline -->
+  <div class="phone-frame option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="frame-label">B — Inline: alles tegelijk zichtbaar</div>
+    <div class="mini-hdr">
+      <div class="mini-hdr-top">
+        <div class="logo-sq"><svg viewBox="0 0 16 16"><path d="M8 1L14 13H2Z"/></svg></div>
+        <span class="logo-name">Texel Rating</span>
+      </div>
+      <div class="pill-row">
+        <div class="pill-item on">Vergelijk</div>
+        <div class="pill-item">Schema</div>
+        <div class="pill-item">Uitleg</div>
+      </div>
+    </div>
+    <div class="body">
+      <div class="section-label">Jouw boot</div>
+      <div class="selected-boot-card">
+        <div><div class="sb-name">Hobie 16</div><div style="font-size:10px;color:#6b7280;font-family:'Inter',sans-serif;">Performance · 2 personen</div></div>
+        <div class="sb-tr">TR 113</div>
+      </div>
+      <div class="section-label">Tijd (uu:mm)</div>
+      <div class="time-row">
+        <div class="time-input">04:32</div>
+        <div class="add-btn">+ Boot</div>
+      </div>
+      <div class="section-label">Scoreboard</div>
+      <div class="score-card win">
+        <div><div class="sc-name">Dart 18</div><div class="sc-meta">TR 119 · High Perf.</div></div>
+        <div class="sc-diff pos">+13<small>voordeel</small></div>
+      </div>
+      <div class="score-card lose">
+        <div><div class="sc-name">Nacra 17</div><div class="sc-meta">TR 98 · Foiler</div></div>
+        <div class="sc-diff neg">−8<small>nadeel</small></div>
+      </div>
+      <div class="score-card win">
+        <div><div class="sc-name">Laser Radial</div><div class="sc-meta">TR 127 · Single</div></div>
+        <div class="sc-diff pos">+19<small>voordeel</small></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VARIANT C: Split panel -->
+  <div class="phone-frame option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="frame-label">C — Split: filter links, scores rechts</div>
+    <div class="mini-hdr">
+      <div class="mini-hdr-top">
+        <div class="logo-sq"><svg viewBox="0 0 16 16"><path d="M8 1L14 13H2Z"/></svg></div>
+        <span class="logo-name">Texel Rating</span>
+      </div>
+      <div class="pill-row">
+        <div class="pill-item on">Vergelijk</div>
+        <div class="pill-item">Schema</div>
+        <div class="pill-item">Uitleg</div>
+      </div>
+    </div>
+    <div class="split2">
+      <div class="panel-left">
+        <div class="mini-class-label">Foiler</div>
+        <div class="mini-boat">Nacra 17</div>
+        <div class="mini-boat">Flying Phantom</div>
+        <div class="mini-class-label">Perf.</div>
+        <div class="mini-boat sel">Hobie 16 ✓</div>
+        <div class="mini-boat">Hobie 14</div>
+        <div class="mini-boat">Dart 18</div>
+        <div class="mini-class-label">High P.</div>
+        <div class="mini-boat">A-Class</div>
+      </div>
+      <div class="panel-right">
+        <div class="section-label" style="font-size:9px;">Scoreboard</div>
+        <div class="score-card win" style="margin-bottom:4px;padding:6px 8px;">
+          <div><div class="sc-name" style="font-size:11px;">Dart 18</div><div class="sc-meta">TR 119</div></div>
+          <div class="sc-diff pos" style="font-size:16px;">+13<small>min</small></div>
+        </div>
+        <div class="score-card lose" style="margin-bottom:4px;padding:6px 8px;">
+          <div><div class="sc-name" style="font-size:11px;">Nacra 17</div><div class="sc-meta">TR 98</div></div>
+          <div class="sc-diff neg" style="font-size:16px;">−8<small>min</small></div>
+        </div>
+        <div class="score-card win" style="padding:6px 8px;">
+          <div><div class="sc-name" style="font-size:11px;">Laser</div><div class="sc-meta">TR 127</div></div>
+          <div class="sc-diff pos" style="font-size:16px;">+19<small>min</small></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 8px 10px; border-top: 1px solid #e5e7eb; background: #fff;">
+      <div class="time-row" style="margin-bottom:0;">
+        <div class="time-input" style="font-size:15px;padding:6px 8px;">04:32</div>
+        <div class="add-btn" style="font-size:10px;padding:6px 10px;">+ Vergelijk</div>
+      </div>
+    </div>
+  </div>
+
+</div>

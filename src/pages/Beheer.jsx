@@ -58,39 +58,25 @@ export default function Beheer({ onBack }) {
 
   const [debugMsg, setDebugMsg] = useState('')
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (!title.trim() || !body.trim()) return
     const t = title.trim()
     const b = body.trim()
     setTitle('')
     setBody('')
-    const uid = auth.currentUser?.uid ?? 'NIET INGELOGD'
-    setDebugMsg(`uid: ${uid.slice(0, 12)}… schrijven…`)
-    let okTimer
-    setSendStatus('ok')
-    okTimer = setTimeout(() => setSendStatus(''), 3000)
-    addNewsItem(t, b)
-      .then(() => {
-        clearTimeout(okTimer)
-        setSendStatus('ok')
-        setDebugMsg('OK — staat op server ✓')
-        setTimeout(() => { setSendStatus(''); setDebugMsg('') }, 4000)
-      })
-      .catch((err) => {
-        clearTimeout(okTimer)
-        setSendStatus('err')
-        setDebugMsg('ERR: ' + (err?.code ?? err?.message ?? String(err)))
-      })
-    // Push in background
-    setPushLoading(true)
-    Promise.race([
-      fetch('/api/send-push', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: t, body: b, secret: import.meta.env.VITE_PUSH_SECRET }),
-      }),
-      new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 8000)),
-    ]).catch(() => {}).finally(() => setPushLoading(false))
+    setSending(true)
+    setDebugMsg('Versturen...')
+    try {
+      const result = await addNewsItem(t, b)
+      setSendStatus('ok')
+      setDebugMsg(`OK — push verstuurd naar ${result.pushSent ?? 0} apparaten ✓`)
+      setTimeout(() => { setSendStatus(''); setDebugMsg('') }, 4000)
+    } catch (err) {
+      setSendStatus('err')
+      setDebugMsg('ERR: ' + (err?.message || String(err)))
+    } finally {
+      setSending(false)
+    }
   }
 
   if (authLoading) return null
@@ -179,11 +165,13 @@ export default function Beheer({ onBack }) {
             onClick={handlePost}
             style={{
               width: '100%', padding: '14px', borderRadius: 12,
-              background: '#000', color: '#fff', textAlign: 'center',
+              background: sending ? 'rgba(0,0,0,0.4)' : '#000',
+              color: '#fff', textAlign: 'center',
               fontFamily: 'Outfit, sans-serif', fontSize: 15, fontWeight: 600,
+              pointerEvents: sending ? 'none' : 'auto',
             }}
           >
-            {sendStatus === 'ok' ? 'Geplaatst ✓' : pushLoading ? 'Push versturen...' : 'Plaatsen + Push sturen'}
+            {sending ? 'Versturen...' : sendStatus === 'ok' ? 'Geplaatst ✓' : 'Plaatsen + Push sturen'}
           </Pressable>
           {debugMsg && (
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: sendStatus === 'err' ? '#b00' : '#060', marginTop: 8, wordBreak: 'break-all' }}>{debugMsg}</div>

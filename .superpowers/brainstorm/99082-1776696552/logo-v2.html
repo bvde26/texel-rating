@@ -1,0 +1,179 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@400;500&display=swap');
+
+.logo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .logo-grid { grid-template-columns: 1fr; } }
+
+.logo-card {
+  border: 2px solid #e5e7eb; border-radius: 18px; padding: 20px 14px 16px;
+  cursor: pointer; transition: border-color .2s, box-shadow .2s;
+  background: #fff; text-align: center;
+}
+.logo-card:hover { border-color: #0066FF; }
+.logo-card.selected { border-color: #0066FF; box-shadow: 0 0 0 4px rgba(0,102,255,.12); }
+.logo-label { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #9ca3af; margin-bottom: 4px; font-family: 'Inter', sans-serif; }
+.logo-sublabel { font-size: 11px; color: #6b7280; font-family: 'Inter', sans-serif; margin-bottom: 16px; line-height: 1.4; }
+
+.size-row { display: flex; align-items: flex-end; gap: 14px; justify-content: center; margin-bottom: 16px; }
+.size-item { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.size-lbl { font-size: 9px; color: #d1d5db; font-family: 'Inter', sans-serif; }
+
+.hdr-preview {
+  background: #f8f9fa; border: 1px solid #e5e7eb; border-radius: 10px;
+  padding: 9px 12px; display: flex; align-items: center; gap: 8px;
+}
+.logo-name-text {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800;
+  font-size: 13px; color: #111827; letter-spacing: -0.2px;
+}
+.tag { display: inline-flex; gap: 4px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+.badge { font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 99px; font-family: 'Inter', sans-serif; background: #f3f4f6; color: #6b7280; }
+</style>
+
+<h2>Race × Zeilen × Berekeningen — 3 nieuwe concepten</h2>
+<p class="subtitle">Elk combineert alle drie elementen. Klik om te kiezen.</p>
+
+<div class="logo-grid">
+
+  <!-- CONCEPT D: Stopwatch + zeil -->
+  <div class="logo-card option" data-choice="d" onclick="toggleSelect(this)">
+    <div class="logo-label">D — Timer + Zeil</div>
+    <div class="logo-sublabel">Stopwatch ring = race<br>Driehoek = zeil</div>
+
+    <div class="size-row">
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="56" height="56">
+          <circle cx="12" cy="14" r="8.5" stroke="#0066FF" stroke-width="2.2" fill="none"/>
+          <rect x="10.5" y="2.5" width="3" height="3" rx="1.25" fill="#0066FF"/>
+          <line x1="12" y1="5.5" x2="12" y2="5.8" stroke="#0066FF" stroke-width="2.2" stroke-linecap="round"/>
+          <polygon points="12,7.5 17,20.5 7,20.5" fill="#0066FF"/>
+        </svg>
+        <div class="size-lbl">56px</div>
+      </div>
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+          <circle cx="12" cy="14" r="8.5" stroke="#0066FF" stroke-width="2.2" fill="none"/>
+          <rect x="10.5" y="2.5" width="3" height="3" rx="1.25" fill="#0066FF"/>
+          <line x1="12" y1="5.5" x2="12" y2="5.8" stroke="#0066FF" stroke-width="2.2" stroke-linecap="round"/>
+          <polygon points="12,7.5 17,20.5 7,20.5" fill="#0066FF"/>
+        </svg>
+        <div class="size-lbl">32px</div>
+      </div>
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <circle cx="12" cy="14" r="8.5" stroke="#0066FF" stroke-width="2.2" fill="none"/>
+          <rect x="10.5" y="2.5" width="3" height="3" rx="1.25" fill="#0066FF"/>
+          <polygon points="12,7.5 17,20.5 7,20.5" fill="#0066FF"/>
+        </svg>
+        <div class="size-lbl">22px</div>
+      </div>
+    </div>
+
+    <div class="hdr-preview">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" style="flex-shrink:0">
+        <circle cx="12" cy="14" r="8.5" stroke="#0066FF" stroke-width="2.2" fill="none"/>
+        <rect x="10.5" y="2.5" width="3" height="3" rx="1.25" fill="#0066FF"/>
+        <polygon points="12,7.5 17,20.5 7,20.5" fill="#0066FF"/>
+      </svg>
+      <span class="logo-name-text">Texel Rating</span>
+    </div>
+    <div class="tag">
+      <span class="badge">⏱ race</span><span class="badge">⛵ zeil</span><span class="badge">○ timer</span>
+    </div>
+  </div>
+
+  <!-- CONCEPT E: Multi-zeil golf -->
+  <div class="logo-card option" data-choice="e" onclick="toggleSelect(this)">
+    <div class="logo-label">E — Multi-zeil golf</div>
+    <div class="logo-sublabel">Zigzag = zeilboten op water<br>+ race-finish uitstraling</div>
+
+    <div class="size-row">
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="56" height="56">
+          <path d="M1 18 L7 5 L13 18 L19 5 L23 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 21 Q12 19.5 23 21" stroke="#0066FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+        <div class="size-lbl">56px</div>
+      </div>
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+          <path d="M1 18 L7 5 L13 18 L19 5 L23 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 21 Q12 19.5 23 21" stroke="#0066FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+        <div class="size-lbl">32px</div>
+      </div>
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <path d="M1 18 L7 5 L13 18 L19 5 L23 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M1 21 Q12 19.5 23 21" stroke="#0066FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+        <div class="size-lbl">22px</div>
+      </div>
+    </div>
+
+    <div class="hdr-preview">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" style="flex-shrink:0">
+        <path d="M1 18 L7 5 L13 18 L19 5 L23 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M1 21 Q12 19.5 23 21" stroke="#0066FF" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+      </svg>
+      <span class="logo-name-text">Texel Rating</span>
+    </div>
+    <div class="tag">
+      <span class="badge">⛵ zeilboten</span><span class="badge">🏁 race</span><span class="badge">〜 water</span>
+    </div>
+  </div>
+
+  <!-- CONCEPT F: Oplopende balken + golf -->
+  <div class="logo-card option" data-choice="f" onclick="toggleSelect(this)">
+    <div class="logo-label">F — Scoreboard + Water</div>
+    <div class="logo-sublabel">Oplopende rating-balken<br>= berekening + race ranking</div>
+
+    <div class="size-row">
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="56" height="56">
+          <rect x="1" y="18" width="4" height="5" rx="2" fill="#0066FF" opacity="0.35"/>
+          <rect x="6.5" y="12" width="4" height="11" rx="2" fill="#0066FF" opacity="0.6"/>
+          <rect x="12" y="6" width="4" height="17" rx="2" fill="#0066FF" opacity="0.85"/>
+          <rect x="17.5" y="1" width="4.5" height="22" rx="2.25" fill="#0066FF"/>
+          <path d="M0 22.5 Q6 20 12 22.5 Q18 25 24 22.5" stroke="#0066FF" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="size-lbl">56px</div>
+      </div>
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+          <rect x="1" y="18" width="4" height="5" rx="2" fill="#0066FF" opacity="0.35"/>
+          <rect x="6.5" y="12" width="4" height="11" rx="2" fill="#0066FF" opacity="0.6"/>
+          <rect x="12" y="6" width="4" height="17" rx="2" fill="#0066FF" opacity="0.85"/>
+          <rect x="17.5" y="1" width="4.5" height="22" rx="2.25" fill="#0066FF"/>
+          <path d="M0 22.5 Q6 20 12 22.5 Q18 25 24 22.5" stroke="#0066FF" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="size-lbl">32px</div>
+      </div>
+      <div class="size-item">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <rect x="1" y="18" width="4" height="5" rx="2" fill="#0066FF" opacity="0.35"/>
+          <rect x="6.5" y="12" width="4" height="11" rx="2" fill="#0066FF" opacity="0.6"/>
+          <rect x="12" y="6" width="4" height="17" rx="2" fill="#0066FF" opacity="0.85"/>
+          <rect x="17.5" y="1" width="4.5" height="22" rx="2.25" fill="#0066FF"/>
+          <path d="M0 22.5 Q6 20 12 22.5 Q18 25 24 22.5" stroke="#0066FF" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+        </svg>
+        <div class="size-lbl">22px</div>
+      </div>
+    </div>
+
+    <div class="hdr-preview">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" style="flex-shrink:0">
+        <rect x="1" y="18" width="4" height="5" rx="2" fill="#0066FF" opacity="0.35"/>
+        <rect x="6.5" y="12" width="4" height="11" rx="2" fill="#0066FF" opacity="0.6"/>
+        <rect x="12" y="6" width="4" height="17" rx="2" fill="#0066FF" opacity="0.85"/>
+        <rect x="17.5" y="1" width="4.5" height="22" rx="2.25" fill="#0066FF"/>
+        <path d="M0 22.5 Q6 20 12 22.5 Q18 25 24 22.5" stroke="#0066FF" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <span class="logo-name-text">Texel Rating</span>
+    </div>
+    <div class="tag">
+      <span class="badge">📊 rating</span><span class="badge">🏆 race</span><span class="badge">〜 water</span>
+    </div>
+  </div>
+
+</div>

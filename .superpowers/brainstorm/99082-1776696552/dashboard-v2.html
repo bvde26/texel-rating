@@ -1,0 +1,158 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=DM+Mono:wght@500&display=swap');
+* { box-sizing: border-box; }
+
+.phone-frame {
+  background: #f8f9fa; border-radius: 18px; overflow: hidden;
+  border: 2px solid #e5e7eb; cursor: pointer;
+  transition: border-color .2s, box-shadow .2s;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-bottom: 16px;
+}
+.phone-frame:hover { border-color: #0066FF; }
+.phone-frame.selected { border-color: #0066FF; box-shadow: 0 0 0 4px rgba(0,102,255,.12); }
+.frame-label { padding: 8px 14px 4px; font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #6b7280; background: #f8f9fa; }
+
+.mini-hdr { background: #fff; padding: 10px 14px; border-bottom: 1px solid #e5e7eb; }
+.mini-hdr-top { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+.logo-sq { width: 22px; height: 22px; background: #0066FF; border-radius: 6px; display:flex;align-items:center;justify-content:center; }
+.logo-sq svg { width: 12px; height: 12px; fill: white; }
+.logo-name { font-size: 13px; font-weight: 800; color: #111827; }
+.pill-row { display: flex; background: #f3f4f6; border-radius: 8px; padding: 2px; gap: 2px; }
+.pill-item { flex: 1; text-align: center; padding: 5px 0; font-size: 11px; font-weight: 500; color: #6b7280; border-radius: 6px; }
+.pill-item.on { background: #fff; color: #111827; font-weight: 700; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+
+.body { padding: 12px; }
+.section-lbl { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #9ca3af; margin-bottom: 8px; font-family: 'Inter', sans-serif; }
+
+/* VARIANT A */
+.hero-a { background: linear-gradient(135deg, #0066FF, #0047b3); border-radius: 12px; padding: 14px; color: white; margin-bottom: 10px; }
+.hero-a h3 { font-size: 16px; font-weight: 800; margin: 0 0 2px; }
+.hero-a p { font-size: 11px; opacity: .8; margin: 0 0 10px; font-family: 'Inter', sans-serif; }
+.hero-a-stats { display: flex; gap: 16px; }
+.hero-a-stat-n { font-size: 20px; font-weight: 800; font-family: 'DM Mono', monospace; }
+.hero-a-stat-l { font-size: 9px; opacity: .75; }
+.btn-list { display: flex; flex-direction: column; gap: 7px; }
+.big-btn { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 12px; display: flex; align-items: center; gap: 10px; }
+.big-btn-icon { width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0; }
+.big-btn-icon.blue { background: #eff6ff; }
+.big-btn-icon.green { background: #ecfdf5; }
+.big-btn-icon.amber { background: #fffbeb; }
+.big-btn-title { font-size: 12px; font-weight: 700; color: #111827; }
+.big-btn-sub { font-size: 10px; color: #9ca3af; font-family: 'Inter', sans-serif; }
+.big-btn-arrow { margin-left: auto; font-size: 13px; color: #d1d5db; }
+
+/* VARIANT B */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 10px; }
+.stat-card { background: #fff; border-radius: 10px; border: 1px solid #e5e7eb; padding: 9px 11px; }
+.stat-card-n { font-size: 22px; font-weight: 800; color: #111827; font-family: 'DM Mono', monospace; line-height: 1; }
+.stat-card-l { font-size: 10px; color: #9ca3af; font-family: 'Inter', sans-serif; margin-top: 2px; }
+.stat-card.accent { background: #0066FF; border-color: #0066FF; }
+.stat-card.accent .stat-card-n { color: #fff; }
+.stat-card.accent .stat-card-l { color: rgba(255,255,255,.7); }
+.compact-links { display: flex; flex-direction: column; gap: 5px; }
+.compact-link { background: #fff; border: 1px solid #e5e7eb; border-radius: 9px; padding: 9px 12px; display: flex; align-items: center; justify-content: space-between; }
+.cl-left { display: flex; align-items: center; gap: 8px; }
+.cl-dot { width: 8px; height: 8px; border-radius: 50%; }
+.cl-title { font-size: 12px; font-weight: 600; color: #111827; }
+.cl-arrow { font-size: 12px; color: #d1d5db; }
+</style>
+
+<h2>Dashboard — A of B?</h2>
+<p class="subtitle">Klik op de variant die je het meeste aanspreekt.</p>
+
+<!-- VARIANT A -->
+<div class="phone-frame option" data-choice="a" onclick="toggleSelect(this)">
+  <div class="frame-label">A — Hero banner + grote actiekaarten</div>
+  <div class="mini-hdr">
+    <div class="mini-hdr-top">
+      <div class="logo-sq"><svg viewBox="0 0 16 16"><path d="M8 1L14 13H2Z"/></svg></div>
+      <span class="logo-name">Texel Rating</span>
+    </div>
+    <div class="pill-row">
+      <div class="pill-item on">Home</div>
+      <div class="pill-item">Vergelijk</div>
+      <div class="pill-item">Schema</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="hero-a">
+      <h3>Ronde van Texel</h3>
+      <p>25 mei 2025 · Editie 50</p>
+      <div class="hero-a-stats">
+        <div><div class="hero-a-stat-n">290</div><div class="hero-a-stat-l">boten</div></div>
+        <div><div class="hero-a-stat-n">6</div><div class="hero-a-stat-l">klassen</div></div>
+        <div><div class="hero-a-stat-n">35</div><div class="hero-a-stat-l">dagen</div></div>
+      </div>
+    </div>
+    <div class="btn-list">
+      <div class="big-btn">
+        <div class="big-btn-icon blue">⏱</div>
+        <div><div class="big-btn-title">Vergelijker</div><div class="big-btn-sub">Bereken handicap-tijden</div></div>
+        <div class="big-btn-arrow">›</div>
+      </div>
+      <div class="big-btn">
+        <div class="big-btn-icon green">📋</div>
+        <div><div class="big-btn-title">Schema</div><div class="big-btn-sub">Programma & tijden</div></div>
+        <div class="big-btn-arrow">›</div>
+      </div>
+      <div class="big-btn">
+        <div class="big-btn-icon amber">📐</div>
+        <div><div class="big-btn-title">Uitleg TR</div><div class="big-btn-sub">Hoe werkt Texel Rating?</div></div>
+        <div class="big-btn-arrow">›</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VARIANT B -->
+<div class="phone-frame option" data-choice="b" onclick="toggleSelect(this)">
+  <div class="frame-label">B — Stat-grid + compacte links</div>
+  <div class="mini-hdr">
+    <div class="mini-hdr-top">
+      <div class="logo-sq"><svg viewBox="0 0 16 16"><path d="M8 1L14 13H2Z"/></svg></div>
+      <span class="logo-name">Texel Rating</span>
+    </div>
+    <div class="pill-row">
+      <div class="pill-item on">Home</div>
+      <div class="pill-item">Vergelijk</div>
+      <div class="pill-item">Schema</div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="section-lbl">Editie 50 · 25 mei 2025</div>
+    <div class="stats-grid">
+      <div class="stat-card accent">
+        <div class="stat-card-n">290</div>
+        <div class="stat-card-l">deelnemende boten</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-n">6</div>
+        <div class="stat-card-l">klassen</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-n">35</div>
+        <div class="stat-card-l">dagen te gaan</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-n">~60</div>
+        <div class="stat-card-l">nm koers</div>
+      </div>
+    </div>
+    <div class="section-lbl">Navigeer naar</div>
+    <div class="compact-links">
+      <div class="compact-link">
+        <div class="cl-left"><div class="cl-dot" style="background:#0066FF"></div><span class="cl-title">Vergelijker</span></div>
+        <div class="cl-arrow">›</div>
+      </div>
+      <div class="compact-link">
+        <div class="cl-left"><div class="cl-dot" style="background:#10b981"></div><span class="cl-title">Schema</span></div>
+        <div class="cl-arrow">›</div>
+      </div>
+      <div class="compact-link">
+        <div class="cl-left"><div class="cl-dot" style="background:#f59e0b"></div><span class="cl-title">Uitleg TR</span></div>
+        <div class="cl-arrow">›</div>
+      </div>
+    </div>
+  </div>
+</div>

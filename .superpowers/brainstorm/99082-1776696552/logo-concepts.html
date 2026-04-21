@@ -1,0 +1,161 @@
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Inter:wght@400;500&display=swap');
+
+.logo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+@media (max-width: 600px) { .logo-grid { grid-template-columns: 1fr; } }
+
+.logo-card {
+  border: 2px solid #e5e7eb; border-radius: 18px; padding: 24px 16px 16px;
+  cursor: pointer; transition: border-color .2s, box-shadow .2s;
+  background: #fff; text-align: center;
+}
+.logo-card:hover { border-color: #0066FF; }
+.logo-card.selected { border-color: #0066FF; box-shadow: 0 0 0 4px rgba(0,102,255,.12); }
+.logo-label { font-size: 10px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: #9ca3af; margin-bottom: 16px; font-family: 'Inter', sans-serif; }
+
+/* Header preview */
+.hdr-preview {
+  background: #fff; border: 1px solid #e5e7eb; border-radius: 10px;
+  padding: 10px 14px; margin-top: 16px; display: flex; align-items: center; gap: 8px;
+}
+.logo-name-text {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800;
+  font-size: 14px; color: #111827; letter-spacing: -0.2px;
+}
+.hdr-preview-sub { font-size: 10px; color: #9ca3af; font-family: 'Inter', sans-serif; margin-top: 2px; }
+
+/* Size demos */
+.size-row { display: flex; align-items: center; gap: 12px; justify-content: center; margin-top: 12px; }
+.size-lbl { font-size: 10px; color: #9ca3af; font-family: 'Inter', sans-serif; }
+</style>
+
+<h2>Logo concept — welke past het beste?</h2>
+<p class="subtitle">Elk concept getoond op 3 groottes + header preview. Klik om te kiezen.</p>
+
+<div class="logo-grid">
+
+  <!-- CONCEPT A: Driehoekig zeil -->
+  <div class="logo-card option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="logo-label">A — Zeil (aanbevolen)</div>
+
+    <div class="size-row">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+          <polygon points="12,2 21,20 3,20" fill="#0066FF"/>
+          <rect x="2" y="21.5" width="20" height="2.5" rx="1.25" fill="#0066FF" opacity="0.5"/>
+        </svg>
+        <div class="size-lbl">48px</div>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+          <polygon points="12,2 21,20 3,20" fill="#0066FF"/>
+          <rect x="2" y="21.5" width="20" height="2.5" rx="1.25" fill="#0066FF" opacity="0.5"/>
+        </svg>
+        <div class="size-lbl">32px</div>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <polygon points="12,2 21,20 3,20" fill="#0066FF"/>
+          <rect x="2" y="21.5" width="20" height="2.5" rx="1.25" fill="#0066FF" opacity="0.5"/>
+        </svg>
+        <div class="size-lbl">22px</div>
+      </div>
+    </div>
+
+    <div class="hdr-preview">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" style="flex-shrink:0">
+        <polygon points="12,2 21,20 3,20" fill="#0066FF"/>
+        <rect x="2" y="21.5" width="20" height="2.5" rx="1.25" fill="#0066FF" opacity="0.5"/>
+      </svg>
+      <div>
+        <div class="logo-name-text">Texel Rating</div>
+        <div class="hdr-preview-sub">Header preview</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT B: Gestileerde golf -->
+  <div class="logo-card option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="logo-label">B — Golf</div>
+
+    <div class="size-row">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+          <path d="M2 7 Q7 2 12 7 Q17 12 22 7" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M2 13 Q7 8 12 13 Q17 18 22 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>
+          <path d="M2 19 Q7 14 12 19 Q17 24 22 19" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+        <div class="size-lbl">48px</div>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+          <path d="M2 7 Q7 2 12 7 Q17 12 22 7" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M2 13 Q7 8 12 13 Q17 18 22 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>
+          <path d="M2 19 Q7 14 12 19 Q17 24 22 19" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+        <div class="size-lbl">32px</div>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <path d="M2 7 Q7 2 12 7 Q17 12 22 7" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M2 13 Q7 8 12 13 Q17 18 22 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>
+          <path d="M2 19 Q7 14 12 19 Q17 24 22 19" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.3"/>
+        </svg>
+        <div class="size-lbl">22px</div>
+      </div>
+    </div>
+
+    <div class="hdr-preview">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" style="flex-shrink:0">
+        <path d="M2 7 Q7 2 12 7 Q17 12 22 7" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <path d="M2 13 Q7 8 12 13 Q17 18 22 13" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.65"/>
+        <path d="M2 19 Q7 14 12 19 Q17 24 22 19" stroke="#0066FF" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.3"/>
+      </svg>
+      <div>
+        <div class="logo-name-text">Texel Rating</div>
+        <div class="hdr-preview-sub">Header preview</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONCEPT C: TR badge -->
+  <div class="logo-card option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="logo-label">C — TR badge</div>
+
+    <div class="size-row">
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+          <rect width="24" height="24" rx="7" fill="#0066FF"/>
+          <text x="12" y="17" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="800" fill="white" text-anchor="middle" letter-spacing="0">TR</text>
+        </svg>
+        <div class="size-lbl">48px</div>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
+          <rect width="24" height="24" rx="6" fill="#0066FF"/>
+          <text x="12" y="17" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="800" fill="white" text-anchor="middle">TR</text>
+        </svg>
+        <div class="size-lbl">32px</div>
+      </div>
+      <div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22">
+          <rect width="24" height="24" rx="6" fill="#0066FF"/>
+          <text x="12" y="17" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="800" fill="white" text-anchor="middle">TR</text>
+        </svg>
+        <div class="size-lbl">22px</div>
+      </div>
+    </div>
+
+    <div class="hdr-preview">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="22" height="22" style="flex-shrink:0">
+        <rect width="24" height="24" rx="6" fill="#0066FF"/>
+        <text x="12" y="17" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="800" fill="white" text-anchor="middle">TR</text>
+      </svg>
+      <div>
+        <div class="logo-name-text">Texel Rating</div>
+        <div class="hdr-preview-sub">Header preview</div>
+      </div>
+    </div>
+  </div>
+
+</div>
