@@ -214,8 +214,8 @@ export default function App() {
 
   return (
     <div style={{ minHeight: '100svh', background: 'var(--stage)', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 430, minHeight: '100svh', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}>
-        <div key={page} className={`page-${dir}`} style={{ minHeight: '100svh' }}>
+      <div style={{ width: '100%', maxWidth: 430, height: '100svh', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}>
+        <div key={page} className={`page-${dir}`} style={{ height: '100svh' }}>
           {page === 'home'    && <Home    {...props} />}
           {page === 'compare' && <RaceComparison {...props} />}
           {page === 'agenda'  && <Info    {...props} />}

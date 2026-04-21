@@ -122,10 +122,10 @@ export default function Info({ t, onBack }) {
   ]
 
   return (
-    <div style={{ minHeight: '100svh', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>
 
       {/* Header */}
-      <div style={{ position: 'sticky', top: 0, zIndex: 10, background: 'var(--surface)', borderBottom: '1px solid var(--border2)' }}>
+      <div style={{ flexShrink: 0, background: 'var(--surface)', borderBottom: '1px solid var(--border2)' }}>
         <div style={{ padding: '18px 20px 0', display: 'flex', alignItems: 'center', gap: 14 }}>
           <Pressable
             onClick={onBack}
@@ -150,9 +150,11 @@ export default function Info({ t, onBack }) {
         </div>
       </div>
 
-      {tab === 'programma' && <TabProgramma/>}
-      {tab === 'regels'    && <TabRegels/>}
-      {tab === 'contact'   && <TabContact/>}
+      <div style={{ flex: 1, overflowY: 'auto' }} className="scrollbar-none">
+        {tab === 'programma' && <TabProgramma/>}
+        {tab === 'regels'    && <TabRegels/>}
+        {tab === 'contact'   && <TabContact/>}
+      </div>
     </div>
   )
 }

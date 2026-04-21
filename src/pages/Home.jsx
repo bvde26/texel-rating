@@ -154,10 +154,10 @@ export default function Home({ t, lang, setLang, go }) {
   })
 
   return (
-    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
+    <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>
 
       {/* Brand header */}
-      <div style={{ padding: '22px 20px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+      <div style={{ padding: '22px 20px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexShrink: 0 }}>
         <div>
           <div style={{
             fontFamily: 'JetBrains Mono, monospace',
@@ -195,31 +195,32 @@ export default function Home({ t, lang, setLang, go }) {
       </div>
 
       {/* Tiles */}
-      <div style={{ padding: '0 16px', display: 'grid', gap: 12 }}>
-        <HomeTile
-          variant="light"
-          eyebrow="01 / Rating"
-          title={t.tile_compare_title}
-          sub={t.tile_compare_sub}
-          meta={t.meta_compare}
-          onClick={() => go('compare')}
-        />
-        <HomeTile
-          variant="dark"
-          eyebrow="02 / Agenda"
-          title={t.tile_agenda_title}
-          sub={t.tile_agenda_sub}
-          meta={t.meta_agenda}
-          onClick={() => go('agenda')}
-        />
-        <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '0 16px 12px' }} className="scrollbar-none">
+        <div style={{ display: 'grid', gap: 12 }}>
+          <HomeTile
+            variant="light"
+            eyebrow="01 / Rating"
+            title={t.tile_compare_title}
+            sub={t.tile_compare_sub}
+            meta={t.meta_compare}
+            onClick={() => go('compare')}
+          />
+          <HomeTile
+            variant="dark"
+            eyebrow="02 / Agenda"
+            title={t.tile_agenda_title}
+            sub={t.tile_agenda_sub}
+            meta={t.meta_agenda}
+            onClick={() => go('agenda')}
+          />
+          <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
+        </div>
       </div>
-
-      <div style={{ flex: 1 }}/>
 
       {/* Footer strip */}
       <div style={{
         padding: '16px 20px 28px',
+        flexShrink: 0,
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         fontFamily: 'JetBrains Mono, monospace', fontSize: 11,
         color: 'rgba(0,0,0,0.45)', letterSpacing: 0.4,

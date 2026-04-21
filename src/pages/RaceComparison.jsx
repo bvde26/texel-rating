@@ -487,7 +487,7 @@ export default function RaceComparison({ t, lang, onBack }) {
 
       {/* Header */}
       <div style={{
-        position: 'sticky', top: 0, zIndex: 10,
+        flexShrink: 0,
         background: 'var(--surface)', color: '#000',
         padding: '18px 20px 0',
         borderBottom: '1px solid var(--border2)',
