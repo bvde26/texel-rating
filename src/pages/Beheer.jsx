@@ -67,7 +67,7 @@ export default function Beheer({ onBack }) {
     try {
       await Promise.race([
         addNewsItem(t, b),
-        new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 6000)),
+        new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 15000)),
       ])
       setSendStatus('ok')
       setTimeout(() => setSendStatus(''), 3000)
