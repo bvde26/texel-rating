@@ -62,28 +62,26 @@ export default function Beheer({ onBack }) {
     setSendStatus('')
     try {
       await addNewsItem(title.trim(), body.trim())
-      // Send push notification
-      setPushLoading(true)
-      try {
-        await fetch('/api/send-push', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: title.trim(),
-            body: body.trim(),
-            secret: import.meta.env.VITE_PUSH_SECRET,
-          }),
-        })
-      } catch { /* push failure doesn't block message posting */ }
-      setPushLoading(false)
       setTitle('')
       setBody('')
       setSendStatus('ok')
       setTimeout(() => setSendStatus(''), 3000)
+      // Fire push in background — never block on it
+      setPushLoading(true)
+      const timeout = new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 8000))
+      Promise.race([
+        fetch('/api/send-push', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: title.trim(), body: body.trim(), secret: import.meta.env.VITE_PUSH_SECRET }),
+        }),
+        timeout,
+      ]).catch(() => {}).finally(() => setPushLoading(false))
     } catch {
       setSendStatus('err')
+    } finally {
+      setSending(false)
     }
-    setSending(false)
   }
 
   if (authLoading) return null
