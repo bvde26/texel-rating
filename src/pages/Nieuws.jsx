@@ -28,16 +28,24 @@ export default function Nieuws({ onBack, lang }) {
   }, [])
 
   const handlePush = async () => {
+    const { isSupported } = await import('firebase/messaging')
+    const supported = await isSupported()
+    if (!supported) {
+      setPushStatus('unsupported')
+      return
+    }
     setPushStatus('requested')
     const token = await requestPushPermission()
     setPushStatus(token ? 'granted' : 'denied')
   }
 
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone
   const pushLabel = {
     idle: lang === 'nl' ? 'Meldingen aan' : 'Enable notifications',
     requested: '...',
     granted: lang === 'nl' ? 'Meldingen actief ✓' : 'Notifications on ✓',
     denied: lang === 'nl' ? 'Niet toegestaan' : 'Permission denied',
+    unsupported: lang === 'nl' ? (isStandalone ? 'Niet ondersteund' : 'Zet op beginscherm') : (isStandalone ? 'Not supported' : 'Add to home screen'),
   }
 
   return (
