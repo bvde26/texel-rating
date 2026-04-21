@@ -56,32 +56,16 @@ export default function Beheer({ onBack }) {
     setLoginLoading(false)
   }
 
-  const [debugMsg, setDebugMsg] = useState('')
-
-  const handlePost = async () => {
+  const handlePost = () => {
     if (!title.trim() || !body.trim()) return
     const t = title.trim()
     const b = body.trim()
     setTitle('')
     setBody('')
-    setSending(true)
-    setSendStatus('')
-    setDebugMsg('Bezig met schrijven...')
-    try {
-      await Promise.race([
-        addNewsItem(t, b),
-        new Promise((_, r) => setTimeout(() => r(new Error('timeout-15s')), 15000)),
-      ])
-      setDebugMsg('OK: bericht opgeslagen')
-      setSendStatus('ok')
-      setTimeout(() => setSendStatus(''), 3000)
-    } catch (err) {
-      setDebugMsg('FOUT: ' + (err?.message || err?.code || String(err)))
-      setSendStatus('err')
-      setSending(false)
-      return
-    }
-    setSending(false)
+    setSendStatus('ok')
+    setTimeout(() => setSendStatus(''), 3000)
+    // Fire-and-forget: onSnapshot confirms the write in the list
+    addNewsItem(t, b).catch(() => setSendStatus('err'))
     // Push in background
     setPushLoading(true)
     Promise.race([
@@ -180,16 +164,14 @@ export default function Beheer({ onBack }) {
             onClick={handlePost}
             style={{
               width: '100%', padding: '14px', borderRadius: 12,
-              background: sending ? 'rgba(0,0,0,0.4)' : '#000',
-              color: '#fff', textAlign: 'center',
+              background: '#000', color: '#fff', textAlign: 'center',
               fontFamily: 'Outfit, sans-serif', fontSize: 15, fontWeight: 600,
-              pointerEvents: sending ? 'none' : 'auto',
             }}
           >
-            {sending ? (pushLoading ? 'Push versturen...' : 'Bezig...') : sendStatus === 'ok' ? 'Geplaatst ✓' : 'Plaatsen + Push sturen'}
+            {sendStatus === 'ok' ? 'Geplaatst ✓' : pushLoading ? 'Push versturen...' : 'Plaatsen + Push sturen'}
           </Pressable>
-          {debugMsg && (
-            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#b00', marginTop: 8, wordBreak: 'break-all' }}>{debugMsg}</div>
+          {sendStatus === 'err' && (
+            <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: '#b00', marginTop: 8 }}>Er ging iets mis. Probeer opnieuw.</div>
           )}
         </div>
 
