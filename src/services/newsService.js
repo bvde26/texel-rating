@@ -1,11 +1,15 @@
 import { db } from '../firebase'
 import { collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore'
 
-export const subscribeToNews = (callback) => {
+export const subscribeToNews = (callback, onError) => {
   const q = query(collection(db, 'news'), orderBy('createdAt', 'desc'))
   return onSnapshot(q, (snapshot) => {
     const items = snapshot.docs.map(d => ({ id: d.id, ...d.data() }))
     callback(items)
+  }, (err) => {
+    console.error('Firestore news error:', err)
+    if (onError) onError(err)
+    else callback([])
   })
 }
 

@@ -19,11 +19,12 @@ export default function Nieuws({ onBack, lang }) {
   const [pushStatus, setPushStatus] = useState('idle') // idle | requested | granted | denied
 
   useEffect(() => {
-    const unsub = subscribeToNews((data) => {
-      setItems(data)
-      setLoading(false)
-    })
-    return unsub
+    const timer = setTimeout(() => setLoading(false), 8000)
+    const unsub = subscribeToNews(
+      (data) => { setItems(data); setLoading(false); clearTimeout(timer) },
+      () => setLoading(false),
+    )
+    return () => { unsub(); clearTimeout(timer) }
   }, [])
 
   const handlePush = async () => {
