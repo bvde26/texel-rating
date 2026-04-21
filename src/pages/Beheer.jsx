@@ -56,6 +56,8 @@ export default function Beheer({ onBack }) {
     setLoginLoading(false)
   }
 
+  const [debugMsg, setDebugMsg] = useState('')
+
   const handlePost = async () => {
     if (!title.trim() || !body.trim()) return
     const t = title.trim()
@@ -64,14 +66,17 @@ export default function Beheer({ onBack }) {
     setBody('')
     setSending(true)
     setSendStatus('')
+    setDebugMsg('Bezig met schrijven...')
     try {
       await Promise.race([
         addNewsItem(t, b),
-        new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 15000)),
+        new Promise((_, r) => setTimeout(() => r(new Error('timeout-15s')), 15000)),
       ])
+      setDebugMsg('OK: bericht opgeslagen')
       setSendStatus('ok')
       setTimeout(() => setSendStatus(''), 3000)
-    } catch {
+    } catch (err) {
+      setDebugMsg('FOUT: ' + (err?.message || err?.code || String(err)))
       setSendStatus('err')
       setSending(false)
       return
@@ -183,8 +188,8 @@ export default function Beheer({ onBack }) {
           >
             {sending ? (pushLoading ? 'Push versturen...' : 'Bezig...') : sendStatus === 'ok' ? 'Geplaatst ✓' : 'Plaatsen + Push sturen'}
           </Pressable>
-          {sendStatus === 'err' && (
-            <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: '#b00', marginTop: 8 }}>Er ging iets mis. Probeer opnieuw.</div>
+          {debugMsg && (
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: '#b00', marginTop: 8, wordBreak: 'break-all' }}>{debugMsg}</div>
           )}
         </div>
 
