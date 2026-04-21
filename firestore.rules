@@ -1,0 +1,17 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Nieuws: iedereen mag lezen, alleen ingelogden mogen schrijven/verwijderen
+    match /news/{docId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // FCM tokens: iedereen mag aanmaken, niemand mag lezen (alleen server via Admin SDK)
+    match /fcm_tokens/{token} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+  }
+}

@@ -214,6 +214,13 @@ export default function Home({ t, lang, setLang, go }) {
             onClick={() => go('agenda')}
           />
           <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
+        <HomeTile
+          variant="light"
+          eyebrow="04 / Nieuws"
+          title={t.tile_nieuws_title}
+          sub={t.tile_nieuws_sub}
+          onClick={() => go('nieuws')}
+        />
         </div>
       </div>
 

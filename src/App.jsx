@@ -3,6 +3,8 @@ import Home from './pages/Home'
 import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
 import Stats from './pages/Stats'
+import Nieuws from './pages/Nieuws'
+import Beheer from './pages/Beheer'
 
 const COPY = {
   nl: {
@@ -52,6 +54,8 @@ const COPY = {
     cat_wingfoil: 'Wingfoil',
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Catamaran solo',
+    tile_nieuws_title: 'Nieuws',
+    tile_nieuws_sub: 'Updates van de wedstrijdleiding',
   },
   en: {
     tile_compare_title: 'Texel Rating Scores',
@@ -100,6 +104,8 @@ const COPY = {
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Catamaran single',
     how_it_works: 'Find your boat by sail number, skipper or crew. See instantly how much time you gain or lose based on the catamaran handicap (Texel Rating).',
+    tile_nieuws_title: 'News',
+    tile_nieuws_sub: 'Updates from race management',
   },
   de: {
     tile_compare_title: 'Texel Rating Scores',
@@ -148,6 +154,8 @@ const COPY = {
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Katamaran Solo',
     how_it_works: 'Wähle dein Boot nach Segelnummer, Skipper oder Crew. Sieh sofort, wie viel Zeit du durch das Katamaran-Handicap (Texel Rating) gewinnst oder verlierst.',
+    tile_nieuws_title: 'Neuigkeiten',
+    tile_nieuws_sub: 'Updates der Rennleitung',
   },
   fr: {
     tile_compare_title: 'Texel Rating Scores',
@@ -196,6 +204,8 @@ const COPY = {
     cat_windsurf: 'Windsurf',
     cat_catamaran_single: 'Catamaran solo',
     how_it_works: 'Trouvez votre bateau par numéro de voile, skipper ou équipier. Voyez immédiatement votre avantage ou retard selon le handicap catamaran (Texel Rating).',
+    tile_nieuws_title: 'Actualités',
+    tile_nieuws_sub: 'Mises à jour du comité de course',
   },
 }
 
@@ -220,6 +230,8 @@ export default function App() {
           {page === 'compare' && <RaceComparison {...props} />}
           {page === 'agenda'  && <Info    {...props} />}
           {page === 'stats'   && <Stats   {...props} />}
+          {page === 'nieuws'  && <Nieuws  {...props} />}
+          {page === 'beheer'  && <Beheer  {...props} />}
         </div>
       </div>
     </div>
