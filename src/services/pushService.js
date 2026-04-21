@@ -1,5 +1,4 @@
-import { db, getMessagingInstance } from '../firebase'
-import { doc, setDoc, deleteDoc } from 'firebase/firestore'
+import { getMessagingInstance } from '../firebase'
 
 const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY
 
@@ -14,15 +13,14 @@ export const requestPushPermission = async () => {
     if (permission !== 'granted') return null
     const token = await getToken(messaging, { vapidKey: VAPID_KEY })
     if (token) {
-      await setDoc(doc(db, 'fcm_tokens', token), { token, createdAt: new Date().toISOString() })
+      await fetch('/api/register-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      })
     }
     return token
   } catch {
     return null
   }
-}
-
-export const removePushToken = async (token) => {
-  if (!token) return
-  await deleteDoc(doc(db, 'fcm_tokens', token))
 }
