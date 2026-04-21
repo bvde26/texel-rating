@@ -58,30 +58,35 @@ export default function Beheer({ onBack }) {
 
   const handlePost = async () => {
     if (!title.trim() || !body.trim()) return
+    const t = title.trim()
+    const b = body.trim()
+    setTitle('')
+    setBody('')
     setSending(true)
     setSendStatus('')
     try {
-      await addNewsItem(title.trim(), body.trim())
-      setTitle('')
-      setBody('')
+      await Promise.race([
+        addNewsItem(t, b),
+        new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 6000)),
+      ])
       setSendStatus('ok')
       setTimeout(() => setSendStatus(''), 3000)
-      // Fire push in background — never block on it
-      setPushLoading(true)
-      const timeout = new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 8000))
-      Promise.race([
-        fetch('/api/send-push', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ title: title.trim(), body: body.trim(), secret: import.meta.env.VITE_PUSH_SECRET }),
-        }),
-        timeout,
-      ]).catch(() => {}).finally(() => setPushLoading(false))
     } catch {
       setSendStatus('err')
-    } finally {
       setSending(false)
+      return
     }
+    setSending(false)
+    // Push in background
+    setPushLoading(true)
+    Promise.race([
+      fetch('/api/send-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ title: t, body: b, secret: import.meta.env.VITE_PUSH_SECRET }),
+      }),
+      new Promise((_, r) => setTimeout(() => r(new Error('timeout')), 8000)),
+    ]).catch(() => {}).finally(() => setPushLoading(false))
   }
 
   if (authLoading) return null

@@ -10,8 +10,8 @@ service cloud.firestore {
 
     // FCM tokens: iedereen mag aanmaken, niemand mag lezen (alleen server via Admin SDK)
     match /fcm_tokens/{token} {
-      allow create: if true;
-      allow read, update, delete: if false;
+      allow create, update: if true;
+      allow read, delete: if false;
     }
   }
 }

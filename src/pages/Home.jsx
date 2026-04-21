@@ -129,15 +129,16 @@ function RegistrationsTile({ t, categories, onClick }) {
       </div>
       <div style={{ display: 'grid', gap: 8 }}>
         {Object.entries(categories).map(([id, cat]) => (
-          <div key={id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div key={id} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <div style={{
               fontFamily: 'Outfit, sans-serif',
               fontSize: 13, color: 'rgba(0,0,0,0.65)',
+              flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>{t[`cat_${id}`] || cat.nameNl}</div>
             <div style={{
               fontFamily: 'JetBrains Mono, monospace',
               fontSize: 13, fontWeight: 600,
-              color: '#000',
+              color: '#000', flexShrink: 0,
             }}>{cat.count}</div>
           </div>
         ))}
