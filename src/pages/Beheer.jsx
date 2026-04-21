@@ -56,16 +56,31 @@ export default function Beheer({ onBack }) {
     setLoginLoading(false)
   }
 
+  const [debugMsg, setDebugMsg] = useState('')
+
   const handlePost = () => {
     if (!title.trim() || !body.trim()) return
     const t = title.trim()
     const b = body.trim()
     setTitle('')
     setBody('')
+    const uid = auth.currentUser?.uid ?? 'NIET INGELOGD'
+    setDebugMsg(`uid: ${uid.slice(0, 12)}… schrijven…`)
+    let okTimer
     setSendStatus('ok')
-    setTimeout(() => setSendStatus(''), 3000)
-    // Fire-and-forget: onSnapshot confirms the write in the list
-    addNewsItem(t, b).catch(() => setSendStatus('err'))
+    okTimer = setTimeout(() => setSendStatus(''), 3000)
+    addNewsItem(t, b)
+      .then(() => {
+        clearTimeout(okTimer)
+        setSendStatus('ok')
+        setDebugMsg('OK — staat op server ✓')
+        setTimeout(() => { setSendStatus(''); setDebugMsg('') }, 4000)
+      })
+      .catch((err) => {
+        clearTimeout(okTimer)
+        setSendStatus('err')
+        setDebugMsg('ERR: ' + (err?.code ?? err?.message ?? String(err)))
+      })
     // Push in background
     setPushLoading(true)
     Promise.race([
@@ -170,8 +185,8 @@ export default function Beheer({ onBack }) {
           >
             {sendStatus === 'ok' ? 'Geplaatst ✓' : pushLoading ? 'Push versturen...' : 'Plaatsen + Push sturen'}
           </Pressable>
-          {sendStatus === 'err' && (
-            <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: '#b00', marginTop: 8 }}>Er ging iets mis. Probeer opnieuw.</div>
+          {debugMsg && (
+            <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: sendStatus === 'err' ? '#b00' : '#060', marginTop: 8, wordBreak: 'break-all' }}>{debugMsg}</div>
           )}
         </div>
 
