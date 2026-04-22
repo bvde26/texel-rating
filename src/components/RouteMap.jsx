@@ -37,17 +37,23 @@ function loadLayers() {
 
 function orderedRouteLine(waypoints) {
   const byId = Object.fromEntries(waypoints.map(w => [w.id, [w.lat, w.lon]]))
-  // Route volgt offshore rond Texel. Alle tussenpunten ruim in zee (geen land-kruising).
+  // Route volgt de kustlijn zoals getekend in NOR Addendum B.
+  // Leg 1: Paal 17 NOORD langs westkust, rondt NW Eierland.
+  // Leg 2: top van eiland naar gate 2 (langs vuurtoren).
+  // Leg 3: diagonaal NE naar VC-vessel.
+  // Leg 4: ZW naar gate 3 (Oudeschild).
+  // Leg 5: ZUID langs oostkust om zuidpunt via gate 4.
+  // Leg 6: langs WNB marks weer NOORD langs westkust naar finish.
   return [
     byId['start-finish'],       // Paal 17
-    [53.1500, 4.6950],          // west coast mid (offshore)
-    [53.1950, 4.6900],          // NW Eierland ruim offshore
-    [53.2150, 4.7400],          // noordkust noord-west (ruim boven Eierland)
-    [53.2150, 4.8000],          // noordkust centraal
-    [53.2050, 4.8350],          // aanloop gate 1
+    [53.1500, 4.7230],          // westkust mid (dicht offshore)
+    [53.1920, 4.7180],          // aanloop NW Eierland
+    [53.2030, 4.7350],          // NW hoek Eierland offshore
+    [53.2050, 4.7750],          // top Eierland
+    [53.2020, 4.8200],          // aanloop gate 1 vanaf noord
     byId['gate-1'],
-    [53.2050, 4.8800],          // past vuurtoren offshore
-    [53.1950, 4.9100],          // NE hoek
+    [53.1950, 4.8720],          // offshore past vuurtoren
+    [53.1850, 4.8950],          // NE hoek
     byId['gate-2'],
     byId['vc-vessel'],
     byId['gate-3'],
@@ -55,11 +61,10 @@ function orderedRouteLine(waypoints) {
     byId['stenen-zuid'],
     byId['t2'],
     byId['gate-4'],
-    [52.9900, 4.6800],          // offshore zuid-west
     byId['wnb-1'],
     byId['wnb-3'],
     byId['wnb-5'],
-    [53.0800, 4.6950],          // westkust terug
+    [53.0800, 4.7220],          // westkust terug
     byId['start-finish'],
   ].filter(Boolean)
 }
