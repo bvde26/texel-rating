@@ -316,7 +316,9 @@ export default function Home({ t, lang, setLang, go }) {
           <div style={{ width: 7, height: 7, borderRadius: 999, background: 'var(--accent-moss)', boxShadow: '0 0 0 3px rgba(127,183,126,0.25)' }}/>
           {t.home_footer.toUpperCase()}
         </div>
-        <div>v{__APP_VERSION__}</div>
+        <Pressable onClick={() => go('beheer')} style={{ fontFamily: 'inherit', fontSize: 'inherit', color: 'inherit', letterSpacing: 'inherit' }}>
+          v{__APP_VERSION__}
+        </Pressable>
       </div>
     </div>
   )

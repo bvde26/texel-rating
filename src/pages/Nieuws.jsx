@@ -4,6 +4,27 @@ import { requestPushPermission } from '../services/pushService'
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
 
+function renderBodyWithLinks(text) {
+  if (!text) return null
+  const parts = text.split(/(https?:\/\/[^\s]+)/g)
+  return parts.map((part, i) => {
+    if (/^https?:\/\//.test(part)) {
+      return (
+        <a
+          key={i}
+          href={part}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: '#0a6b2e', textDecoration: 'underline', wordBreak: 'break-all' }}
+        >
+          {part}
+        </a>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
+
 function timeAgo(ts) {
   if (!ts) return ''
   const diff = (Date.now() - ts.toMillis()) / 1000
@@ -167,7 +188,7 @@ export default function Nieuws({ onBack, lang }) {
               </div>
             </div>
             <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, lineHeight: 1.55, color: 'rgba(0,0,0,0.75)', whiteSpace: 'pre-wrap' }}>
-              {item.body}
+              {renderBodyWithLinks(item.body)}
             </div>
           </div>
         ))}
