@@ -191,11 +191,13 @@ export default function Beheer({ onBack }) {
           <Pressable
             onClick={handlePost}
             style={{
-              width: '100%', padding: '14px', borderRadius: 12,
+              width: '100%', height: 48, borderRadius: 12,
               background: sending ? 'rgba(0,0,0,0.4)' : '#000',
-              color: '#fff', textAlign: 'center',
+              color: '#fff',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
               fontFamily: 'Outfit, sans-serif', fontSize: 15, fontWeight: 600,
               pointerEvents: sending ? 'none' : 'auto',
+              boxSizing: 'border-box',
             }}
           >
             {sending ? 'Versturen...' : sendStatus === 'ok' ? 'Geplaatst ✓' : 'Plaatsen + Push sturen'}
@@ -228,13 +230,13 @@ export default function Beheer({ onBack }) {
                 <div style={{ display: 'flex', gap: 8 }}>
                   <Pressable
                     onClick={saveEdit}
-                    style={{ flex: 1, padding: '10px', borderRadius: 10, background: editSaving ? 'rgba(0,0,0,0.4)' : '#000', color: '#fff', textAlign: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, pointerEvents: editSaving ? 'none' : 'auto' }}
+                    style={{ flex: 1, height: 40, borderRadius: 10, background: editSaving ? 'rgba(0,0,0,0.4)' : '#000', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, pointerEvents: editSaving ? 'none' : 'auto', boxSizing: 'border-box' }}
                   >
                     {editSaving ? 'Opslaan...' : 'Opslaan'}
                   </Pressable>
                   <Pressable
                     onClick={cancelEdit}
-                    style={{ flex: 1, padding: '10px', borderRadius: 10, background: 'rgba(0,0,0,0.06)', color: '#000', textAlign: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600 }}
+                    style={{ flex: 1, height: 40, borderRadius: 10, background: 'rgba(0,0,0,0.06)', color: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, boxSizing: 'border-box' }}
                   >
                     Annuleren
                   </Pressable>
