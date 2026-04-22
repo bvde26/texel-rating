@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import useVersionCheck from './hooks/useVersionCheck'
 import Home from './pages/Home'
 import RaceComparison from './pages/RaceComparison'
@@ -268,9 +268,25 @@ export default function App() {
   const [lang, setLang] = useState('nl')
   useVersionCheck()
 
+  useEffect(() => {
+    if (!window.history.state?.page) {
+      window.history.replaceState({ page: initialPage }, '')
+    }
+    const onPop = (e) => {
+      const nextPage = e.state?.page ?? 'home'
+      setDir('back')
+      setPage(nextPage)
+    }
+    window.addEventListener('popstate', onPop)
+    return () => window.removeEventListener('popstate', onPop)
+  }, [initialPage])
+
   const go = (next) => {
+    if (next === page) return
     setDir(next === 'home' ? 'back' : 'fwd')
     setPage(next)
+    const url = next === 'home' ? '/' : `#${next}`
+    window.history.pushState({ page: next }, '', url)
   }
 
   const t = COPY[lang]
