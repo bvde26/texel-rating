@@ -5,11 +5,12 @@ import Pressable from './Pressable'
 import { Icon } from './icons'
 
 const TYPE_STYLE = {
-  start:    { color: '#00B050', stroke: '#000', radius: 8, weight: 1 },
-  vessel:   { color: '#FFC400', stroke: '#000', radius: 7, weight: 1 },
-  landmark: { color: '#8B5CF6', stroke: '#000', radius: 6, weight: 1 },
-  cardinal: { color: '#000',    stroke: '#FFC400', radius: 4, weight: 2 },
-  mark:     { color: '#E4002B', stroke: '#000', radius: 5, weight: 1 },
+  start:       { color: '#00B050', stroke: '#000', radius: 8, weight: 1 },
+  vessel:      { color: '#FFC400', stroke: '#000', radius: 7, weight: 1 },
+  landmark:    { color: '#8B5CF6', stroke: '#000', radius: 6, weight: 1 },
+  cardinal:    { color: '#000',    stroke: '#FFC400', radius: 4, weight: 2 },
+  mark:        { color: '#E4002B', stroke: '#000', radius: 5, weight: 1 },
+  'yellow-mark': { color: '#FFC400', stroke: '#000', radius: 4, weight: 1 },
 }
 
 const GATE_PAIRS = [
@@ -111,7 +112,7 @@ function MapBody({ data, layers, fullscreen }) {
   const line = orderedRouteLine(data.waypoints)
   return (
     <MapContainer
-      center={[53.07, 4.80]}
+      center={[53.05, 4.75]}
       zoom={fullscreen ? 11 : 10}
       scrollWheelZoom={fullscreen}
       style={{ width: '100%', height: '100%' }}

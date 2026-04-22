@@ -129,7 +129,15 @@
     { "id": "t2", "name": "T2 (rode navigatiemark)", "type": "mark", "lat": 52.9870, "lon": 4.7640 },
     { "id": "gate-4", "name": "Gate 4", "type": "route-point", "lat": 52.982800, "lon": 4.720108 },
     { "id": "gate-4-a", "name": "Gate 4 A", "type": "mark", "lat": 52.982800, "lon": 4.721600 },
-    { "id": "gate-4-b", "name": "Gate 4 B", "type": "mark", "lat": 52.982800, "lon": 4.718616 }
+    { "id": "gate-4-b", "name": "Gate 4 B", "type": "mark", "lat": 52.982800, "lon": 4.718616 },
+    { "id": "rb-ow-2",  "name": "RB-OW 2",  "type": "yellow-mark", "lat": 52.991686, "lon": 4.680739 },
+    { "id": "rb-ow-4",  "name": "RB-OW 4",  "type": "yellow-mark", "lat": 52.995486, "lon": 4.685042 },
+    { "id": "rb-ow-6",  "name": "RB-OW 6",  "type": "yellow-mark", "lat": 52.996369, "lon": 4.692856 },
+    { "id": "rb-ow-8",  "name": "RB-OW 8",  "type": "yellow-mark", "lat": 52.992153, "lon": 4.699333 },
+    { "id": "rb-ow-10", "name": "RB-OW 10", "type": "yellow-mark", "lat": 52.987831, "lon": 4.706717 },
+    { "id": "rb-ow-12", "name": "RB-OW 12", "type": "yellow-mark", "lat": 52.983161, "lon": 4.711089 },
+    { "id": "rb-ow-14", "name": "RB-OW 14", "type": "yellow-mark", "lat": 52.978553, "lon": 4.716239 },
+    { "id": "rb-ow-16", "name": "RB-OW 16", "type": "yellow-mark", "lat": 52.975208, "lon": 4.714131 }
   ],
 
   "restrictedAreas": [
@@ -164,7 +172,22 @@
         "de": "Sandbank Noorderhaaks — Sperrgebiet, an Backbord halten.",
         "fr": "Banc de sable Noorderhaaks — zone interdite, garder à bâbord."
       },
-      "polygon": [[53.018, 4.615], [52.995, 4.620], [52.955, 4.580], [52.955, 4.485], [52.990, 4.475], [53.018, 4.510]]
+      "polygon": [
+        [52.991686, 4.680739],
+        [52.995486, 4.685042],
+        [52.996369, 4.692856],
+        [52.992153, 4.699333],
+        [52.987831, 4.706717],
+        [52.983161, 4.711089],
+        [52.978553, 4.716239],
+        [52.975208, 4.714131],
+        [52.960000, 4.680000],
+        [52.955000, 4.620000],
+        [52.965000, 4.555000],
+        [52.985000, 4.530000],
+        [52.998000, 4.555000],
+        [52.999000, 4.620000]
+      ]
     }
   ],
 
