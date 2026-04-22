@@ -129,10 +129,7 @@
     { "id": "t2", "name": "T2 (rode navigatiemark)", "type": "mark", "lat": 52.9870, "lon": 4.7640 },
     { "id": "gate-4", "name": "Gate 4", "type": "route-point", "lat": 52.982800, "lon": 4.720108 },
     { "id": "gate-4-a", "name": "Gate 4 A", "type": "mark", "lat": 52.982800, "lon": 4.721600 },
-    { "id": "gate-4-b", "name": "Gate 4 B", "type": "mark", "lat": 52.982800, "lon": 4.718616 },
-    { "id": "wnb-1", "name": "WNB-1", "type": "cardinal", "lat": 53.0040, "lon": 4.6870 },
-    { "id": "wnb-3", "name": "WNB-3", "type": "cardinal", "lat": 53.0280, "lon": 4.6790 },
-    { "id": "wnb-5", "name": "WNB-5", "type": "cardinal", "lat": 53.0520, "lon": 4.6720 }
+    { "id": "gate-4-b", "name": "Gate 4 B", "type": "mark", "lat": 52.982800, "lon": 4.718616 }
   ],
 
   "restrictedAreas": [
@@ -162,12 +159,12 @@
       "id": "razende-bol",
       "name": "Razende Bol / Noorderhaaks",
       "description": {
-        "nl": "Gebied westelijk van WNB-1, WNB-3 en WNB-5 — verboden gebied.",
-        "en": "Area west of WNB-1, WNB-3 and WNB-5 — restricted area.",
-        "de": "Gebiet westlich von WNB-1, WNB-3 und WNB-5 — Sperrgebiet.",
-        "fr": "Zone à l'ouest de WNB-1, WNB-3 et WNB-5 — zone interdite."
+        "nl": "Zandplaat Noorderhaaks — verboden gebied, bakboord houden.",
+        "en": "Noorderhaaks sandbank — restricted area, keep to port.",
+        "de": "Sandbank Noorderhaaks — Sperrgebiet, an Backbord halten.",
+        "fr": "Banc de sable Noorderhaaks — zone interdite, garder à bâbord."
       },
-      "polygon": [[53.0520, 4.6720], [53.0280, 4.6790], [53.0040, 4.6870], [53.0040, 4.6200], [53.0520, 4.6200]]
+      "polygon": [[53.018, 4.615], [52.995, 4.620], [52.955, 4.580], [52.955, 4.485], [52.990, 4.475], [53.018, 4.510]]
     }
   ],
 
