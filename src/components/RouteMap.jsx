@@ -40,30 +40,23 @@ function orderedRouteLine(waypoints) {
   const byId = Object.fromEntries(waypoints.map(w => [w.id, [w.lat, w.lon]]))
   // Vloeiende klokwijzerroute met offshore tussenpunten. Sprinkle helpers tussen echte waypoints
   // zodat de polyline het eiland rondt (niet over land snijdt) en om de Vlakte van Kerken loopt.
+  // Kortste lijn gate-naar-gate. Alleen tussenpunten waar een directe lijn land zou kruisen.
   return [
-    byId['start-finish'],       // Paal 17 (west)
-    [53.1500, 4.7280],          // offshore NW van Paal 17
-    [53.1950, 4.7450],          // rounding NW corner van eiland
-    [53.2080, 4.8000],          // rounding noord boven Eierland
-    byId['gate-1'],             // boven vuurtoren (53.189, 4.839)
-    byId['gate-2'],             // oostkant (53.173, 4.887)
-    [53.1680, 4.9400],          // afdraaien naar VC
-    byId['vc-vessel'],          // VC-vessel offshore east
-    [53.1100, 4.9650],          // zuid van VC, om Vlakte van Kerken heen
-    [53.0700, 4.9300],          // verder zuid offshore van Vlakte van Kerken
-    [53.0500, 4.8950],          // naar Oudeschild toe
-    byId['gate-3'],             // Oudeschild (53.039, 4.860)
-    byId['stenen-oost'],        // cardinal offshore SE
-    byId['stenen-zuid'],        // cardinal offshore S
-    byId['t2'],                 // zuidpunt mark
-    byId['gate-4'],             // zuidwest (52.983, 4.720)
-    [52.9800, 4.6950],          // afdraaien west onder Razende Bol
-    [52.9900, 4.6650],          // om Noorderhaaks heen
-    byId['wnb-1'],              // WNB-1 cardinal
-    byId['wnb-3'],              // WNB-3 cardinal
-    byId['wnb-5'],              // WNB-5 cardinal
-    [53.0800, 4.6950],          // afdraaien terug naar Paal 17
-    byId['start-finish'],       // finish
+    byId['start-finish'],       // Paal 17
+    [53.1950, 4.7180],          // ronding NW hoek (directe lijn zou over Eierland-duinen gaan)
+    byId['gate-1'],             // boven vuurtoren
+    [53.1940, 4.8700],          // ronding NE hoek (directe lijn zou net vuurtoren-kust raken)
+    byId['gate-2'],
+    byId['vc-vessel'],          // direct offshore
+    byId['gate-3'],             // direct (VvK ligt NO van deze lijn)
+    byId['stenen-oost'],
+    byId['stenen-zuid'],
+    byId['t2'],
+    byId['gate-4'],
+    byId['wnb-1'],
+    byId['wnb-3'],
+    byId['wnb-5'],
+    byId['start-finish'],
   ].filter(Boolean)
 }
 
