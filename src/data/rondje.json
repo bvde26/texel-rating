@@ -170,7 +170,49 @@
         "de": "Bucht nach dem Fährhafen — Sperrgebiet.",
         "fr": "Baie après le port du ferry — zone interdite."
       },
-      "polygon": [[53.0060, 4.7700], [53.0060, 4.8050], [52.9920, 4.7900], [52.9920, 4.7700]]
+      "polygon": [
+        [53.001627, 4.781413],
+        [53.002886, 4.779986],
+        [53.004259, 4.775801],
+        [53.006014, 4.772598],
+        [53.006009, 4.768841],
+        [53.006818, 4.767255],
+        [53.007633, 4.763070],
+        [53.010119, 4.754992],
+        [53.009310, 4.753651],
+        [53.010246, 4.750821],
+        [53.010117, 4.746830],
+        [53.004621, 4.753238],
+        [53.003376, 4.755537],
+        [53.001616, 4.761393],
+        [53.000846, 4.765565],
+        [53.000133, 4.770018],
+        [52.998728, 4.771732],
+        [52.998496, 4.773009],
+        [52.997023, 4.773142],
+        [52.996397, 4.773701]
+      ]
+    },
+    {
+      "id": "ferry-corridor",
+      "name": "Veerhaven & pontroute TESO",
+      "description": {
+        "nl": "Veerhaven 't Horntje en pontroute TESO — vrijhouden, geen kruising tijdens ferry-passage.",
+        "en": "Veerhaven 't Horntje and TESO ferry route — keep clear, no crossing during ferry passage.",
+        "de": "Fährhafen 't Horntje und TESO-Fährroute — freihalten, keine Kreuzung bei Fährpassage.",
+        "fr": "Port du ferry 't Horntje et route TESO — dégager, pas de traversée pendant le passage du ferry."
+      },
+      "polygon": [
+        [53.004500, 4.776000],
+        [53.004500, 4.790000],
+        [52.990000, 4.791500],
+        [52.975000, 4.790000],
+        [52.962000, 4.784000],
+        [52.962000, 4.772000],
+        [52.975000, 4.778000],
+        [52.990000, 4.779000],
+        [53.001000, 4.778000]
+      ]
     },
     {
       "id": "razende-bol",
