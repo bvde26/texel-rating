@@ -5,12 +5,21 @@ import Pressable from './Pressable'
 import { Icon } from './icons'
 
 const TYPE_STYLE = {
-  start:    { color: '#00B050', radius: 8 },
-  vessel:   { color: '#FFC400', radius: 7 },
-  landmark: { color: '#8B5CF6', radius: 6 },
-  cardinal: { color: '#E4002B', radius: 6 },
-  mark:     { color: '#E4002B', radius: 8 },
+  start:    { color: '#00B050', stroke: '#000', radius: 8, weight: 1 },
+  vessel:   { color: '#FFC400', stroke: '#000', radius: 7, weight: 1 },
+  landmark: { color: '#8B5CF6', stroke: '#000', radius: 6, weight: 1 },
+  cardinal: { color: '#000',    stroke: '#FFC400', radius: 4, weight: 2 },
+  mark:     { color: '#E4002B', stroke: '#000', radius: 5, weight: 1 },
 }
+
+const GATE_PAIRS = [
+  ['gate-1-a', 'gate-1-b'],
+  ['gate-2-a', 'gate-2-b'],
+  ['gate-3-a', 'gate-3-b'],
+  ['gate-4-a', 'gate-4-b'],
+  ['startline-a', 'startline-b'],
+  ['finishline-a', 'finishline-b'],
+]
 
 const L_I18N = {
   layer_seamark:    { nl: 'Betonning', en: 'Seamarks', de: 'Seezeichen', fr: 'Balisage' },
@@ -134,6 +143,18 @@ function MapBody({ data, layers, fullscreen }) {
             positions={line}
             pathOptions={{ color: '#E4002B', weight: 3, opacity: 0.85, dashArray: '6 6' }}
           />
+          {GATE_PAIRS.map(([a, b]) => {
+            const wpA = data.waypoints.find(w => w.id === a)
+            const wpB = data.waypoints.find(w => w.id === b)
+            if (!wpA || !wpB) return null
+            return (
+              <Polyline
+                key={`gate-line-${a}`}
+                positions={[[wpA.lat, wpA.lon], [wpB.lat, wpB.lon]]}
+                pathOptions={{ color: '#000', weight: 2, opacity: 0.55, dashArray: '2 4' }}
+              />
+            )
+          })}
           {data.waypoints.filter(w => w.type !== 'route-point').map(w => {
             const s = TYPE_STYLE[w.type] || TYPE_STYLE.mark
             return (
@@ -141,7 +162,7 @@ function MapBody({ data, layers, fullscreen }) {
                 key={w.id}
                 center={[w.lat, w.lon]}
                 radius={s.radius}
-                pathOptions={{ color: '#000', weight: 1, fillColor: s.color, fillOpacity: 1 }}
+                pathOptions={{ color: s.stroke, weight: s.weight, fillColor: s.color, fillOpacity: 1 }}
               >
                 <Tooltip>{w.name}</Tooltip>
               </CircleMarker>
