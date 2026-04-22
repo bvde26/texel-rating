@@ -92,13 +92,19 @@ const CAT_LABELS = {
 
 function RegistrationsTile({ t, categories, onClick }) {
   const total = Object.values(categories).reduce((s, c) => s + c.count, 0)
+  const catTotal = (categories.catamaran_duo?.count || 0) + (categories.catamaran_single?.count || 0)
+  const displayRows = [
+    { label: t.cat_catamaran || 'Catamaran', count: catTotal },
+    { label: t.cat_wingfoil, count: categories.wingfoil?.count || 0 },
+    { label: t.cat_windsurf, count: categories.windsurf?.count || 0 },
+  ]
   return (
     <Pressable
       onClick={onClick}
       style={{
         background: '#fff',
         borderRadius: 20,
-        padding: '20px 20px 18px',
+        padding: '22px 22px 20px',
         border: '1px solid rgba(0,0,0,0.06)',
         boxShadow: '0 2px 8px -4px rgba(0,0,0,0.08)',
         width: '100%',
@@ -110,7 +116,7 @@ function RegistrationsTile({ t, categories, onClick }) {
     >
       <div style={{
         display: 'flex', justifyContent: 'space-between',
-        alignItems: 'flex-start', gap: 12, marginBottom: 14, minWidth: 0,
+        alignItems: 'flex-start', gap: 12, marginBottom: 10, minWidth: 0,
       }}>
         <div style={{
           fontFamily: 'JetBrains Mono, monospace',
@@ -120,25 +126,46 @@ function RegistrationsTile({ t, categories, onClick }) {
           flex: 1, minWidth: 0,
           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
         }}>04 / {t.tile_reg_eyebrow}</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
-          <div style={{
-            fontFamily: 'Space Grotesk, sans-serif',
-            fontWeight: 700, fontSize: 20,
-            letterSpacing: -0.6, color: '#000',
-          }}>{total}</div>
-          <div style={{
-            width: 30, height: 30, borderRadius: 999,
-            border: '1px solid rgba(0,0,0,0.12)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <Icon.ArrowRight size={14} color="#000" />
-          </div>
+        <div style={{
+          width: 36, height: 36, borderRadius: 999,
+          border: '1px solid rgba(0,0,0,0.15)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          flexShrink: 0,
+        }}>
+          <Icon.ArrowRight size={16} color="#000" />
         </div>
       </div>
+
+      <div style={{
+        display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
+        gap: 12, marginBottom: 14, minWidth: 0,
+      }}>
+        <div style={{
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontWeight: 700,
+          fontSize: 30,
+          letterSpacing: -0.9,
+          lineHeight: 1,
+          textTransform: 'uppercase',
+          color: '#000',
+          flex: 1, minWidth: 0,
+          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+        }}>{t.tile_reg_eyebrow}</div>
+        <div style={{
+          fontFamily: 'Space Grotesk, sans-serif',
+          fontWeight: 700,
+          fontSize: 30,
+          letterSpacing: -0.9,
+          lineHeight: 1,
+          color: '#000',
+          fontVariantNumeric: 'tabular-nums',
+          flexShrink: 0,
+        }}>{total}</div>
+      </div>
+
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7, minWidth: 0 }}>
-        {Object.entries(categories).map(([id, cat]) => (
-          <div key={id} style={{
+        {displayRows.map((row) => (
+          <div key={row.label} style={{
             display: 'flex', alignItems: 'baseline', gap: 10,
             minWidth: 0, width: '100%',
           }}>
@@ -147,7 +174,7 @@ function RegistrationsTile({ t, categories, onClick }) {
               fontSize: 13, color: 'rgba(0,0,0,0.65)',
               flex: '1 1 auto', minWidth: 0,
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-            }}>{t[`cat_${id}`] || cat.nameNl}</div>
+            }}>{row.label}</div>
             <div style={{
               fontFamily: 'JetBrains Mono, monospace',
               fontSize: 13, fontWeight: 600,
@@ -155,7 +182,7 @@ function RegistrationsTile({ t, categories, onClick }) {
               flex: '0 0 auto',
               textAlign: 'right',
               fontVariantNumeric: 'tabular-nums',
-            }}>{cat.count}</div>
+            }}>{row.count}</div>
           </div>
         ))}
       </div>
