@@ -1,16 +1,36 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=DM+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=DM+Mono:wght@500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --bg:        #f8f9fa;
+  /* Spring palette (2028 glass) */
+  --spring-bg-1:     #F6F2E9;
+  --spring-bg-2:     #EFEFE8;
+  --spring-surface:  rgba(255, 255, 255, 0.68);
+  --spring-surface-strong: rgba(255, 255, 255, 0.86);
+  --spring-edge:     rgba(255, 255, 255, 0.85);
+  --spring-ink:      #1A1F1A;
+  --spring-ink-soft: rgba(26, 31, 26, 0.58);
+  --spring-ink-mute: rgba(26, 31, 26, 0.40);
+
+  /* Accent tints per tile */
+  --accent-moss:   #7FB77E;
+  --accent-sky:    #A4C9E3;
+  --accent-sand:   #E8C9A0;
+  --accent-coral:  #F2A598;
+  --accent-indigo: #8BA4D9;
+  --accent-mint:   #A8D8BE;
+  --accent-ocean:  #6EB5C0;
+
+  /* Legacy tokens (kept for backwards-compat until other pages migrate) */
+  --bg:        var(--spring-bg-1);
   --surface:   #ffffff;
   --border:    #e5e7eb;
   --accent:    #0066FF;
   --accent-bg: #eff6ff;
-  --text:      #111827;
+  --text:      var(--spring-ink);
   --text2:     #6b7280;
   --text3:     #9ca3af;
   --green:     #10b981;
@@ -21,8 +41,12 @@
 }
 
 body {
-  background-color: var(--bg);
-  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 15% 0%, #E8F1E4 0%, transparent 55%),
+    radial-gradient(900px 500px at 95% 100%, #F0E3D4 0%, transparent 50%),
+    linear-gradient(180deg, var(--spring-bg-1) 0%, var(--spring-bg-2) 100%);
+  background-attachment: fixed;
+  color: var(--spring-ink);
   font-family: 'Inter', system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -31,6 +55,67 @@ body {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 14px;
+}
+
+/* Glass tile (2028) */
+.tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 22px 22px 20px;
+  min-height: 168px;
+  background: var(--spring-surface);
+  border: 1px solid var(--spring-edge);
+  border-radius: 24px;
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.9) inset,
+    0 12px 32px -16px rgba(26, 31, 26, 0.18);
+  color: var(--spring-ink);
+  text-align: left;
+  overflow: hidden;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.tile::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: var(--tile-accent, transparent);
+  opacity: 0.9;
+}
+.tile:hover {
+  transform: translateY(-2px);
+  background: var(--spring-surface-strong);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 1) inset,
+    0 20px 44px -20px rgba(26, 31, 26, 0.24);
+}
+.tile[data-accent="moss"]   { --tile-accent: var(--accent-moss); }
+.tile[data-accent="sky"]    { --tile-accent: var(--accent-sky); }
+.tile[data-accent="sand"]   { --tile-accent: var(--accent-sand); }
+.tile[data-accent="coral"]  { --tile-accent: var(--accent-coral); }
+.tile[data-accent="indigo"] { --tile-accent: var(--accent-indigo); }
+.tile[data-accent="mint"]   { --tile-accent: var(--accent-mint); }
+.tile[data-accent="ocean"]  { --tile-accent: var(--accent-ocean); }
+
+.tile-arrow {
+  width: 38px; height: 38px;
+  border-radius: 999px;
+  background: var(--tile-accent, rgba(26, 31, 26, 0.06));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--spring-ink);
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  grid-auto-rows: 1fr;
+  gap: 14px;
+  width: 100%;
 }
 
 .section-title {
