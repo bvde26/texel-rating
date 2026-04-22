@@ -112,9 +112,9 @@
     { "id": "gate-1", "name": "Gate 1", "type": "gate", "lat": 53.1835, "lon": 4.7820 },
     { "id": "lighthouse", "name": "Vuurtoren Eierland", "type": "landmark", "lat": 53.1842, "lon": 4.8610 },
     { "id": "gate-2", "name": "Gate 2", "type": "gate", "lat": 53.1810, "lon": 4.8940 },
-    { "id": "vc-vessel", "name": "VC-vessel", "type": "vessel", "lat": 53.1490, "lon": 4.9540 },
+    { "id": "vc-vessel", "name": "VC-vessel", "type": "vessel", "lat": 53.1511, "lon": 4.9708 },
     { "id": "ijzeren-kaap", "name": "IJzeren Kaap", "type": "landmark", "lat": 53.1100, "lon": 4.8990 },
-    { "id": "gate-3", "name": "Gate 3 (Oudeschild)", "type": "gate", "lat": 53.0395, "lon": 4.8570 },
+    { "id": "gate-3", "name": "Gate 3 (Oudeschild)", "type": "gate", "lat": 53.0395, "lon": 4.8750 },
     { "id": "stenen-oost", "name": "Stenen Oost (cardinal)", "type": "cardinal", "lat": 53.0180, "lon": 4.8230 },
     { "id": "stenen-zuid", "name": "Stenen Zuid (cardinal)", "type": "cardinal", "lat": 53.0060, "lon": 4.8050 },
     { "id": "t2", "name": "T2 (rode navigatiemark)", "type": "mark", "lat": 52.9870, "lon": 4.7640 },
@@ -134,7 +134,7 @@
         "de": "Dreieck westlich der VC-Boje — Sperrgebiet.",
         "fr": "Triangle à l'ouest de la bouée VC — zone interdite."
       },
-      "polygon": [[53.1490, 4.9540], [53.1100, 4.8990], [53.1810, 4.8940]]
+      "polygon": [[53.1511, 4.9708], [53.1100, 4.8990], [53.1810, 4.8940]]
     },
     {
       "id": "mokbaai",
