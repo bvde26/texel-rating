@@ -109,6 +109,9 @@
 
   "waypoints": [
     { "id": "start-finish", "name": "Start / Finish Paal 17", "type": "start", "lat": 53.1047, "lon": 4.7365 },
+    { "id": "startline-offshore", "name": "Startlijn (offshore)", "type": "mark", "lat": 53.1080, "lon": 4.7285 },
+    { "id": "startline-shore", "name": "Startlijn (kust)", "type": "mark", "lat": 53.1050, "lon": 4.7360 },
+    { "id": "finishline-offshore", "name": "Finishlijn", "type": "mark", "lat": 53.1050, "lon": 4.7320 },
     { "id": "gate-1", "name": "Gate 1", "type": "gate", "lat": 53.1870, "lon": 4.7770 },
     { "id": "lighthouse", "name": "Vuurtoren Eierland", "type": "landmark", "lat": 53.1842, "lon": 4.8610 },
     { "id": "gate-2", "name": "Gate 2", "type": "gate", "lat": 53.1780, "lon": 4.9050 },
