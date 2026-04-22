@@ -220,7 +220,7 @@ export default function Home({ t, lang, setLang, go }) {
           <div style={{
             fontFamily: 'JetBrains Mono, monospace',
             fontSize: 11, letterSpacing: 0.8,
-            color: 'var(--spring-ink-mute)', textTransform: 'uppercase',
+            color: 'var(--spring-ink-soft)', textTransform: 'uppercase',
           }}>{t.race_dates}</div>
           <div style={{
             fontFamily: 'Space Grotesk, sans-serif',
