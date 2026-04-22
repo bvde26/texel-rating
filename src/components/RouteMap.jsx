@@ -6,11 +6,10 @@ import { Icon } from './icons'
 
 const TYPE_STYLE = {
   start:    { color: '#00B050', radius: 8 },
-  gate:     { color: '#000',    radius: 7 },
   vessel:   { color: '#FFC400', radius: 7 },
   landmark: { color: '#8B5CF6', radius: 6 },
   cardinal: { color: '#E4002B', radius: 6 },
-  mark:     { color: '#E4002B', radius: 6 },
+  mark:     { color: '#E4002B', radius: 8 },
 }
 
 const L_I18N = {
@@ -127,7 +126,7 @@ function MapBody({ data, layers, fullscreen }) {
             positions={line}
             pathOptions={{ color: '#E4002B', weight: 3, opacity: 0.85, dashArray: '6 6' }}
           />
-          {data.waypoints.map(w => {
+          {data.waypoints.filter(w => w.type !== 'route-point').map(w => {
             const s = TYPE_STYLE[w.type] || TYPE_STYLE.mark
             return (
               <CircleMarker
