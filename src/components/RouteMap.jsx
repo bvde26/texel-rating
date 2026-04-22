@@ -35,38 +35,39 @@ function loadLayers() {
   return { seamark: true, route: true, restricted: true }
 }
 
-function orderedRouteLine(waypoints) {
-  const byId = Object.fromEntries(waypoints.map(w => [w.id, [w.lat, w.lon]]))
-  // Route volgt de kustlijn zoals getekend in NOR Addendum B.
-  // Leg 1: Paal 17 NOORD langs westkust, rondt NW Eierland.
-  // Leg 2: top van eiland naar gate 2 (langs vuurtoren).
-  // Leg 3: diagonaal NE naar VC-vessel.
-  // Leg 4: ZW naar gate 3 (Oudeschild).
-  // Leg 5: ZUID langs oostkust om zuidpunt via gate 4.
-  // Leg 6: langs WNB marks weer NOORD langs westkust naar finish.
-  return [
-    byId['start-finish'],       // Paal 17
-    [53.1500, 4.7230],          // westkust mid (dicht offshore)
-    [53.1920, 4.7180],          // aanloop NW Eierland
-    [53.2030, 4.7350],          // NW hoek Eierland offshore
-    [53.2050, 4.7750],          // top Eierland
-    [53.2020, 4.8200],          // aanloop gate 1 vanaf noord
-    byId['gate-1'],
-    [53.1950, 4.8720],          // offshore past vuurtoren
-    [53.1850, 4.8950],          // NE hoek
-    byId['gate-2'],
-    byId['vc-vessel'],
-    byId['gate-3'],
-    byId['stenen-oost'],
-    byId['stenen-zuid'],
-    byId['t2'],
-    byId['gate-4'],
-    byId['wnb-1'],
-    byId['wnb-3'],
-    byId['wnb-5'],
-    [53.0800, 4.7220],          // westkust terug
-    byId['start-finish'],
-  ].filter(Boolean)
+// Polyline getekend door Bram in geojson.io (user-provided LineString, [lon, lat] naar [lat, lon]).
+const NOR_ROUTE = [
+  [53.174572448790656, 4.81588173256938],
+  [53.13977540935812, 4.779167840865853],
+  [53.10850454340164, 4.74600899011449],
+  [53.08005773659892, 4.720544402665666],
+  [53.051235974723824, 4.703964751136681],
+  [53.02666822869239, 4.6980419833900555],
+  [53.00279955424136, 4.698634142933997],
+  [52.99175137139986, 4.708700855174413],
+  [52.989612686908515, 4.727649960570119],
+  [52.989612686908515, 4.768508969080017],
+  [52.995315610215044, 4.794563988999187],
+  [53.004581254481764, 4.808775818045916],
+  [53.01491366583082, 4.821211168462298],
+  [53.02025704596812, 4.8295014020721965],
+  [53.0309418211792, 4.847266188381383],
+  [53.044116065798505, 4.869176091495632],
+  [53.06155684352942, 4.885164399172908],
+  [53.07116405181765, 4.900560547306185],
+  [53.079701993611735, 4.912995897722453],
+  [53.121300226999864, 4.970435368363638],
+  [53.17031310995256, 4.882203596364377],
+  [53.18379959048764, 4.866215288687101],
+  [53.18785299457997, 4.858909692388551],
+  [53.18833937660173, 4.852686409006566],
+  [53.18801512253364, 4.8451102379319195],
+  [53.187366607041355, 4.839157532088507],
+  [53.174394235021, 4.816429020154629],
+]
+
+function orderedRouteLine() {
+  return NOR_ROUTE
 }
 
 function ResizeOnMount({ trigger }) {
