@@ -211,7 +211,8 @@ function SpiChipSmall({ value, onChange }) {
         transition: 'color 200ms',
       }}
     >
-      {value ? '●' : '○'} SPI
+      {value ? '●' : '○'}{' '}
+      <span style={{ textDecoration: value ? 'none' : 'line-through' }}>SPI</span>
     </Pressable>
   )
 }
