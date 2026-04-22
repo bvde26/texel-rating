@@ -108,7 +108,6 @@
   ],
 
   "waypoints": [
-    { "id": "start-finish", "name": "Start / Finish Paal 17", "type": "start", "lat": 53.1047, "lon": 4.7365 },
     { "id": "finishline-a", "name": "Finishlijn A", "type": "mark", "lat": 53.080423, "lon": 4.728236 },
     { "id": "finishline-b", "name": "Finishlijn B", "type": "mark", "lat": 53.080423, "lon": 4.726741 },
     { "id": "startline-a", "name": "Startlijn A (oost)", "type": "mark", "lat": 53.080423, "lon": 4.731227 },
@@ -125,8 +124,8 @@
     { "id": "gate-3", "name": "Gate 3 (Oudeschild)", "type": "route-point", "lat": 53.038842, "lon": 4.860437 },
     { "id": "gate-3-a", "name": "Gate 3 A", "type": "mark", "lat": 53.038842, "lon": 4.858945 },
     { "id": "gate-3-b", "name": "Gate 3 B", "type": "mark", "lat": 53.038842, "lon": 4.861929 },
-    { "id": "stenen-oost", "name": "Stenen Oost (cardinal)", "type": "cardinal", "lat": 53.0180, "lon": 4.8230 },
-    { "id": "stenen-zuid", "name": "Stenen Zuid (cardinal)", "type": "cardinal", "lat": 53.0060, "lon": 4.8050 },
+    { "id": "stenen-oost", "name": "Stenen Oost (cardinal)", "type": "cardinal", "lat": 53.024667, "lon": 4.831833 },
+    { "id": "stenen-zuid", "name": "Stenen Zuid (cardinal)", "type": "cardinal", "lat": 53.022697, "lon": 4.826200 },
     { "id": "t2", "name": "T2 (rode navigatiemark)", "type": "mark", "lat": 52.9870, "lon": 4.7640 },
     { "id": "gate-4", "name": "Gate 4", "type": "route-point", "lat": 52.982800, "lon": 4.720108 },
     { "id": "gate-4-a", "name": "Gate 4 A", "type": "mark", "lat": 52.982800, "lon": 4.721600 },
