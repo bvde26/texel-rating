@@ -276,9 +276,11 @@ export default function App() {
   const t = COPY[lang]
   const props = { t, lang, setLang, go, onBack: () => go('home') }
 
+  const isHome = page === 'home'
+
   return (
     <div style={{ minHeight: '100svh', background: 'var(--stage)', display: 'flex', justifyContent: 'center' }}>
-      <div style={{ width: '100%', maxWidth: 430, height: '100svh', background: 'var(--bg)', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ width: '100%', maxWidth: isHome ? 1280 : 430, height: '100svh', position: 'relative', overflow: 'hidden' }}>
         <div key={page} className={`page-${dir}`} style={{ height: '100svh' }}>
           {page === 'home'    && <Home    {...props} />}
           {page === 'compare' && <RaceComparison {...props} />}
