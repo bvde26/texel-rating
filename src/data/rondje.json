@@ -120,7 +120,7 @@
     { "id": "gate-2", "name": "Gate 2", "type": "gate", "lat": 53.173263, "lon": 4.886761 },
     { "id": "gate-2-a", "name": "Gate 2 A", "type": "gate", "lat": 53.173263, "lon": 4.885269 },
     { "id": "gate-2-b", "name": "Gate 2 B", "type": "gate", "lat": 53.173263, "lon": 4.888253 },
-    { "id": "vc-vessel", "name": "VC-vessel", "type": "vessel", "lat": 53.1511, "lon": 4.9708 },
+    { "id": "vc-vessel", "name": "VC-vessel", "type": "vessel", "lat": 53.1150, "lon": 4.9550 },
     { "id": "ijzeren-kaap", "name": "IJzeren Kaap", "type": "landmark", "lat": 53.0784, "lon": 4.8965 },
     { "id": "gate-3", "name": "Gate 3 (Oudeschild)", "type": "gate", "lat": 53.038842, "lon": 4.860437 },
     { "id": "gate-3-a", "name": "Gate 3 A", "type": "gate", "lat": 53.038842, "lon": 4.858945 },
@@ -146,7 +146,7 @@
         "de": "Dreieck westlich der VC-Boje — Sperrgebiet.",
         "fr": "Triangle à l'ouest de la bouée VC — zone interdite."
       },
-      "polygon": [[53.1511, 4.9708], [53.1100, 4.8990], [53.1810, 4.8940]]
+      "polygon": [[53.1150, 4.9550], [53.0650, 4.8600], [53.1400, 4.8700]]
     },
     {
       "id": "mokbaai",
