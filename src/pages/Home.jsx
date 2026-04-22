@@ -269,7 +269,7 @@ export default function Home({ t, lang, setLang, go }) {
           <div style={{ width: 7, height: 7, borderRadius: 999, background: '#000', boxShadow: '0 0 0 3px rgba(0,0,0,0.12)' }}/>
           {t.home_footer.toUpperCase()}
         </div>
-        <div>v2.6</div>
+        <div>v{__APP_VERSION__}</div>
       </div>
     </div>
   )

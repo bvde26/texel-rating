@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import useVersionCheck from './hooks/useVersionCheck'
 import Home from './pages/Home'
 import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
@@ -240,6 +241,7 @@ export default function App() {
   const [page, setPage] = useState(initialPage)
   const [dir, setDir] = useState('fwd')
   const [lang, setLang] = useState('nl')
+  useVersionCheck()
 
   const go = (next) => {
     setDir(next === 'home' ? 'back' : 'fwd')
