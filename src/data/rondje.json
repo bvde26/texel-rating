@@ -115,7 +115,7 @@
     { "id": "gate-1", "name": "Gate 1", "type": "route-point", "lat": 53.189249, "lon": 4.839270 },
     { "id": "gate-1-a", "name": "Gate 1 A", "type": "mark", "lat": 53.188351, "lon": 4.839270 },
     { "id": "gate-1-b", "name": "Gate 1 B", "type": "mark", "lat": 53.190147, "lon": 4.839270 },
-    { "id": "lighthouse", "name": "Vuurtoren Eierland", "type": "landmark", "lat": 53.1842, "lon": 4.8610 },
+    { "id": "lighthouse", "name": "Vuurtoren Eierland", "type": "landmark", "lat": 53.182130, "lon": 4.855274 },
     { "id": "gate-2", "name": "Gate 2", "type": "route-point", "lat": 53.173263, "lon": 4.886761 },
     { "id": "gate-2-a", "name": "Gate 2 A", "type": "mark", "lat": 53.173263, "lon": 4.885269 },
     { "id": "gate-2-b", "name": "Gate 2 B", "type": "mark", "lat": 53.173263, "lon": 4.888253 },
