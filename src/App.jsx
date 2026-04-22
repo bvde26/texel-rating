@@ -4,6 +4,8 @@ import RaceComparison from './pages/RaceComparison'
 import Info from './pages/Info'
 import Stats from './pages/Stats'
 import Nieuws from './pages/Nieuws'
+import Weer from './pages/Weer'
+import Rondje from './pages/Rondje'
 import Beheer from './pages/Beheer'
 
 const COPY = {
@@ -56,6 +58,12 @@ const COPY = {
     cat_catamaran_single: 'Catamaran solo',
     tile_nieuws_title: 'Nieuws',
     tile_nieuws_sub: 'Updates van de wedstrijdleiding',
+    tile_weer_title: 'Weer op zee',
+    tile_weer_sub: 'Wind, golven en temperatuur bij paal 17',
+    meta_weer: 'LIVE WIND · TEXEL PAAL 17',
+    tile_rondje_title: 'Het Rondje',
+    tile_rondje_sub: 'Route, gates, tijden, vlaggen en reglement',
+    meta_rondje: '65 NM · 6 JUNI 2026 · EDITIE 47',
   },
   en: {
     tile_compare_title: 'Texel Rating Scores',
@@ -106,6 +114,12 @@ const COPY = {
     how_it_works: 'Find your boat by sail number, skipper or crew. See instantly how much time you gain or lose based on the catamaran handicap (Texel Rating).',
     tile_nieuws_title: 'News',
     tile_nieuws_sub: 'Updates from race management',
+    tile_weer_title: 'Weather at sea',
+    tile_weer_sub: 'Wind, waves and temperature at paal 17',
+    meta_weer: 'LIVE WIND · TEXEL PAAL 17',
+    tile_rondje_title: 'The Round',
+    tile_rondje_sub: 'Route, gates, timings, flags and rules',
+    meta_rondje: '65 NM · 6 JUNE 2026 · EDITION 47',
   },
   de: {
     tile_compare_title: 'Texel Rating Scores',
@@ -156,6 +170,12 @@ const COPY = {
     how_it_works: 'Wähle dein Boot nach Segelnummer, Skipper oder Crew. Sieh sofort, wie viel Zeit du durch das Katamaran-Handicap (Texel Rating) gewinnst oder verlierst.',
     tile_nieuws_title: 'Neuigkeiten',
     tile_nieuws_sub: 'Updates der Rennleitung',
+    tile_weer_title: 'Wetter auf See',
+    tile_weer_sub: 'Wind, Wellen und Temperatur bei Paal 17',
+    meta_weer: 'LIVE WIND · TEXEL PAAL 17',
+    tile_rondje_title: 'Die Runde',
+    tile_rondje_sub: 'Strecke, Gates, Zeiten, Flaggen und Regeln',
+    meta_rondje: '65 SM · 6. JUNI 2026 · AUSGABE 47',
   },
   fr: {
     tile_compare_title: 'Texel Rating Scores',
@@ -206,6 +226,12 @@ const COPY = {
     how_it_works: 'Trouvez votre bateau par numéro de voile, skipper ou équipier. Voyez immédiatement votre avantage ou retard selon le handicap catamaran (Texel Rating).',
     tile_nieuws_title: 'Actualités',
     tile_nieuws_sub: 'Mises à jour du comité de course',
+    tile_weer_title: 'Météo en mer',
+    tile_weer_sub: 'Vent, vagues et température à paal 17',
+    meta_weer: 'VENT LIVE · TEXEL PAAL 17',
+    tile_rondje_title: 'Le Tour',
+    tile_rondje_sub: 'Parcours, portes, horaires, pavillons et règles',
+    meta_rondje: '65 NM · 6 JUIN 2026 · ÉDITION 47',
   },
 }
 
@@ -232,6 +258,8 @@ export default function App() {
           {page === 'agenda'  && <Info    {...props} />}
           {page === 'stats'   && <Stats   {...props} />}
           {page === 'nieuws'  && <Nieuws  {...props} />}
+          {page === 'weer'    && <Weer    {...props} />}
+          {page === 'rondje'  && <Rondje  {...props} />}
           {page === 'beheer'  && <Beheer  {...props} />}
         </div>
       </div>

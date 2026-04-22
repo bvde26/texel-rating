@@ -3,8 +3,8 @@ import Pressable from '../components/Pressable'
 
 import registrationsData from '../data/registrations.json'
 
-const EVENT_DATE = new Date('2026-05-25')
-const EVENT_EDITIE = 51
+const EVENT_DATE = new Date('2026-06-06')
+const EVENT_EDITIE = 47
 const LANGS = ['nl', 'en', 'de', 'fr']
 const FLAGS = { nl: '🇳🇱', en: '🇬🇧', de: '🇩🇪', fr: '🇫🇷' }
 
@@ -119,7 +119,7 @@ function RegistrationsTile({ t, categories, onClick }) {
           color: 'rgba(0,0,0,0.5)',
           flex: 1, minWidth: 0,
           overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-        }}>03 / {t.tile_reg_eyebrow}</div>
+        }}>04 / {t.tile_reg_eyebrow}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
           <div style={{
             fontFamily: 'Space Grotesk, sans-serif',
@@ -230,13 +230,29 @@ export default function Home({ t, lang, setLang, go }) {
             meta={t.meta_agenda}
             onClick={() => go('agenda')}
           />
+          <HomeTile
+            variant="light"
+            eyebrow="03 / Rondje"
+            title={t.tile_rondje_title}
+            sub={t.tile_rondje_sub}
+            meta={t.meta_rondje}
+            onClick={() => go('rondje')}
+          />
           <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
         <HomeTile
           variant="light"
-          eyebrow="04 / Nieuws"
+          eyebrow="05 / Nieuws"
           title={t.tile_nieuws_title}
           sub={t.tile_nieuws_sub}
           onClick={() => go('nieuws')}
+        />
+        <HomeTile
+          variant="dark"
+          eyebrow="06 / Weer"
+          title={t.tile_weer_title}
+          sub={t.tile_weer_sub}
+          meta={t.meta_weer}
+          onClick={() => go('weer')}
         />
         </div>
       </div>

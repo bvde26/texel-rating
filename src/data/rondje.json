@@ -1,0 +1,397 @@
+{
+  "event": {
+    "name": "Ronde om Texel",
+    "editie": 47,
+    "date": "2026-06-06",
+    "backupDate": "2026-06-07",
+    "distanceNm": 65,
+    "distanceKm": 120,
+    "direction": "clockwise",
+    "startFinish": {
+      "name": "Paal 17",
+      "address": "Ruijslaan 94/98, 1796AZ De Koog, Texel",
+      "lat": 53.1047,
+      "lon": 4.7365
+    },
+    "skippersMeeting": {
+      "time": "06:45",
+      "location": "Waves Festival Tent"
+    },
+    "firstWarningWindow": "08:00–11:00",
+    "firstWarningNote": {
+      "nl": "1 uur voor hoogwater; exacte tijd via Notice to Competitors",
+      "en": "1 hour before high tide; exact time via Notice to Competitors",
+      "de": "1 Stunde vor Hochwasser; genaue Zeit via Notice to Competitors",
+      "fr": "1 heure avant marée haute; horaire exact via Notice to Competitors"
+    }
+  },
+
+  "legs": [
+    {
+      "id": 1,
+      "from": "Start Paal 17",
+      "to": "Gate 1 (top eiland)",
+      "distanceNm": 7.5,
+      "bearing": null,
+      "description": {
+        "nl": "Volg de kustlijn naar het noorden. Groene cilinderboei aan het eind van een 600m-golfbreker stuurboord, rode opblaasboei bakboord. RC-boot bij de rode kant. Gate ~200m breed. Blijf binnen ~1 NM uit de kust.",
+        "en": "Follow coastline north. Green cylindrical buoy at sea end of a 600m breakwater to starboard, red inflatable to port. RC boat near the red side. Gate ~200m wide. Stay within ~1 NM of coast.",
+        "de": "Küste nach Norden folgen. Grüne Zylinder-Boje am Ende eines 600m-Wellenbrechers an Steuerbord, rote Schlauch-Boje an Backbord. RC-Boot an der roten Seite. Gate ~200m breit. Bleiben Sie innerhalb ~1 SM der Küste.",
+        "fr": "Longez la côte vers le nord. Bouée cylindrique verte à l'extrémité d'un brise-lames de 600m à tribord, bouée gonflable rouge à bâbord. Bateau RC côté rouge. Porte ~200m de large. Restez à moins de ~1 NM de la côte."
+      }
+    },
+    {
+      "id": 2,
+      "from": "Gate 1",
+      "to": "Gate 2 (na vuurtoren)",
+      "distanceNm": null,
+      "bearing": null,
+      "description": {
+        "nl": "Na het ronden van de top, ~1 NM voorbij de vuurtoren dicht bij de kust. Groen stuurboord, rood bakboord. Gate ~200m breed.",
+        "en": "After rounding the top of the island, ~1 NM past the lighthouse close to shore. Green to starboard, red to port. Gate ~200m wide.",
+        "de": "Nach dem Umrunden der Nordspitze, ~1 SM nach dem Leuchtturm küstennah. Grün an Steuerbord, rot an Backbord. Gate ~200m breit.",
+        "fr": "Après avoir contourné la pointe nord, ~1 NM après le phare, près de la côte. Vert à tribord, rouge à bâbord. Porte ~200m de large."
+      }
+    },
+    {
+      "id": 3,
+      "from": "Gate 2",
+      "to": "VC-vessel",
+      "distanceNm": 3.3,
+      "bearing": 123,
+      "description": {
+        "nl": "VC-vessel (grote werkboot met gele vlag 'VC') stuurboord houden. Vier gele cilinderboeien markeren Vlakte van Kerken — allemaal stuurboord, inclusief de lijn die de stuurboordboei van gate 2, de gele boeien en VC-vessel verbindt.",
+        "en": "Keep VC-vessel (large workboat flying yellow 'VC' flag) to starboard. Four yellow cylindrical buoys mark Vlakte van Kerken — all to starboard, including the line connecting the starboard buoy of gate 2, the yellow buoys and the VC-vessel.",
+        "de": "VC-Vessel (großes Arbeitsboot mit gelber 'VC'-Flagge) an Steuerbord halten. Vier gelbe Zylinder-Bojen markieren Vlakte van Kerken — alle an Steuerbord, inklusive der Linie von der Steuerbord-Boje des Gate 2 über die gelben Bojen bis zum VC-Vessel.",
+        "fr": "Gardez le VC-vessel (gros bateau de travail avec drapeau jaune 'VC') à tribord. Quatre bouées cylindriques jaunes marquent la Vlakte van Kerken — toutes à tribord, incluant la ligne reliant la bouée tribord de la porte 2, les bouées jaunes et le VC-vessel."
+      }
+    },
+    {
+      "id": 4,
+      "from": "VC-vessel",
+      "to": "Gate 3 (Oudeschild)",
+      "distanceNm": 7.4,
+      "bearing": 206,
+      "description": {
+        "nl": "Gate 3 ligt voor de haven van Oudeschild. Rode cilinder aan RC-vissersboot bakboord, groene cilinder stuurboord. Drie gele cilinderboeien markeren de Vlakte van Kerken op de lijn VC-vessel → IJzeren Kaap (landmark halverwege) — allemaal stuurboord.",
+        "en": "Gate 3 is off Oudeschild harbour. Red cylinder on RC fishing vessel to port, green cylinder to starboard. Three yellow cylindrical buoys mark Vlakte van Kerken on the line VC-vessel → IJzeren Kaap (landmark midway) — all to starboard.",
+        "de": "Gate 3 liegt vor dem Hafen Oudeschild. Rote Zylinder-Boje am RC-Fischerboot an Backbord, grüne Zylinder an Steuerbord. Drei gelbe Zylinder-Bojen markieren die Vlakte van Kerken auf der Linie VC-Vessel → IJzeren Kaap (Landmarke auf halbem Weg) — alle an Steuerbord.",
+        "fr": "La porte 3 est devant le port d'Oudeschild. Cylindre rouge sur bateau de pêche RC à bâbord, cylindre vert à tribord. Trois bouées cylindriques jaunes marquent la Vlakte van Kerken sur la ligne VC-vessel → IJzeren Kaap (repère à mi-chemin) — toutes à tribord."
+      }
+    },
+    {
+      "id": 5,
+      "from": "Gate 3",
+      "to": "Gate 4 (zuidpunt)",
+      "distanceNm": 5.8,
+      "bearing": null,
+      "description": {
+        "nl": "Volg de kust. Groene boei ~300m noord van rode navigatiemark T2 stuurboord, T2 bakboord. Cardinals 'Stenen Oost' en 'Stenen Zuid' stuurboord om rotsen te vermijden. Mokbaai is verboden gebied. Pas op voor ferry-kruising halverwege.",
+        "en": "Follow coast. Green buoy ~300m north of red navigational mark T2 to starboard, T2 to port. Keep cardinals 'Stenen Oost' and 'Stenen Zuid' to starboard to avoid rocks. Mokbaai is restricted. Beware of ferry crossing midway.",
+        "de": "Küste folgen. Grüne Boje ~300m nördlich von roter Navigationsmarke T2 an Steuerbord, T2 an Backbord. Cardinals 'Stenen Oost' und 'Stenen Zuid' an Steuerbord halten um Felsen zu vermeiden. Mokbaai ist Sperrgebiet. Achten Sie auf Fähre auf halbem Weg.",
+        "fr": "Suivez la côte. Bouée verte ~300m au nord de la marque rouge T2 à tribord, T2 à bâbord. Gardez les cardinales 'Stenen Oost' et 'Stenen Zuid' à tribord pour éviter les rochers. Mokbaai est zone interdite. Attention à la traversée du ferry à mi-parcours."
+      }
+    },
+    {
+      "id": 6,
+      "from": "Gate 4",
+      "to": "Finish Paal 17",
+      "distanceNm": 5.7,
+      "bearing": null,
+      "description": {
+        "nl": "Volg de kust naar de finish bij Paal 17. Boei met blauwe vlag stuurboord, RC-motorboot met blauwe vlag bakboord. Noorderhaaks/Razende Bol is verboden: houd WNB-5, WNB-3 en WNB-1 (en de verbindingslijn) bakboord. Pas op voor onderwater-golfbrekers en bunkers (cardinals). Shipwreck ~500m voor finish.",
+        "en": "Follow coast to finish at Paal 17. Buoy with blue flag to starboard, RC motorboat with blue flag to port. Noorderhaaks/Razende Bol is restricted: keep WNB-5, WNB-3 and WNB-1 (and connecting line) to port. Beware of underwater breakwaters and bunkers (cardinals). Shipwreck ~500m before finish.",
+        "de": "Küste folgen bis Ziel bei Paal 17. Boje mit blauer Flagge an Steuerbord, RC-Motorboot mit blauer Flagge an Backbord. Noorderhaaks/Razende Bol ist Sperrgebiet: WNB-5, WNB-3 und WNB-1 (und Verbindungslinie) an Backbord halten. Achtung: Unterwasser-Wellenbrecher und Bunker (Cardinals). Schiffswrack ~500m vor Ziel.",
+        "fr": "Suivez la côte jusqu'à l'arrivée à Paal 17. Bouée avec drapeau bleu à tribord, bateau à moteur RC avec drapeau bleu à bâbord. Noorderhaaks/Razende Bol est zone interdite : gardez WNB-5, WNB-3 et WNB-1 (et ligne de connexion) à bâbord. Attention aux brise-lames sous-marins et bunkers (cardinales). Épave à ~500m de l'arrivée."
+      }
+    }
+  ],
+
+  "waypoints": [
+    { "id": "start-finish", "name": "Start / Finish Paal 17", "type": "start", "lat": 53.1047, "lon": 4.7365 },
+    { "id": "gate-1", "name": "Gate 1", "type": "gate", "lat": 53.1835, "lon": 4.7820 },
+    { "id": "lighthouse", "name": "Vuurtoren Eierland", "type": "landmark", "lat": 53.1842, "lon": 4.8610 },
+    { "id": "gate-2", "name": "Gate 2", "type": "gate", "lat": 53.1810, "lon": 4.8940 },
+    { "id": "vc-vessel", "name": "VC-vessel", "type": "vessel", "lat": 53.1490, "lon": 4.9540 },
+    { "id": "ijzeren-kaap", "name": "IJzeren Kaap", "type": "landmark", "lat": 53.1100, "lon": 4.8990 },
+    { "id": "gate-3", "name": "Gate 3 (Oudeschild)", "type": "gate", "lat": 53.0395, "lon": 4.8570 },
+    { "id": "stenen-oost", "name": "Stenen Oost (cardinal)", "type": "cardinal", "lat": 53.0180, "lon": 4.8230 },
+    { "id": "stenen-zuid", "name": "Stenen Zuid (cardinal)", "type": "cardinal", "lat": 53.0060, "lon": 4.8050 },
+    { "id": "t2", "name": "T2 (rode navigatiemark)", "type": "mark", "lat": 52.9870, "lon": 4.7640 },
+    { "id": "gate-4", "name": "Gate 4", "type": "gate", "lat": 52.9895, "lon": 4.7620 },
+    { "id": "wnb-1", "name": "WNB-1", "type": "cardinal", "lat": 53.0040, "lon": 4.6870 },
+    { "id": "wnb-3", "name": "WNB-3", "type": "cardinal", "lat": 53.0280, "lon": 4.6790 },
+    { "id": "wnb-5", "name": "WNB-5", "type": "cardinal", "lat": 53.0520, "lon": 4.6720 }
+  ],
+
+  "restrictedAreas": [
+    {
+      "id": "vlakte-van-kerken",
+      "name": "Vlakte van Kerken",
+      "description": {
+        "nl": "Driehoek westelijk van VC-boei — verboden gebied.",
+        "en": "Triangle west of VC-buoy — restricted area.",
+        "de": "Dreieck westlich der VC-Boje — Sperrgebiet.",
+        "fr": "Triangle à l'ouest de la bouée VC — zone interdite."
+      },
+      "polygon": [[53.1490, 4.9540], [53.1100, 4.8990], [53.1810, 4.8940]]
+    },
+    {
+      "id": "mokbaai",
+      "name": "Mokbaai",
+      "description": {
+        "nl": "Baai na de Veerhaven — verboden gebied.",
+        "en": "Bay after the Veerhaven ferry port — restricted area.",
+        "de": "Bucht nach dem Fährhafen — Sperrgebiet.",
+        "fr": "Baie après le port du ferry — zone interdite."
+      },
+      "polygon": [[53.0060, 4.7700], [53.0060, 4.8050], [52.9920, 4.7900], [52.9920, 4.7700]]
+    },
+    {
+      "id": "razende-bol",
+      "name": "Razende Bol / Noorderhaaks",
+      "description": {
+        "nl": "Gebied westelijk van WNB-1, WNB-3 en WNB-5 — verboden gebied.",
+        "en": "Area west of WNB-1, WNB-3 and WNB-5 — restricted area.",
+        "de": "Gebiet westlich von WNB-1, WNB-3 und WNB-5 — Sperrgebiet.",
+        "fr": "Zone à l'ouest de WNB-1, WNB-3 et WNB-5 — zone interdite."
+      },
+      "polygon": [[53.0520, 4.6720], [53.0280, 4.6790], [53.0040, 4.6870], [53.0040, 4.6200], [53.0520, 4.6200]]
+    }
+  ],
+
+  "startProcedure": [
+    { "time": "> 32 min", "flag": "AP", "flagAction": "up", "sound": "2×", "note": { "nl": "Start uitgesteld", "en": "Postponement", "de": "Start verschoben", "fr": "Report" } },
+    { "time": "31 min", "flag": "AP", "flagAction": "down", "sound": "1×", "note": { "nl": "Uitstel opgeheven", "en": "Postponement lifted", "de": "Verschiebung aufgehoben", "fr": "Report levé" } },
+    { "time": "30 min", "flag": "Red", "flagAction": "up", "sound": "1×", "note": { "nl": "Warning signal", "en": "Warning signal", "de": "Ankündigungssignal", "fr": "Signal d'annonce" } },
+    { "time": "30 min", "flag": "P", "flagAction": "up", "sound": "—", "note": { "nl": "Voorbereidingssein", "en": "Preparatory", "de": "Vorbereitungssignal", "fr": "Préparation" } },
+    { "time": "10 min", "flag": "P", "flagAction": "down", "sound": "1×", "note": { "nl": "P weg", "en": "P removed", "de": "P entfernt", "fr": "P retiré" } },
+    { "time": "4 min", "flag": "Z", "flagAction": "up", "sound": "1×", "note": { "nl": "Z-vlag (RRS 30.2)", "en": "Z flag (RRS 30.2)", "de": "Z-Flagge (RRS 30.2)", "fr": "Pavillon Z (RRS 30.2)" } },
+    { "time": "1 min", "flag": "Z", "flagAction": "down", "sound": "1×", "note": { "nl": "One-minute", "en": "One-minute", "de": "Eine Minute", "fr": "Une minute" } },
+    { "time": "0 min", "flag": "Red", "flagAction": "down", "sound": "1×", "note": { "nl": "Start", "en": "Start", "de": "Start", "fr": "Départ" } }
+  ],
+
+  "flags": [
+    { "id": "AP", "label": "AP (Answering Pendant)", "meaning": { "nl": "Race uitgesteld", "en": "Race postponed", "de": "Rennen verschoben", "fr": "Course reportée" } },
+    { "id": "AP-over-B", "label": "AP boven B", "meaning": { "nl": "Niet het water op. Overtreding = DSQ + geweigerd volgend jaar.", "en": "Do not launch. Violation = DSQ + refused next edition.", "de": "Nicht aufs Wasser. Verstoß = DSQ + im nächsten Jahr abgelehnt.", "fr": "Ne pas mettre à l'eau. Infraction = DSQ + refusé l'an prochain." } },
+    { "id": "P", "label": "P (Preparatory)", "meaning": { "nl": "Voorbereidingssein — start over 10 min", "en": "Preparatory — start in 10 min", "de": "Vorbereitung — Start in 10 min", "fr": "Préparation — départ dans 10 min" } },
+    { "id": "Z", "label": "Z (RRS 30.2)", "meaning": { "nl": "Te vroeg starten = 25% scoring penalty + geen line honors", "en": "Premature start = 25% scoring penalty + no line honors", "de": "Zu früher Start = 25% Punktstrafe + keine Line Honors", "fr": "Départ prématuré = 25% de pénalité + pas de line honors" } },
+    { "id": "Red", "label": "Rode vlag", "meaning": { "nl": "Warning (30 min) / op zee zonder geluid: tijdslimiet verstreken — verlaat racing area", "en": "Warning (30 min) / at sea without sound: time limit expired — leave racing area", "de": "Warnung (30 min) / auf See ohne Ton: Zeitlimit abgelaufen — Rennbereich verlassen", "fr": "Avertissement (30 min) / en mer sans son : temps limite écoulé — quittez la zone de course" } },
+    { "id": "N", "label": "N (November)", "meaning": { "nl": "Race afgebroken — vaar naar dichtstbijzijnde strand of haven", "en": "Race abandoned — sail to nearest beach or harbour", "de": "Rennen abgebrochen — segeln Sie zum nächsten Strand oder Hafen", "fr": "Course abandonnée — naviguez vers la plage ou le port le plus proche" } },
+    { "id": "Y", "label": "Y (Yankee)", "meaning": { "nl": "Wordt NOOIT getoond — RRS 40.1 geldt altijd (reddingsvest verplicht)", "en": "NEVER displayed — RRS 40.1 always applies (life jacket mandatory)", "de": "Wird NIE gezeigt — RRS 40.1 gilt immer (Rettungsweste Pflicht)", "fr": "JAMAIS affiché — RRS 40.1 toujours d'application (gilet obligatoire)" } },
+    { "id": "Orange", "label": "Oranje vlag", "meaning": { "nl": "Eindpunt start-/finishlijn (Kustwacht = bakboord, vissersvessel = stuurboord)", "en": "End of start/finish line (Coast Guard = port, fishing vessel = starboard)", "de": "Ende der Start-/Ziellinie (Küstenwache = Backbord, Fischerboot = Steuerbord)", "fr": "Extrémité de la ligne de départ/arrivée (Garde-côte = bâbord, bateau de pêche = tribord)" } },
+    { "id": "Blue", "label": "Blauwe vlag", "meaning": { "nl": "Finish mark", "en": "Finish mark", "de": "Zielmarke", "fr": "Marque d'arrivée" } },
+    { "id": "Yellow-VC", "label": "Gele vlag 'VC'", "meaning": { "nl": "VC-vessel (keerpunt leg 3)", "en": "VC-vessel (turning point leg 3)", "de": "VC-Vessel (Wendepunkt Leg 3)", "fr": "VC-vessel (point de virage leg 3)" } },
+    { "id": "White-RC", "label": "Witte vlag 'RC'", "meaning": { "nl": "Race Committee boot", "en": "Race Committee boat", "de": "Race Committee Boot", "fr": "Bateau du comité de course" } },
+    { "id": "Class", "label": "Witte vlag Round Texel logo", "meaning": { "nl": "Class flag — catamaran", "en": "Class flag — catamaran", "de": "Klassenflagge — Katamaran", "fr": "Pavillon de classe — catamaran" } },
+    { "id": "Rescue", "label": "Gekleurde vlag met geel RT-embleem", "meaning": { "nl": "Reddingsboot", "en": "Rescue boat", "de": "Rettungsboot", "fr": "Bateau de sauvetage" } }
+  ],
+
+  "safety": {
+    "onBoard": {
+      "nl": ["Kompas", "Righting line minstens 8 mm diameter", "Sleeplijn minstens 10 m lang, minstens 8 mm diameter"],
+      "en": ["Compass", "Righting line at least 8 mm diameter", "Towing line at least 10 m long, at least 8 mm diameter"],
+      "de": ["Kompass", "Aufrichtleine min. 8 mm Durchmesser", "Schleppleine min. 10 m lang, min. 8 mm Durchmesser"],
+      "fr": ["Compas", "Ligne de redressement min. 8 mm de diamètre", "Ligne de remorquage min. 10 m de long, min. 8 mm de diamètre"]
+    },
+    "onBody": {
+      "nl": ["Impact vest met floatation CE50 Newton of equivalent", "Wet- of drysuit", "Goedgekeurd persoonlijk nood-signaal (op het lichaam)"],
+      "en": ["Impact vest with floatation CE50 Newton or equivalent", "Wet- or drysuit", "Approved personal emergency signal (on body)"],
+      "de": ["Impact-Weste mit Auftrieb CE50 Newton oder gleichwertig", "Nass- oder Trockenanzug", "Zugelassenes persönliches Notsignal (am Körper)"],
+      "fr": ["Gilet impact avec flottaison CE50 Newton ou équivalent", "Combinaison humide ou sèche", "Signal d'urgence personnel homologué (sur le corps)"]
+    },
+    "foiling": {
+      "nl": "Foilende catamarans: helm EN1385 of EN1077 verplicht",
+      "en": "Foiling catamarans: helmet EN1385 or EN1077 mandatory",
+      "de": "Foilende Katamarane: Helm EN1385 oder EN1077 Pflicht",
+      "fr": "Catamarans foilants : casque EN1385 ou EN1077 obligatoire"
+    }
+  },
+
+  "rules": [
+    {
+      "id": "tracker",
+      "title": { "nl": "Tracker verplicht", "en": "Tracker mandatory", "de": "Tracker Pflicht", "fr": "Tracker obligatoire" },
+      "body": {
+        "nl": "Elke boot krijgt een tracker uitgereikt bij het Regatta Office (na skippers meeting). Zonder tracker = DSQ zonder hearing. Terugbrengen binnen 1 uur na finish = verplicht (anders DNF). Verlies = €145 vergoeding.",
+        "en": "Each boat receives a tracker at the Regatta Office (after skippers meeting). No tracker = DSQ without hearing. Return within 1 hour after finish = mandatory (else DNF). Loss = €145 fee.",
+        "de": "Jedes Boot erhält einen Tracker beim Regatta Office (nach dem Skipper Meeting). Kein Tracker = DSQ ohne Anhörung. Rückgabe innerhalb 1 Std. nach Ziel = Pflicht (sonst DNF). Verlust = €145.",
+        "fr": "Chaque bateau reçoit un tracker au Regatta Office (après le skippers meeting). Sans tracker = DSQ sans audience. Retour dans l'heure après arrivée = obligatoire (sinon DNF). Perte = €145."
+      }
+    },
+    {
+      "id": "communication",
+      "title": { "nl": "Geen radio/data tijdens race", "en": "No radio/data during race", "de": "Kein Funk/Daten während Rennen", "fr": "Pas de radio/données en course" },
+      "body": {
+        "nl": "Tijdens de race geen spraak- of data-communicatie — behalve in een noodgeval.",
+        "en": "During the race no voice or data communication — except in an emergency.",
+        "de": "Während des Rennens keine Sprach- oder Datenkommunikation — außer im Notfall.",
+        "fr": "Pendant la course, pas de communication voix ou données — sauf en cas d'urgence."
+      }
+    },
+    {
+      "id": "retire",
+      "title": { "nl": "Opgeven melden", "en": "Report retirement", "de": "Aufgabe melden", "fr": "Signaler l'abandon" },
+      "body": {
+        "nl": "Als je opgeeft, meld dit zo snel mogelijk bij het Race Committee. In nood: boot kan niet binnen 10 min hervatten → rescue grijpt in (RRS 41a).",
+        "en": "If you retire, notify the Race Committee as soon as possible. In distress: boat unable to race again within 10 min → rescue assists (RRS 41a).",
+        "de": "Wenn Sie aufgeben, benachrichtigen Sie das Race Committee so schnell wie möglich. In Not: Boot kann nicht in 10 Min. weitermachen → Rettung hilft (RRS 41a).",
+        "fr": "Si vous abandonnez, prévenez le comité de course dès que possible. En détresse : bateau incapable de reprendre dans les 10 min → sauvetage (RRS 41a)."
+      }
+    },
+    {
+      "id": "substitution",
+      "title": { "nl": "Geen vervanging materiaal", "en": "No equipment substitution", "de": "Kein Materialaustausch", "fr": "Pas de remplacement de matériel" },
+      "body": {
+        "nl": "Vervanging van zeil, boot of beschadigd/verloren materiaal is niet toegestaan.",
+        "en": "Substitution of sail, boat or damaged/lost equipment is not allowed.",
+        "de": "Austausch von Segel, Boot oder beschädigtem/verlorenem Material nicht erlaubt.",
+        "fr": "Le remplacement de voile, bateau ou matériel endommagé/perdu n'est pas autorisé."
+      }
+    },
+    {
+      "id": "insurance",
+      "title": { "nl": "Verzekering", "en": "Insurance", "de": "Versicherung", "fr": "Assurance" },
+      "body": {
+        "nl": "Geldige WA-verzekering met Noordzee-dekking, min. €1.5 miljoen per incident. Coaches/supportboot-chauffeurs ook.",
+        "en": "Valid third party liability insurance with North Sea coverage, min. €1.5M per incident. Coaches/support boat drivers too.",
+        "de": "Gültige Haftpflichtversicherung mit Nordsee-Deckung, min. €1.5 Mio. pro Vorfall. Trainer/Supportboot-Fahrer auch.",
+        "fr": "Assurance responsabilité civile valide avec couverture Mer du Nord, min. €1.5M par incident. Coaches/pilotes bateaux support aussi."
+      }
+    },
+    {
+      "id": "restricted",
+      "title": { "nl": "Verboden gebieden", "en": "Restricted areas", "de": "Sperrgebiete", "fr": "Zones interdites" },
+      "body": {
+        "nl": "Binnenvaren van Vlakte van Kerken, Mokbaai of Razende Bol = DSQ zonder hearing.",
+        "en": "Entering Vlakte van Kerken, Mokbaai or Razende Bol = DSQ without hearing.",
+        "de": "Einfahrt in Vlakte van Kerken, Mokbaai oder Razende Bol = DSQ ohne Anhörung.",
+        "fr": "Entrer dans Vlakte van Kerken, Mokbaai ou Razende Bol = DSQ sans audience."
+      }
+    }
+  ],
+
+  "startLine": {
+    "nl": "Tussen oranje vlag op Kustwacht-vaartuig (bakboord) en oranje vlag op vissersvessel (stuurboord). Tussen 1-min-sein en startsein mag geen deel van boot of crew in de driehoek startlijn-eindpunten ↔ vuurtoren. RRS 30.2 gewijzigd: 25% penalty + line honors vervalt.",
+    "en": "Between orange flag on Coast Guard vessel (port) and orange flag on fishing vessel (starboard). Between 1-min and start signal, no part of boat or crew may be in the triangle start-line-ends ↔ lighthouse. RRS 30.2 changed: 25% penalty + line honors forfeit.",
+    "de": "Zwischen orangefarbener Flagge auf Küstenwache-Boot (Backbord) und orangefarbener Flagge auf Fischerboot (Steuerbord). Zwischen 1-Min- und Startsignal darf kein Teil von Boot oder Crew im Dreieck Startlinien-Enden ↔ Leuchtturm sein. RRS 30.2 geändert: 25% Strafe + Line Honors verfallen.",
+    "fr": "Entre drapeau orange sur bateau Garde-côte (bâbord) et drapeau orange sur bateau de pêche (tribord). Entre le signal 1-min et le départ, aucune partie du bateau ou de l'équipage dans le triangle extrémités-ligne ↔ phare. RRS 30.2 modifié : 25% pénalité + line honors annulés."
+  },
+
+  "finishLine": {
+    "nl": "Tussen staven met blauwe vlaggen op de finishmarks.",
+    "en": "Between staffs displaying blue flags on the finishing marks.",
+    "de": "Zwischen Stangen mit blauen Flaggen an den Zielmarken.",
+    "fr": "Entre les mâts avec drapeaux bleus sur les marques d'arrivée."
+  },
+
+  "lateStart": {
+    "nl": "Niet gestart binnen 15 min na startsein = DNS zonder hearing.",
+    "en": "Not started within 15 min after starting signal = DNS without hearing.",
+    "de": "Nicht gestartet innerhalb 15 Min. nach Startsignal = DNS ohne Anhörung.",
+    "fr": "Non parti dans les 15 min après le signal de départ = DNS sans audience."
+  },
+
+  "timeLimit": {
+    "nl": "Geen target time. Rode vlag op zee (zonder geluid) = tijdslimiet verstreken, verlaat racing area. Extra tijdlimieten kunnen op zee of wal afgekondigd worden.",
+    "en": "No target time. Red flag at sea (without sound) = time limit expired, leave racing area. Additional time limits may be announced at sea or ashore.",
+    "de": "Keine Zielzeit. Rote Flagge auf See (ohne Ton) = Zeitlimit abgelaufen, Rennbereich verlassen. Zusätzliche Zeitlimits können auf See oder an Land bekannt gegeben werden.",
+    "fr": "Pas de temps cible. Drapeau rouge en mer (sans son) = temps limite écoulé, quittez la zone. Des temps supplémentaires peuvent être annoncés en mer ou à terre."
+  },
+
+  "protest": {
+    "timeLimit": "45 min",
+    "note": {
+      "nl": "Protest time limit: 45 min na laatste finisher. Formulieren bij Race Office (protest room nabij). Boten gediskwalificeerd zonder hearing: start-nummers op notice board binnen 30 min na laatste finisher; verzoek tot hearing mogelijk binnen 1 uur na plaatsen mededeling.",
+      "en": "Protest time limit: 45 min after last finisher. Forms at Race Office (protest room nearby). Boats disqualified without hearing: start numbers on notice board within 30 min of last finisher; request for hearing possible within 1 hr of notice.",
+      "de": "Protestfrist: 45 Min. nach letztem Finisher. Formulare beim Race Office (Protestraum nebenan). Ohne Anhörung disqualifizierte Boote: Startnummern am Aushang innerhalb 30 Min. nach letztem Finisher; Anhörungsantrag innerhalb 1 Std. möglich.",
+      "fr": "Limite de réclamation : 45 min après le dernier arrivé. Formulaires au Race Office (salle de réclamation à proximité). Bateaux disqualifiés sans audience : numéros au panneau dans les 30 min ; demande d'audience possible dans l'heure."
+    }
+  },
+
+  "prizes": {
+    "nl": [
+      "Blauwe wimpel: Nederlands Kampioen Texel Rating 2026",
+      "NK medailles: 1e / 2e / 3e plaats",
+      "Line honors: 1e / 2e / 3e (op gevaren tijd)",
+      "Round Texel Record Attempt",
+      "Snelste single-handed",
+      "Snelste damesteam",
+      "Snelste team onder 21 jaar",
+      "Snelste per boottype: >10 entries = 1 prijs, >15 = 2 prijzen, >20 = 3 prijzen (peildatum 13 mei)"
+    ],
+    "en": [
+      "Blue pennant: Dutch Champion Texel Rating 2026",
+      "Dutch Champion medals: 1st / 2nd / 3rd",
+      "Line honors: 1st / 2nd / 3rd (on elapsed time)",
+      "Round Texel Record Attempt",
+      "Fastest single-handed",
+      "Fastest ladies team",
+      "Fastest team under 21",
+      "Fastest per boat type: >10 entries = 1 prize, >15 = 2, >20 = 3 (cut-off May 13)"
+    ],
+    "de": [
+      "Blauer Wimpel: Niederländischer Meister Texel Rating 2026",
+      "NK Medaillen: 1. / 2. / 3. Platz",
+      "Line honors: 1. / 2. / 3. (auf gesegelter Zeit)",
+      "Round Texel Record Attempt",
+      "Schnellster Single-handed",
+      "Schnellstes Damen-Team",
+      "Schnellstes Team unter 21",
+      "Schnellstes pro Bootstyp: >10 = 1 Preis, >15 = 2, >20 = 3 (Stichtag 13. Mai)"
+    ],
+    "fr": [
+      "Fanion bleu : Champion des Pays-Bas Texel Rating 2026",
+      "Médailles NK : 1er / 2e / 3e",
+      "Line honors : 1er / 2e / 3e (sur temps réel)",
+      "Tentative de record Round Texel",
+      "Meilleur solitaire",
+      "Meilleure équipe féminine",
+      "Meilleure équipe des moins de 21",
+      "Meilleur par type : >10 = 1 prix, >15 = 2, >20 = 3 (arrêté 13 mai)"
+    ]
+  },
+
+  "officials": [
+    { "role": { "nl": "Race manager / PRO", "en": "Race manager / PRO", "de": "Race Manager / PRO", "fr": "Race manager / PRO" }, "name": "Roel Swijnenburg" },
+    { "role": { "nl": "Race officer", "en": "Race officer", "de": "Race Officer", "fr": "Race officer" }, "name": "Wouter Wessels" },
+    { "role": { "nl": "Voorzitter protestcommissie", "en": "Protest committee chair", "de": "Vorsitzender Protestkomitee", "fr": "Président du comité de réclamation" }, "name": "Nicole de By" },
+    { "role": { "nl": "Voorzitter technische commissie", "en": "Technical committee chair", "de": "Vorsitzender Technisches Komitee", "fr": "Président du comité technique" }, "name": "Geert Ruesink" }
+  ],
+
+  "contact": [
+    { "label": { "nl": "Wedstrijd", "en": "Race", "de": "Rennen", "fr": "Course" }, "email": "wedstrijd@roundtexel.com" },
+    { "label": "VVV Texel", "phone": "+31 222 314741", "whatsapp": "+31 6 83357827", "email": "info@texel.net" }
+  ],
+
+  "categories": {
+    "catamaran": {
+      "available": true,
+      "entryFee": "€185",
+      "eligibility": {
+        "nl": "Open catamarans, max 35 ft lang, max 0.70 m diepgang (excl. roeren, daggerboards, bowsprit). Moet 'beachable' zijn. Geldige Texel Rating vereist (of inschrijving in line-honors-ranking).",
+        "en": "Open catamarans, max 35 ft long, max 0.70 m draught (excl. rudders, daggerboards, bowsprit). Must be 'beachable'. Valid Texel Rating required (or line-honors-only entry).",
+        "de": "Offene Katamarane, max 35 ft lang, max 0.70 m Tiefgang (excl. Ruder, Schwerter, Bugspriet). Muss 'beachable' sein. Gültiges Texel Rating erforderlich (oder nur Line Honors).",
+        "fr": "Catamarans ouverts, max 35 ft, tirant d'eau max 0.70 m (excl. safrans, dérives, bout-dehors). Doit être 'beachable'. Texel Rating valide requis (ou inscription line-honors uniquement)."
+      }
+    },
+    "wingfoil": {
+      "available": false,
+      "note": {
+        "nl": "Aparte NOR/SI — details volgen zodra beschikbaar.",
+        "en": "Separate NOR/SI — details will follow.",
+        "de": "Separate NOR/SI — Details folgen.",
+        "fr": "NOR/SI séparé — détails à suivre."
+      }
+    },
+    "windsurf": {
+      "available": false,
+      "note": {
+        "nl": "Aparte NOR/SI — details volgen zodra beschikbaar.",
+        "en": "Separate NOR/SI — details will follow.",
+        "de": "Separate NOR/SI — Details folgen.",
+        "fr": "NOR/SI séparé — détails à suivre."
+      }
+    }
+  }
+}

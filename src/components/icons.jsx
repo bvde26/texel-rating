@@ -95,4 +95,33 @@ export const Icon = {
       <path d="M5 12l5 5L20 7" stroke={color} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
+  Wind: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M3 8h12a3 3 0 100-6M3 14h17a3 3 0 110 6M3 11h8a2.5 2.5 0 100-5" stroke={color} strokeWidth="1.8" strokeLinecap="round"/>
+    </svg>
+  ),
+  Route: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <circle cx="6" cy="6" r="2.5" stroke={color} strokeWidth="1.8"/>
+      <circle cx="18" cy="18" r="2.5" stroke={color} strokeWidth="1.8"/>
+      <path d="M8 7c5 1 6 5 4 8s-2 3 2 3" stroke={color} strokeWidth="1.8" strokeLinecap="round" fill="none"/>
+    </svg>
+  ),
+  MapPin: ({ size = 14, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M12 22s7-7.5 7-13a7 7 0 10-14 0c0 5.5 7 13 7 13z" stroke={color} strokeWidth="1.8" strokeLinejoin="round"/>
+      <circle cx="12" cy="9" r="2.5" stroke={color} strokeWidth="1.8"/>
+    </svg>
+  ),
+  Mail: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="3" y="5" width="18" height="14" rx="2" stroke={color} strokeWidth="1.8"/>
+      <path d="M3 7l9 6 9-6" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
+  Flag: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M5 21V4M5 4h12l-2 4 2 4H5" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  ),
 }
