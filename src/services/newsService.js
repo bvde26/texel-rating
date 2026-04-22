@@ -1,5 +1,5 @@
 import { db } from '../firebase'
-import { collection, addDoc, deleteDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot, query, orderBy, serverTimestamp } from 'firebase/firestore'
 
 export const subscribeToNews = (callback, onError) => {
   const q = query(collection(db, 'news'), orderBy('createdAt', 'desc'))
@@ -28,3 +28,6 @@ export const addNewsItem = async (title, body) => {
 
 export const deleteNewsItem = (id) =>
   deleteDoc(doc(db, 'news', id))
+
+export const updateNewsItem = (id, { title, body }) =>
+  updateDoc(doc(db, 'news', id), { title, body, updatedAt: serverTimestamp() })

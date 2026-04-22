@@ -6,19 +6,24 @@ import Pressable from '../components/Pressable'
 
 function renderBodyWithLinks(text) {
   if (!text) return null
-  const parts = text.split(/(https?:\/\/[^\s]+)/g)
+  const parts = text.split(/((?:https?:\/\/|www\.)[^\s]+)/gi)
   return parts.map((part, i) => {
-    if (/^https?:\/\//.test(part)) {
+    if (/^(https?:\/\/|www\.)/i.test(part)) {
+      const trailing = part.match(/[.,!?;:)]+$/)?.[0] || ''
+      const url = trailing ? part.slice(0, -trailing.length) : part
+      const href = /^https?:\/\//i.test(url) ? url : `https://${url}`
       return (
-        <a
-          key={i}
-          href={part}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: '#0a6b2e', textDecoration: 'underline', wordBreak: 'break-all' }}
-        >
-          {part}
-        </a>
+        <span key={i}>
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#0a6b2e', textDecoration: 'underline', wordBreak: 'break-all' }}
+          >
+            {url}
+          </a>
+          {trailing}
+        </span>
       )
     }
     return <span key={i}>{part}</span>

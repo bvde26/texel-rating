@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { auth } from '../firebase'
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'
-import { subscribeToNews, addNewsItem, deleteNewsItem } from '../services/newsService'
+import { subscribeToNews, addNewsItem, deleteNewsItem, updateNewsItem } from '../services/newsService'
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
 
@@ -29,6 +29,33 @@ export default function Beheer({ onBack }) {
 
   const [items, setItems] = useState([])
   const [pushLoading, setPushLoading] = useState(false)
+
+  const [editingId, setEditingId] = useState(null)
+  const [editTitle, setEditTitle] = useState('')
+  const [editBody, setEditBody] = useState('')
+  const [editSaving, setEditSaving] = useState(false)
+
+  const startEdit = (item) => {
+    setEditingId(item.id)
+    setEditTitle(item.title || '')
+    setEditBody(item.body || '')
+  }
+  const cancelEdit = () => {
+    setEditingId(null)
+    setEditTitle('')
+    setEditBody('')
+  }
+  const saveEdit = async () => {
+    if (!editTitle.trim() || !editBody.trim()) return
+    setEditSaving(true)
+    try {
+      await updateNewsItem(editingId, { title: editTitle.trim(), body: editBody.trim() })
+      cancelEdit()
+    } catch (err) {
+      alert('Opslaan mislukt: ' + (err?.message || err))
+    }
+    setEditSaving(false)
+  }
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (u) => {
@@ -182,21 +209,64 @@ export default function Beheer({ onBack }) {
         <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', color: 'rgba(0,0,0,0.4)', marginBottom: 10 }}>
           Geplaatste berichten
         </div>
-        {items.map((item) => (
-          <div key={item.id} style={{ background: '#fff', borderRadius: 14, border: '1px solid rgba(0,0,0,0.06)', padding: '14px 16px', marginBottom: 10, display: 'flex', alignItems: 'flex-start', gap: 12 }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, color: '#000', marginBottom: 4 }}>{item.title}</div>
-              <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: 'rgba(0,0,0,0.6)', lineHeight: 1.4, whiteSpace: 'pre-wrap' }}>{item.body}</div>
-              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.35)', marginTop: 6 }}>{timeAgo(item.createdAt)}</div>
+        {items.map((item) => {
+          const isEditing = editingId === item.id
+          if (isEditing) {
+            return (
+              <div key={item.id} style={{ background: '#fff', borderRadius: 14, border: '1px solid #7fb77e', padding: '14px 16px', marginBottom: 10 }}>
+                <input
+                  value={editTitle} onChange={e => setEditTitle(e.target.value)}
+                  placeholder="Titel"
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--border2)', fontFamily: 'Outfit, sans-serif', fontSize: 14, fontWeight: 600, marginBottom: 8, boxSizing: 'border-box' }}
+                />
+                <textarea
+                  value={editBody} onChange={e => setEditBody(e.target.value)}
+                  placeholder="Bericht..."
+                  rows={4}
+                  style={{ width: '100%', padding: '10px 12px', borderRadius: 8, border: '1px solid var(--border2)', fontFamily: 'Outfit, sans-serif', fontSize: 13, lineHeight: 1.5, resize: 'none', boxSizing: 'border-box', marginBottom: 10 }}
+                />
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <Pressable
+                    onClick={saveEdit}
+                    style={{ flex: 1, padding: '10px', borderRadius: 10, background: editSaving ? 'rgba(0,0,0,0.4)' : '#000', color: '#fff', textAlign: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600, pointerEvents: editSaving ? 'none' : 'auto' }}
+                  >
+                    {editSaving ? 'Opslaan...' : 'Opslaan'}
+                  </Pressable>
+                  <Pressable
+                    onClick={cancelEdit}
+                    style={{ flex: 1, padding: '10px', borderRadius: 10, background: 'rgba(0,0,0,0.06)', color: '#000', textAlign: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: 600 }}
+                  >
+                    Annuleren
+                  </Pressable>
+                </div>
+              </div>
+            )
+          }
+          return (
+            <div key={item.id} style={{ background: '#fff', borderRadius: 14, border: '1px solid rgba(0,0,0,0.06)', padding: '14px 16px', marginBottom: 10, display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, color: '#000', marginBottom: 4 }}>{item.title}</div>
+                <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: 'rgba(0,0,0,0.6)', lineHeight: 1.4, whiteSpace: 'pre-wrap' }}>{item.body}</div>
+                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.35)', marginTop: 6 }}>
+                  {timeAgo(item.createdAt)}
+                  {item.updatedAt && <span style={{ marginLeft: 6, fontStyle: 'italic' }}>· bewerkt</span>}
+                </div>
+              </div>
+              <Pressable
+                onClick={() => startEdit(item)}
+                style={{ padding: '6px', borderRadius: 8, background: 'rgba(0,0,0,0.05)', flexShrink: 0 }}
+              >
+                <Icon.Pen size={16} color="#000" />
+              </Pressable>
+              <Pressable
+                onClick={() => deleteNewsItem(item.id)}
+                style={{ padding: '6px', borderRadius: 8, background: 'rgba(180,0,0,0.06)', flexShrink: 0 }}
+              >
+                <Icon.Delete size={16} color="#b00" />
+              </Pressable>
             </div>
-            <Pressable
-              onClick={() => deleteNewsItem(item.id)}
-              style={{ padding: '6px', borderRadius: 8, background: 'rgba(180,0,0,0.06)', flexShrink: 0 }}
-            >
-              <Icon.Delete size={16} color="#b00" />
-            </Pressable>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </div>
   )
