@@ -85,15 +85,15 @@ function TabRegels() {
 function TabContact() {
   const c = schedule.contact
   const rows = [
-    { role: 'Organisatie', name: c.organizerName, action: `tel:${c.organizerPhone}`, icon: true },
-    { role: 'E-mail',      name: c.organizerEmail, action: `mailto:${c.organizerEmail}`, icon: true },
-    { role: 'Telefoon',    name: c.organizerPhone,  action: `tel:${c.organizerPhone}`, icon: true },
-    { role: 'Website',     name: c.website,         action: `https://${c.website}`, icon: true },
+    { role: 'Organisatie', name: c.organizerName,  action: `tel:${c.organizerPhone}`, Icn: Icon.Users,  external: false },
+    { role: 'E-mail',      name: c.organizerEmail, action: `mailto:${c.organizerEmail}`, Icn: Icon.Mail, external: false },
+    { role: 'Telefoon',    name: c.organizerPhone, action: `tel:${c.organizerPhone}`, Icn: Icon.Phone,  external: false },
+    { role: 'Website',     name: c.website,        action: `https://${c.website}`, Icn: Icon.Globe,    external: true },
   ]
 
   return (
     <div style={{ padding: '16px 16px 32px', display: 'grid', gap: 10 }}>
-      {rows.map(({ role, name, action }) => (
+      {rows.map(({ role, name, action, Icn, external }) => (
         <div key={role} style={{ background: 'var(--surface)', borderRadius: 14, border: '1px solid var(--border)', padding: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12 }}>
           <div style={{ minWidth: 0 }}>
             <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.8, textTransform: 'uppercase', marginBottom: 4 }}>{role}</div>
@@ -101,9 +101,10 @@ function TabContact() {
           </div>
           <a
             href={action}
+            {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
             style={{ width: 44, height: 44, borderRadius: 999, background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, textDecoration: 'none' }}
           >
-            <Icon.Phone size={16} color="#fff"/>
+            <Icn size={16} color="#fff"/>
           </a>
         </div>
       ))}

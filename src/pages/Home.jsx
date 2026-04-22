@@ -207,15 +207,10 @@ export default function Home({ t, lang, setLang, go }) {
       <div style={{ padding: '22px 20px 20px', display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', flexShrink: 0 }}>
         <div>
           <div style={{
-            fontFamily: 'JetBrains Mono, monospace',
-            fontSize: 11, letterSpacing: 0.8,
-            color: 'var(--spring-ink-soft)', textTransform: 'uppercase',
-          }}>{t.race_dates}</div>
-          <div style={{
             fontFamily: 'Space Grotesk, sans-serif',
             fontWeight: 700, fontSize: 30,
             letterSpacing: -1, color: 'var(--spring-ink)',
-            lineHeight: 1.05, marginTop: 6,
+            lineHeight: 1.05,
             textTransform: 'uppercase',
           }}>Round Texel</div>
           <div style={{
