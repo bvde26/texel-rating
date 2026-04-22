@@ -37,11 +37,35 @@ function loadLayers() {
 }
 
 function orderedRouteLine(waypoints) {
-  const order = ['start-finish', 'gate-1', 'lighthouse', 'gate-2', 'vc-vessel', 'ijzeren-kaap', 'gate-3', 't2', 'gate-4', 'wnb-5', 'wnb-3', 'wnb-1', 'start-finish']
-  return order
-    .map(id => waypoints.find(w => w.id === id))
-    .filter(Boolean)
-    .map(w => [w.lat, w.lon])
+  const byId = Object.fromEntries(waypoints.map(w => [w.id, [w.lat, w.lon]]))
+  // Vloeiende klokwijzerroute met offshore tussenpunten. Sprinkle helpers tussen echte waypoints
+  // zodat de polyline het eiland rondt (niet over land snijdt) en om de Vlakte van Kerken loopt.
+  return [
+    byId['start-finish'],       // Paal 17 (west)
+    [53.1500, 4.7280],          // offshore NW, opzoek naar top
+    byId['gate-1'],             // top NW
+    [53.2020, 4.8050],          // rounding boven vuurtoren
+    [53.2050, 4.8700],          // rounding noord
+    [53.1980, 4.9200],          // afdraaien naar NE
+    byId['gate-2'],             // NE na vuurtoren
+    [53.1680, 4.9550],          // afdraaien naar VC
+    byId['vc-vessel'],          // VC-vessel offshore east
+    [53.1100, 4.9650],          // south van VC, om Vlakte van Kerken heen (oostzijde)
+    [53.0700, 4.9300],          // verder zuid, nog offshore van Vlakte van Kerken
+    [53.0500, 4.9050],          // naar Oudeschild toe
+    byId['gate-3'],             // Oudeschild
+    byId['stenen-oost'],        // cardinal offshore SE
+    byId['stenen-zuid'],        // cardinal offshore S
+    byId['t2'],                 // zuidpunt mark
+    byId['gate-4'],             // zuidpunt gate
+    [52.9820, 4.7050],          // afdraaien west, onder de Razende Bol
+    [52.9900, 4.6700],          // om Noorderhaaks heen
+    byId['wnb-1'],              // WNB-1 cardinal
+    byId['wnb-3'],              // WNB-3 cardinal
+    byId['wnb-5'],              // WNB-5 cardinal
+    [53.0800, 4.6950],          // afdraaien terug naar paal 17
+    byId['start-finish'],       // finish
+  ].filter(Boolean)
 }
 
 function ResizeOnMount({ trigger }) {
