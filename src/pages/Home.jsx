@@ -183,12 +183,14 @@ export default function Home({ t, lang, setLang, go }) {
   const latestNewsAt = useLatestNewsAt()
   const scrollRef = useRef(null)
   const [hasMoreBelow, setHasMoreBelow] = useState(false)
+  const [hasMoreAbove, setHasMoreAbove] = useState(false)
 
   useEffect(() => {
     const el = scrollRef.current
     if (!el) return
     const update = () => {
       setHasMoreBelow(el.scrollHeight - el.clientHeight - el.scrollTop > 8)
+      setHasMoreAbove(el.scrollTop > 8)
     }
     update()
     el.addEventListener('scroll', update, { passive: true })
@@ -199,6 +201,13 @@ export default function Home({ t, lang, setLang, go }) {
       ro.disconnect()
     }
   }, [])
+
+  const maskImage = (() => {
+    if (!hasMoreAbove && !hasMoreBelow) return 'none'
+    const top = hasMoreAbove ? 'transparent 0, black 56px' : 'black 0, black 0'
+    const bottom = hasMoreBelow ? 'black calc(100% - 56px), transparent 100%' : 'black 100%, black 100%'
+    return `linear-gradient(to bottom, ${top}, ${bottom})`
+  })()
   const newsUpdatedLabel = {
     nl: 'LAATSTE UPDATE', en: 'LAST UPDATE', de: 'LETZTES UPDATE', fr: 'DERNIÈRE MAJ',
   }[lang] || 'LAATSTE UPDATE'
@@ -264,12 +273,8 @@ export default function Home({ t, lang, setLang, go }) {
           overflowY: 'auto',
           overflowX: 'hidden',
           padding: '0 16px 12px',
-          WebkitMaskImage: hasMoreBelow
-            ? 'linear-gradient(to bottom, black 0, black calc(100% - 56px), transparent 100%)'
-            : 'none',
-          maskImage: hasMoreBelow
-            ? 'linear-gradient(to bottom, black 0, black calc(100% - 56px), transparent 100%)'
-            : 'none',
+          WebkitMaskImage: maskImage,
+          maskImage: maskImage,
           transition: 'mask-image 200ms ease, -webkit-mask-image 200ms ease',
         }}
         className="scrollbar-none"
