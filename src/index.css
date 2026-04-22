@@ -110,6 +110,35 @@ body {
   color: var(--spring-ink);
 }
 
+.tile-icon {
+  width: 36px; height: 36px;
+  border-radius: 12px;
+  background: var(--tile-accent, rgba(26, 31, 26, 0.06));
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--spring-ink);
+}
+
+.tile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--spring-edge);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--spring-ink);
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .tile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));

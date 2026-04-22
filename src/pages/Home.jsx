@@ -59,22 +59,23 @@ function useLatestNewsAt() {
   return ms
 }
 
-function HomeTile({ accent, title, sub, meta, onClick }) {
+function HomeTile({ accent, icon: IconCmp, title, sub, chip, onClick }) {
   return (
     <Pressable onClick={onClick} className="tile" data-accent={accent}>
-      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
-        <div className="tile-arrow">
-          <Icon.ArrowRight size={16} color="var(--spring-ink)"/>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+        <div className="tile-icon">
+          {IconCmp && <IconCmp size={20} color="var(--spring-ink)" />}
         </div>
+        {chip && <div className="tile-chip">{chip}</div>}
       </div>
-      <div>
+      <div style={{ marginTop: 'auto' }}>
         <div style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: 700,
-          fontSize: 30,
+          fontSize: 28,
           letterSpacing: -0.9,
           lineHeight: 1,
-          marginBottom: 8,
+          marginBottom: 6,
           textTransform: 'uppercase',
         }}>{title}</div>
         <div style={{
@@ -85,15 +86,6 @@ function HomeTile({ accent, title, sub, meta, onClick }) {
           letterSpacing: -0.1,
         }}>{sub}</div>
       </div>
-      {meta && (
-        <div style={{
-          fontFamily: 'JetBrains Mono, monospace',
-          fontSize: 11,
-          color: 'var(--spring-ink-mute)',
-          letterSpacing: 0.4,
-          marginTop: 8,
-        }}>{meta}</div>
-      )}
     </Pressable>
   )
 }
@@ -116,42 +108,26 @@ function RegistrationsTile({ t, categories, onClick }) {
   return (
     <Pressable onClick={onClick} className="tile" data-accent="mint">
       <div style={{
-        display: 'flex', justifyContent: 'flex-end',
-        alignItems: 'flex-start', gap: 12, marginBottom: 10, minWidth: 0,
+        display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', gap: 10, marginBottom: 12, minWidth: 0,
       }}>
-        <div className="tile-arrow">
-          <Icon.ArrowRight size={16} color="var(--spring-ink)" />
+        <div className="tile-icon">
+          <Icon.Users size={20} color="var(--spring-ink)" />
         </div>
+        <div className="tile-chip"><b style={{ fontWeight: 700, marginRight: 4 }}>{total}</b>{t.tile_reg_eyebrow}</div>
       </div>
 
-      <div style={{
-        display: 'flex', alignItems: 'baseline', justifyContent: 'space-between',
-        gap: 12, marginBottom: 14, minWidth: 0,
-      }}>
+      <div style={{ marginTop: 'auto' }}>
         <div style={{
           fontFamily: 'Space Grotesk, sans-serif',
           fontWeight: 700,
-          fontSize: 30,
+          fontSize: 28,
           letterSpacing: -0.9,
           lineHeight: 1,
+          marginBottom: 10,
           textTransform: 'uppercase',
-          color: 'var(--spring-ink)',
-          flex: 1, minWidth: 0,
-          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
         }}>{t.tile_reg_eyebrow}</div>
-        <div style={{
-          fontFamily: 'Space Grotesk, sans-serif',
-          fontWeight: 700,
-          fontSize: 30,
-          letterSpacing: -0.9,
-          lineHeight: 1,
-          color: 'var(--spring-ink)',
-          fontVariantNumeric: 'tabular-nums',
-          flexShrink: 0,
-        }}>{total}</div>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 7, minWidth: 0 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 5, minWidth: 0 }}>
         {displayRows.map((row) => (
           <div key={row.label} style={{
             display: 'flex', alignItems: 'baseline', gap: 10,
@@ -159,13 +135,13 @@ function RegistrationsTile({ t, categories, onClick }) {
           }}>
             <div style={{
               fontFamily: 'Outfit, sans-serif',
-              fontSize: 13, color: 'var(--spring-ink-soft)',
+              fontSize: 14, color: 'var(--spring-ink-soft)',
               flex: '1 1 auto', minWidth: 0,
               overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
             }}>{row.label}</div>
             <div style={{
               fontFamily: 'JetBrains Mono, monospace',
-              fontSize: 13, fontWeight: 600,
+              fontSize: 14, fontWeight: 600,
               color: 'var(--spring-ink)',
               flex: '0 0 auto',
               textAlign: 'right',
@@ -173,6 +149,7 @@ function RegistrationsTile({ t, categories, onClick }) {
             }}>{row.count}</div>
           </div>
         ))}
+      </div>
       </div>
     </Pressable>
   )
@@ -282,45 +259,51 @@ export default function Home({ t, lang, setLang, go }) {
         <div className="tile-grid">
           <HomeTile
             accent="coral"
+            icon={Icon.Bell}
             title={t.tile_nieuws_title}
             sub={t.tile_nieuws_sub}
-            meta={newsMeta}
+            chip={newsMeta}
             onClick={() => go('nieuws')}
           />
           <HomeTile
             accent="indigo"
+            icon={Icon.Calendar}
             title={t.tile_agenda_title}
             sub={t.tile_agenda_sub}
-            meta={t.meta_agenda}
+            chip={t.meta_agenda}
             onClick={() => go('agenda')}
           />
           <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
           <HomeTile
             accent="sand"
+            icon={Icon.Route}
             title={t.tile_rondje_title}
             sub={t.tile_rondje_sub}
-            meta={t.meta_rondje}
+            chip={t.meta_rondje}
             onClick={() => go('rondje')}
           />
           <HomeTile
             accent="moss"
+            icon={Icon.Scale}
             title={t.tile_compare_title}
             sub={t.tile_compare_sub}
-            meta={t.meta_compare}
+            chip={t.meta_compare}
             onClick={() => go('compare')}
           />
           <HomeTile
             accent="sky"
+            icon={Icon.Wind}
             title={t.tile_weer_title}
             sub={t.tile_weer_sub}
-            meta={t.meta_weer}
+            chip={t.meta_weer}
             onClick={() => go('weer')}
           />
           <HomeTile
             accent="ocean"
+            icon={Icon.Camera}
             title={t.tile_webcams_title}
             sub={t.tile_webcams_sub}
-            meta={t.meta_webcams}
+            chip={t.meta_webcams}
             onClick={() => go('webcams')}
           />
         </div>
