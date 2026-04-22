@@ -42,28 +42,27 @@ function orderedRouteLine(waypoints) {
   // zodat de polyline het eiland rondt (niet over land snijdt) en om de Vlakte van Kerken loopt.
   return [
     byId['start-finish'],       // Paal 17 (west)
-    [53.1500, 4.7280],          // offshore NW, opzoek naar top
-    byId['gate-1'],             // top NW
-    [53.2020, 4.8050],          // rounding boven vuurtoren
-    [53.2050, 4.8700],          // rounding noord
-    [53.1980, 4.9200],          // afdraaien naar NE
-    byId['gate-2'],             // NE na vuurtoren
-    [53.1680, 4.9550],          // afdraaien naar VC
+    [53.1500, 4.7280],          // offshore NW van Paal 17
+    [53.1950, 4.7450],          // rounding NW corner van eiland
+    [53.2080, 4.8000],          // rounding noord boven Eierland
+    byId['gate-1'],             // boven vuurtoren (53.189, 4.839)
+    byId['gate-2'],             // oostkant (53.173, 4.887)
+    [53.1680, 4.9400],          // afdraaien naar VC
     byId['vc-vessel'],          // VC-vessel offshore east
-    [53.1100, 4.9650],          // south van VC, om Vlakte van Kerken heen (oostzijde)
-    [53.0700, 4.9300],          // verder zuid, nog offshore van Vlakte van Kerken
-    [53.0500, 4.9050],          // naar Oudeschild toe
-    byId['gate-3'],             // Oudeschild
+    [53.1100, 4.9650],          // zuid van VC, om Vlakte van Kerken heen
+    [53.0700, 4.9300],          // verder zuid offshore van Vlakte van Kerken
+    [53.0500, 4.8950],          // naar Oudeschild toe
+    byId['gate-3'],             // Oudeschild (53.039, 4.860)
     byId['stenen-oost'],        // cardinal offshore SE
     byId['stenen-zuid'],        // cardinal offshore S
     byId['t2'],                 // zuidpunt mark
-    byId['gate-4'],             // zuidpunt gate
-    [52.9820, 4.7050],          // afdraaien west, onder de Razende Bol
-    [52.9900, 4.6700],          // om Noorderhaaks heen
+    byId['gate-4'],             // zuidwest (52.983, 4.720)
+    [52.9800, 4.6950],          // afdraaien west onder Razende Bol
+    [52.9900, 4.6650],          // om Noorderhaaks heen
     byId['wnb-1'],              // WNB-1 cardinal
     byId['wnb-3'],              // WNB-3 cardinal
     byId['wnb-5'],              // WNB-5 cardinal
-    [53.0800, 4.6950],          // afdraaien terug naar paal 17
+    [53.0800, 4.6950],          // afdraaien terug naar Paal 17
     byId['start-finish'],       // finish
   ].filter(Boolean)
 }
