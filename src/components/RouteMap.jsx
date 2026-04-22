@@ -38,14 +38,19 @@ function loadLayers() {
 
 function orderedRouteLine(waypoints) {
   const byId = Object.fromEntries(waypoints.map(w => [w.id, [w.lat, w.lon]]))
-  // Kortste lijn gate-naar-gate. Alleen tussenpunten waar een directe lijn land zou kruisen.
+  // Route volgt de kust (offshore, parallel aan shoreline). Directe diagonaal zou land kruisen.
   return [
     byId['start-finish'],       // Paal 17
-    byId['gate-1'],             // directe lijn start → gate 1
-    [53.1940, 4.8700],          // ronding NE hoek (directe lijn zou net vuurtoren-kust raken)
+    [53.1500, 4.7120],          // west coast mid
+    [53.1900, 4.7080],          // NW hoek Eierland
+    [53.2000, 4.7600],          // noordkust west
+    [53.1980, 4.8150],          // noordkust oost (aanloop gate 1)
+    byId['gate-1'],
+    [53.1920, 4.8750],          // past vuurtoren offshore
+    [53.1850, 4.8980],          // NE hoek
     byId['gate-2'],
-    byId['vc-vessel'],          // direct offshore
-    byId['gate-3'],             // direct (VvK ligt NO van deze lijn)
+    byId['vc-vessel'],
+    byId['gate-3'],
     byId['stenen-oost'],
     byId['stenen-zuid'],
     byId['t2'],
@@ -53,6 +58,7 @@ function orderedRouteLine(waypoints) {
     byId['wnb-1'],
     byId['wnb-3'],
     byId['wnb-5'],
+    [53.0800, 4.7100],          // westkust terug richting Paal 17
     byId['start-finish'],
   ].filter(Boolean)
 }
