@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-04-21T06:55:31.968Z",
+  "fetchedAt": "2026-04-22T06:54:46.912Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 149,
+      "count": 152,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -498,7 +498,7 @@
     {
       "id": "reg_037",
       "skipper": "Oliver Abeldt",
-      "crew": "Max Lindenberg",
+      "crew": "Dennis Fischer",
       "sailNumber": "GER 39",
       "boatName": "GER 39",
       "boatClass": "F18 c2",
@@ -1962,6 +1962,45 @@
       "boatId": "nacra_f16_double",
       "spinnaker": true,
       "rating": 103,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_150",
+      "skipper": "Gijs Jannink",
+      "crew": "Menno de Vries",
+      "sailNumber": "NED600",
+      "boatName": "NED600",
+      "boatClass": "F18 Nacra Infusion",
+      "country": "Netherlands",
+      "boatId": "nacra_infusion_f18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_151",
+      "skipper": "Kai Cording",
+      "crew": "Birgit Rübenich",
+      "sailNumber": "6970",
+      "boatName": "6970",
+      "boatClass": "Dart 18",
+      "country": "Germany",
+      "boatId": "dart_18",
+      "spinnaker": false,
+      "rating": 121,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_152",
+      "skipper": "Allard Verburg",
+      "crew": "Anna Smit",
+      "sailNumber": "117802",
+      "boatName": "117802",
+      "boatClass": "Hobie 16",
+      "country": "Netherlands",
+      "boatId": "hobie_16",
+      "spinnaker": false,
+      "rating": 118,
       "category": "catamaran_duo"
     },
     {
