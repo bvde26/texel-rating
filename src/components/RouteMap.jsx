@@ -115,15 +115,14 @@ function MapBody({ data, layers, fullscreen }) {
       center={[53.05, 4.75]}
       zoom={fullscreen ? 11 : 10}
       scrollWheelZoom={fullscreen}
+      attributionControl={false}
       style={{ width: '100%', height: '100%' }}
     >
       <TileLayer
-        attribution='&copy; OSM'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {layers.seamark && (
         <TileLayer
-          attribution='Seamarks &copy; OpenSeaMap'
           url="https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png"
           opacity={1}
           minZoom={8}
