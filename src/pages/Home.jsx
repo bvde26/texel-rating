@@ -250,6 +250,14 @@ export default function Home({ t, lang, setLang, go }) {
           meta={t.meta_weer}
           onClick={() => go('weer')}
         />
+        <HomeTile
+          variant="light"
+          eyebrow="07 / Webcams"
+          title={t.tile_webcams_title}
+          sub={t.tile_webcams_sub}
+          meta={t.meta_webcams}
+          onClick={() => go('webcams')}
+        />
         </div>
       </div>
 

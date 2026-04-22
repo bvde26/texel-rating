@@ -7,6 +7,7 @@ import Stats from './pages/Stats'
 import Nieuws from './pages/Nieuws'
 import Weer from './pages/Weer'
 import Rondje from './pages/Rondje'
+import Webcams from './pages/Webcams'
 import Beheer from './pages/Beheer'
 
 const COPY = {
@@ -67,6 +68,9 @@ const COPY = {
     tile_rondje_title: 'Het Rondje',
     tile_rondje_sub: 'Route, gates, tijden, vlaggen en reglement',
     meta_rondje: '65 NM · 6 JUNI 2026 · EDITIE 47',
+    tile_webcams_title: 'Texelse webcams',
+    tile_webcams_sub: 'Livestreams langs het rondje',
+    meta_webcams: '6 CAMERAS · LIVE',
   },
   en: {
     tile_compare_title: 'Texel Rating Scores',
@@ -125,6 +129,9 @@ const COPY = {
     tile_rondje_title: 'The Round',
     tile_rondje_sub: 'Route, gates, timings, flags and rules',
     meta_rondje: '65 NM · 6 JUNE 2026 · EDITION 47',
+    tile_webcams_title: 'Texel webcams',
+    tile_webcams_sub: 'Livestreams along the course',
+    meta_webcams: '6 CAMERAS · LIVE',
   },
   de: {
     tile_compare_title: 'Texel Rating Scores',
@@ -183,6 +190,9 @@ const COPY = {
     tile_rondje_title: 'Die Runde',
     tile_rondje_sub: 'Strecke, Gates, Zeiten, Flaggen und Regeln',
     meta_rondje: '65 SM · 6. JUNI 2026 · AUSGABE 47',
+    tile_webcams_title: 'Texel Webcams',
+    tile_webcams_sub: 'Livestreams entlang der Strecke',
+    meta_webcams: '6 KAMERAS · LIVE',
   },
   fr: {
     tile_compare_title: 'Texel Rating Scores',
@@ -241,6 +251,9 @@ const COPY = {
     tile_rondje_title: 'Le Tour',
     tile_rondje_sub: 'Parcours, portes, horaires, pavillons et règles',
     meta_rondje: '65 NM · 6 JUIN 2026 · ÉDITION 47',
+    tile_webcams_title: 'Webcams de Texel',
+    tile_webcams_sub: 'Directs le long du parcours',
+    meta_webcams: '6 CAMÉRAS · DIRECT',
   },
 }
 
@@ -270,6 +283,7 @@ export default function App() {
           {page === 'nieuws'  && <Nieuws  {...props} />}
           {page === 'weer'    && <Weer    {...props} />}
           {page === 'rondje'  && <Rondje  {...props} />}
+          {page === 'webcams' && <Webcams {...props} />}
           {page === 'beheer'  && <Beheer  {...props} />}
         </div>
       </div>

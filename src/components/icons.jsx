@@ -124,4 +124,15 @@ export const Icon = {
       <path d="M5 21V4M5 4h12l-2 4 2 4H5" stroke={color} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
     </svg>
   ),
+  Camera: ({ size = 16, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M4 8a2 2 0 0 1 2-2h2l1.5-2h5L16 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z" stroke={color} strokeWidth="1.8" strokeLinejoin="round"/>
+      <circle cx="12" cy="13" r="3.5" stroke={color} strokeWidth="1.8"/>
+    </svg>
+  ),
+  Play: ({ size = 18, color = 'currentColor' }) => (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color}>
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  ),
 }

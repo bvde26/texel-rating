@@ -1,0 +1,82 @@
+{
+  "cams": [
+    {
+      "id": "paal-17",
+      "name": "Paal 17",
+      "subtitle": {
+        "nl": "Start & Finish · Ecomare",
+        "en": "Start & Finish · Ecomare",
+        "de": "Start & Ziel · Ecomare",
+        "fr": "Départ & Arrivée · Ecomare"
+      },
+      "embedUrl": "https://www.youtube-nocookie.com/embed/Hq2Qbcuph4w?autoplay=1&mute=1",
+      "url": "https://www.youtube.com/watch?v=Hq2Qbcuph4w",
+      "credit": "YouTube Live · Texelinformatie"
+    },
+    {
+      "id": "paal-9",
+      "name": "Paal 9",
+      "subtitle": {
+        "nl": "Westkust zuid · Den Hoorn",
+        "en": "West coast south · Den Hoorn",
+        "de": "Westküste Süd · Den Hoorn",
+        "fr": "Côte ouest sud · Den Hoorn"
+      },
+      "embedUrl": "https://www.youtube-nocookie.com/embed/YIefLlsHUVQ?autoplay=1&mute=1",
+      "url": "https://www.youtube.com/watch?v=YIefLlsHUVQ",
+      "credit": "YouTube Live · Texelinformatie"
+    },
+    {
+      "id": "paal-33",
+      "name": "Paal 33 · Kaap Noord",
+      "subtitle": {
+        "nl": "Noordpunt · richting Gate 1",
+        "en": "Northern tip · toward Gate 1",
+        "de": "Nordspitze · Richtung Gate 1",
+        "fr": "Pointe nord · vers Gate 1"
+      },
+      "embedUrl": "https://www.youtube-nocookie.com/embed/Gq8dWezdEX8?autoplay=1&mute=1",
+      "url": "https://www.youtube.com/watch?v=Gq8dWezdEX8",
+      "credit": "YouTube Live · Texelinformatie"
+    },
+    {
+      "id": "vuurtoren",
+      "name": "Vuurtoren Eierland",
+      "subtitle": {
+        "nl": "Noord · tussen Gate 1 en Gate 2",
+        "en": "North · between Gate 1 and Gate 2",
+        "de": "Nord · zwischen Gate 1 und Gate 2",
+        "fr": "Nord · entre Gate 1 et Gate 2"
+      },
+      "embedUrl": "https://www.youtube-nocookie.com/embed/ajX5wOMF8ss?autoplay=1&mute=1",
+      "url": "https://www.youtube.com/watch?v=ajX5wOMF8ss",
+      "credit": "YouTube Live · Texelinformatie"
+    },
+    {
+      "id": "oudeschild",
+      "name": "Haven Oudeschild",
+      "subtitle": {
+        "nl": "Oostkust · Gate 3",
+        "en": "East coast · Gate 3",
+        "de": "Ostküste · Gate 3",
+        "fr": "Côte est · Gate 3"
+      },
+      "embedUrl": "https://www.youtube-nocookie.com/embed/iglXbEMJ2W0?autoplay=1&mute=1",
+      "url": "https://www.youtube.com/watch?v=iglXbEMJ2W0",
+      "credit": "YouTube Live · Texelinformatie"
+    },
+    {
+      "id": "teso",
+      "name": "TESO Veerboot",
+      "subtitle": {
+        "nl": "Den Helder · bij 't Horntje",
+        "en": "Den Helder · near 't Horntje",
+        "de": "Den Helder · bei 't Horntje",
+        "fr": "Den Helder · près de 't Horntje"
+      },
+      "embedUrl": "https://www.youtube-nocookie.com/embed/U8m7Fr6xMqM?autoplay=1&mute=1",
+      "url": "https://www.youtube.com/watch?v=U8m7Fr6xMqM",
+      "credit": "YouTube Live · Texelinformatie"
+    }
+  ]
+}
