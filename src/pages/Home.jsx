@@ -1,5 +1,7 @@
+import { useEffect, useState } from 'react'
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
+import { subscribeToNews } from '../services/newsService'
 
 import registrationsData from '../data/registrations.json'
 
@@ -12,6 +14,49 @@ function daysUntil(date) {
   const now = new Date()
   const diff = date - new Date(now.getFullYear(), now.getMonth(), now.getDate())
   return Math.ceil(diff / (1000 * 60 * 60 * 24))
+}
+
+function relativeTime(ms, lang) {
+  if (!ms) return ''
+  const sec = Math.max(0, (Date.now() - ms) / 1000)
+  const L = {
+    nl: { now: 'zojuist', min: 'min geleden', hr: 'uur geleden', day: 'd geleden' },
+    en: { now: 'just now', min: 'min ago', hr: 'h ago', day: 'd ago' },
+    de: { now: 'gerade eben', min: 'Min', hr: 'Std', day: 'T' },
+    fr: { now: "à l'instant", min: 'min', hr: 'h', day: 'j' },
+  }[lang] || { now: 'zojuist', min: 'min geleden', hr: 'uur geleden', day: 'd geleden' }
+  if (sec < 60) return L.now
+  if (sec < 3600) {
+    const n = Math.floor(sec / 60)
+    return lang === 'de' ? `vor ${n} ${L.min}` : lang === 'fr' ? `il y a ${n} ${L.min}` : `${n} ${L.min}`
+  }
+  if (sec < 86400) {
+    const n = Math.floor(sec / 3600)
+    return lang === 'de' ? `vor ${n} ${L.hr}` : lang === 'fr' ? `il y a ${n} ${L.hr}` : `${n} ${L.hr}`
+  }
+  const n = Math.floor(sec / 86400)
+  return lang === 'de' ? `vor ${n} ${L.day}` : lang === 'fr' ? `il y a ${n} ${L.day}` : `${n} ${L.day}`
+}
+
+function useLatestNewsAt() {
+  const [ms, setMs] = useState(null)
+  useEffect(() => {
+    const unsub = subscribeToNews(
+      (items) => {
+        const ts = items[0]?.createdAt
+        if (ts && typeof ts.toMillis === 'function') setMs(ts.toMillis())
+      },
+      () => {},
+    )
+    return () => unsub && unsub()
+  }, [])
+  // Force re-render every 60s so relative time updates
+  const [, tick] = useState(0)
+  useEffect(() => {
+    const id = setInterval(() => tick(t => t + 1), 60000)
+    return () => clearInterval(id)
+  }, [])
+  return ms
 }
 
 function HomeTile({ variant, eyebrow, title, sub, meta, onClick }) {
@@ -192,6 +237,21 @@ function RegistrationsTile({ t, categories, onClick }) {
 
 export default function Home({ t, lang, setLang, go }) {
   const days = daysUntil(EVENT_DATE)
+  const latestNewsAt = useLatestNewsAt()
+  const newsUpdatedLabel = {
+    nl: 'LAATSTE UPDATE', en: 'LAST UPDATE', de: 'LETZTES UPDATE', fr: 'DERNIÈRE MAJ',
+  }[lang] || 'LAATSTE UPDATE'
+  const newsMeta = latestNewsAt ? (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+      <span style={{
+        width: 7, height: 7, borderRadius: 999,
+        background: '#16a34a',
+        boxShadow: '0 0 0 3px rgba(22,163,74,0.18)',
+        display: 'inline-block',
+      }}/>
+      {newsUpdatedLabel} · {relativeTime(latestNewsAt, lang).toUpperCase()}
+    </span>
+  ) : null
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>
@@ -267,6 +327,7 @@ export default function Home({ t, lang, setLang, go }) {
           eyebrow="05 / Nieuws"
           title={t.tile_nieuws_title}
           sub={t.tile_nieuws_sub}
+          meta={newsMeta}
           onClick={() => go('nieuws')}
         />
         <HomeTile
