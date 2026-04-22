@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
 import { subscribeToNews } from '../services/newsService'
@@ -59,17 +59,10 @@ function useLatestNewsAt() {
   return ms
 }
 
-function HomeTile({ accent, eyebrow, title, sub, meta, onClick }) {
+function HomeTile({ accent, title, sub, meta, onClick }) {
   return (
     <Pressable onClick={onClick} className="tile" data-accent={accent}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-        <div style={{
-          fontFamily: 'JetBrains Mono, monospace',
-          fontSize: 11,
-          letterSpacing: 0.6,
-          textTransform: 'uppercase',
-          color: 'var(--spring-ink-soft)',
-        }}>{eyebrow}</div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'flex-start' }}>
         <div className="tile-arrow">
           <Icon.ArrowRight size={16} color="var(--spring-ink)"/>
         </div>
@@ -123,17 +116,9 @@ function RegistrationsTile({ t, categories, onClick }) {
   return (
     <Pressable onClick={onClick} className="tile" data-accent="mint">
       <div style={{
-        display: 'flex', justifyContent: 'space-between',
+        display: 'flex', justifyContent: 'flex-end',
         alignItems: 'flex-start', gap: 12, marginBottom: 10, minWidth: 0,
       }}>
-        <div style={{
-          fontFamily: 'JetBrains Mono, monospace',
-          fontSize: 11, letterSpacing: 0.6,
-          textTransform: 'uppercase',
-          color: 'var(--spring-ink-soft)',
-          flex: 1, minWidth: 0,
-          overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-        }}>04 / {t.tile_reg_eyebrow}</div>
         <div className="tile-arrow">
           <Icon.ArrowRight size={16} color="var(--spring-ink)" />
         </div>
@@ -196,6 +181,24 @@ function RegistrationsTile({ t, categories, onClick }) {
 export default function Home({ t, lang, setLang, go }) {
   const days = daysUntil(EVENT_DATE)
   const latestNewsAt = useLatestNewsAt()
+  const scrollRef = useRef(null)
+  const [hasMoreBelow, setHasMoreBelow] = useState(false)
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+    const update = () => {
+      setHasMoreBelow(el.scrollHeight - el.clientHeight - el.scrollTop > 8)
+    }
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    const ro = new ResizeObserver(update)
+    ro.observe(el)
+    return () => {
+      el.removeEventListener('scroll', update)
+      ro.disconnect()
+    }
+  }, [])
   const newsUpdatedLabel = {
     nl: 'LAATSTE UPDATE', en: 'LAST UPDATE', de: 'LETZTES UPDATE', fr: 'DERNIÈRE MAJ',
   }[lang] || 'LAATSTE UPDATE'
@@ -254,44 +257,55 @@ export default function Home({ t, lang, setLang, go }) {
       </div>
 
       {/* Tiles */}
-      <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', padding: '0 16px 12px' }} className="scrollbar-none">
+      <div
+        ref={scrollRef}
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          overflowX: 'hidden',
+          padding: '0 16px 12px',
+          WebkitMaskImage: hasMoreBelow
+            ? 'linear-gradient(to bottom, black 0, black calc(100% - 56px), transparent 100%)'
+            : 'none',
+          maskImage: hasMoreBelow
+            ? 'linear-gradient(to bottom, black 0, black calc(100% - 56px), transparent 100%)'
+            : 'none',
+          transition: 'mask-image 200ms ease, -webkit-mask-image 200ms ease',
+        }}
+        className="scrollbar-none"
+      >
         <div className="tile-grid">
           <HomeTile
-            accent="moss"
-            eyebrow="01 / Rating"
-            title={t.tile_compare_title}
-            sub={t.tile_compare_sub}
-            meta={t.meta_compare}
-            onClick={() => go('compare')}
-          />
-          <HomeTile
-            accent="indigo"
-            eyebrow="02 / Agenda"
-            title={t.tile_agenda_title}
-            sub={t.tile_agenda_sub}
-            meta={t.meta_agenda}
-            onClick={() => go('agenda')}
-          />
-          <HomeTile
-            accent="sand"
-            eyebrow="03 / Rondje"
-            title={t.tile_rondje_title}
-            sub={t.tile_rondje_sub}
-            meta={t.meta_rondje}
-            onClick={() => go('rondje')}
-          />
-          <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
-          <HomeTile
             accent="coral"
-            eyebrow="05 / Nieuws"
             title={t.tile_nieuws_title}
             sub={t.tile_nieuws_sub}
             meta={newsMeta}
             onClick={() => go('nieuws')}
           />
           <HomeTile
+            accent="indigo"
+            title={t.tile_agenda_title}
+            sub={t.tile_agenda_sub}
+            meta={t.meta_agenda}
+            onClick={() => go('agenda')}
+          />
+          <RegistrationsTile t={t} categories={registrationsData.categories} onClick={() => go('stats')} />
+          <HomeTile
+            accent="sand"
+            title={t.tile_rondje_title}
+            sub={t.tile_rondje_sub}
+            meta={t.meta_rondje}
+            onClick={() => go('rondje')}
+          />
+          <HomeTile
+            accent="moss"
+            title={t.tile_compare_title}
+            sub={t.tile_compare_sub}
+            meta={t.meta_compare}
+            onClick={() => go('compare')}
+          />
+          <HomeTile
             accent="sky"
-            eyebrow="06 / Weer"
             title={t.tile_weer_title}
             sub={t.tile_weer_sub}
             meta={t.meta_weer}
@@ -299,7 +313,6 @@ export default function Home({ t, lang, setLang, go }) {
           />
           <HomeTile
             accent="ocean"
-            eyebrow="07 / Webcams"
             title={t.tile_webcams_title}
             sub={t.tile_webcams_sub}
             meta={t.meta_webcams}
