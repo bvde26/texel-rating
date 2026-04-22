@@ -38,13 +38,10 @@ function loadLayers() {
 
 function orderedRouteLine(waypoints) {
   const byId = Object.fromEntries(waypoints.map(w => [w.id, [w.lat, w.lon]]))
-  // Vloeiende klokwijzerroute met offshore tussenpunten. Sprinkle helpers tussen echte waypoints
-  // zodat de polyline het eiland rondt (niet over land snijdt) en om de Vlakte van Kerken loopt.
   // Kortste lijn gate-naar-gate. Alleen tussenpunten waar een directe lijn land zou kruisen.
   return [
     byId['start-finish'],       // Paal 17
-    [53.1950, 4.7180],          // ronding NW hoek (directe lijn zou over Eierland-duinen gaan)
-    byId['gate-1'],             // boven vuurtoren
+    byId['gate-1'],             // directe lijn start → gate 1
     [53.1940, 4.8700],          // ronding NE hoek (directe lijn zou net vuurtoren-kust raken)
     byId['gate-2'],
     byId['vc-vessel'],          // direct offshore

@@ -146,7 +146,7 @@
         "de": "Dreieck westlich der VC-Boje — Sperrgebiet.",
         "fr": "Triangle à l'ouest de la bouée VC — zone interdite."
       },
-      "polygon": [[53.1150, 4.9550], [53.0650, 4.8600], [53.1400, 4.8700]]
+      "polygon": [[53.169123, 4.875799], [53.084637, 4.899689], [53.1150, 4.9550]]
     },
     {
       "id": "mokbaai",
