@@ -111,6 +111,8 @@
     { "id": "start-finish", "name": "Start / Finish Paal 17", "type": "start", "lat": 53.1047, "lon": 4.7365 },
     { "id": "finishline-a", "name": "Finishlijn A", "type": "mark", "lat": 53.080423, "lon": 4.728236 },
     { "id": "finishline-b", "name": "Finishlijn B", "type": "mark", "lat": 53.080423, "lon": 4.726741 },
+    { "id": "startline-a", "name": "Startlijn A (oost)", "type": "mark", "lat": 53.080423, "lon": 4.731227 },
+    { "id": "startline-b", "name": "Startlijn B (west)", "type": "mark", "lat": 53.080423, "lon": 4.723750 },
     { "id": "gate-1", "name": "Gate 1", "type": "gate", "lat": 53.189249, "lon": 4.839270 },
     { "id": "gate-1-a", "name": "Gate 1 A", "type": "gate", "lat": 53.188351, "lon": 4.839270 },
     { "id": "gate-1-b", "name": "Gate 1 B", "type": "gate", "lat": 53.190147, "lon": 4.839270 },
