@@ -165,10 +165,6 @@ function RegistrationsTile({ t, categories, onClick }) {
 
 export default function Home({ t, lang, setLang, go }) {
   const days = daysUntil(EVENT_DATE)
-  const now = new Date()
-  const dateStr = now.toLocaleDateString(lang === 'nl' ? 'nl-NL' : 'en-GB', {
-    weekday: 'long', day: 'numeric', month: 'long',
-  })
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)', overflow: 'hidden' }}>
@@ -180,7 +176,7 @@ export default function Home({ t, lang, setLang, go }) {
             fontFamily: 'JetBrains Mono, monospace',
             fontSize: 11, letterSpacing: 0.8,
             color: 'rgba(0,0,0,0.45)', textTransform: 'uppercase',
-          }}>{dateStr}</div>
+          }}>{t.race_dates}</div>
           <div style={{
             fontFamily: 'Space Grotesk, sans-serif',
             fontWeight: 700, fontSize: 30,
@@ -192,7 +188,7 @@ export default function Home({ t, lang, setLang, go }) {
             fontFamily: 'Outfit, sans-serif',
             fontWeight: 500, fontSize: 15,
             color: 'rgba(0,0,0,0.55)', marginTop: 2, letterSpacing: -0.2,
-          }}>{t.edition} · {t.edition_word} {EVENT_EDITIE}{days > 0 ? ` · ${days} ${t.days_label}` : ''}</div>
+          }}>{t.edition} · {t.edition_word} {EVENT_EDITIE}{days > 0 ? ` · ${t.days_until_prefix} ${days} ${t.days_label}` : ''}</div>
         </div>
 
         {/* Lang toggle */}
