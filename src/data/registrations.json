@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-04-22T06:54:46.912Z",
+  "fetchedAt": "2026-04-23T06:58:39.003Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 152,
+      "count": 155,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2001,6 +2001,45 @@
       "boatId": "hobie_16",
       "spinnaker": false,
       "rating": 118,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_153",
+      "skipper": "benji wilkens",
+      "crew": "Carsten schermer",
+      "sailNumber": "117911",
+      "boatName": "117911",
+      "boatClass": "hobie 16",
+      "country": "Netherlands",
+      "boatId": "hobie_16",
+      "spinnaker": false,
+      "rating": 118,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_154",
+      "skipper": "onno henneman",
+      "crew": "helene wilkens",
+      "sailNumber": "119031",
+      "boatName": "119031",
+      "boatClass": "hobie 16",
+      "country": "Netherlands",
+      "boatId": "hobie_16",
+      "spinnaker": false,
+      "rating": 118,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_155",
+      "skipper": "Edward Ooteman",
+      "crew": "Gerben Staal",
+      "sailNumber": "Ned001",
+      "boatName": "Ned001",
+      "boatClass": "Formula 18",
+      "country": "Netherlands",
+      "boatId": "formula_18",
+      "spinnaker": true,
+      "rating": 100,
       "category": "catamaran_duo"
     },
     {
