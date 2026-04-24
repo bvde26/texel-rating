@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-04-23T06:58:39.003Z",
+  "fetchedAt": "2026-04-24T07:02:03.180Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 155,
+      "count": 156,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2036,6 +2036,19 @@
       "sailNumber": "Ned001",
       "boatName": "Ned001",
       "boatClass": "Formula 18",
+      "country": "Netherlands",
+      "boatId": "formula_18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_156",
+      "skipper": "Bert van Son",
+      "crew": "Martijn Grosmann",
+      "sailNumber": "NED 888",
+      "boatName": "NED 888",
+      "boatClass": "F18",
       "country": "Netherlands",
       "boatId": "formula_18",
       "spinnaker": true,
