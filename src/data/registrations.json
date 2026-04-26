@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-04-25T06:17:40.099Z",
+  "fetchedAt": "2026-04-26T06:56:43.810Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 157,
+      "count": 158,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2066,6 +2066,19 @@
       "boatId": "nacra_580_provisional_sport",
       "spinnaker": true,
       "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_158",
+      "skipper": "Hardy Peters",
+      "crew": "Christopher Payne",
+      "sailNumber": "274",
+      "boatName": "274",
+      "boatClass": "Nacra Inter 20 Mk2",
+      "country": "United States of America",
+      "boatId": null,
+      "spinnaker": true,
+      "rating": 96,
       "category": "catamaran_duo"
     },
     {
