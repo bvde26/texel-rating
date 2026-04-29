@@ -601,6 +601,7 @@ export default function RaceComparison({ t, lang, onBack }) {
                   {results.map(({ uid, boat, cSpi, compTR, diff, skipper, crew, sailNumber }) => {
                     const positive = diff >= 0
                     const color = positive ? 'var(--win)' : 'var(--loss)'
+                    const bg = positive ? 'var(--win-bg)' : 'var(--loss-bg)'
                     const toggleSpi = (v) => setCompetitors(cs => cs.map(c => c.uid === uid ? { ...c, spi: v } : c))
                     return (
                       <SwipeableCard
@@ -627,12 +628,9 @@ export default function RaceComparison({ t, lang, onBack }) {
                             )}
                           </div>
                           {diff !== null ? (
-                            <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 18, fontWeight: 600, color, letterSpacing: -0.5, lineHeight: 1 }}>
+                            <div style={{ flexShrink: 0 }}>
+                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 15, fontWeight: 700, color, background: bg, letterSpacing: -0.3, lineHeight: 1, padding: '6px 10px', borderRadius: 8 }}>
                                 {fmtDelta(diff)}
-                              </div>
-                              <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 9, color, letterSpacing: 0.6, textTransform: 'uppercase', marginTop: 3, opacity: 0.8 }}>
-                                {positive ? t.advantage : t.disadvantage}
                               </div>
                             </div>
                           ) : (

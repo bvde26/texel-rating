@@ -37,6 +37,10 @@
   --green-bg:  #ecfdf5;
   --red:       #ef4444;
   --red-bg:    #fee2e2;
+  --win:       #0a8f4a;
+  --win-bg:    #d1f4dd;
+  --loss:      #c92a2a;
+  --loss-bg:   #fde2e2;
   --surface2:  #f3f4f6;
 }
 
