@@ -1,16 +1,16 @@
 {
-  "fetchedAt": "2026-04-28T07:28:00.798Z",
+  "fetchedAt": "2026-04-29T07:18:42.050Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 159,
+      "count": 160,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
       "name": "Wingfoil Marathon",
       "nameNl": "Wingfoil",
-      "count": 57,
+      "count": 58,
       "url": "https://scoring.winterwave.nl/register/3b15cb900f46"
     },
     "windsurf": {
@@ -2092,6 +2092,19 @@
       "boatId": null,
       "spinnaker": false,
       "rating": 133,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_160",
+      "skipper": "Floor Holleman",
+      "crew": "Francien Holleman",
+      "sailNumber": "117670",
+      "boatName": "117670",
+      "boatClass": "Hobie 16",
+      "country": "Netherlands",
+      "boatId": "hobie_16",
+      "spinnaker": false,
+      "rating": 118,
       "category": "catamaran_duo"
     },
     {
