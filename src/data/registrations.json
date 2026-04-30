@@ -1,16 +1,16 @@
 {
-  "fetchedAt": "2026-04-29T07:18:42.050Z",
+  "fetchedAt": "2026-04-30T07:25:15.077Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 160,
+      "count": 161,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
       "name": "Wingfoil Marathon",
       "nameNl": "Wingfoil",
-      "count": 58,
+      "count": 59,
       "url": "https://scoring.winterwave.nl/register/3b15cb900f46"
     },
     "windsurf": {
@@ -2100,6 +2100,19 @@
       "crew": "Francien Holleman",
       "sailNumber": "117670",
       "boatName": "117670",
+      "boatClass": "Hobie 16",
+      "country": "Netherlands",
+      "boatId": "hobie_16",
+      "spinnaker": false,
+      "rating": 118,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_161",
+      "skipper": "Stefan Keizer",
+      "crew": "Ilse Purmer",
+      "sailNumber": "95655",
+      "boatName": "95655",
       "boatClass": "Hobie 16",
       "country": "Netherlands",
       "boatId": "hobie_16",
