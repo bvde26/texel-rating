@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-04-30T07:25:15.077Z",
+  "fetchedAt": "2026-05-01T07:23:14.098Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
@@ -10,7 +10,7 @@
     "wingfoil": {
       "name": "Wingfoil Marathon",
       "nameNl": "Wingfoil",
-      "count": 59,
+      "count": 60,
       "url": "https://scoring.winterwave.nl/register/3b15cb900f46"
     },
     "windsurf": {
