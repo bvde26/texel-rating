@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-01T07:23:14.098Z",
+  "fetchedAt": "2026-05-02T06:59:00.856Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 161,
+      "count": 163,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2118,6 +2118,32 @@
       "boatId": "hobie_16",
       "spinnaker": false,
       "rating": 118,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_162",
+      "skipper": "Rene Renirie",
+      "crew": "Axel vaessens",
+      "sailNumber": "5155",
+      "boatName": "5155",
+      "boatClass": "Dart 18",
+      "country": "Netherlands",
+      "boatId": "dart_18",
+      "spinnaker": false,
+      "rating": 121,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_163",
+      "skipper": "Douwe Sijsma",
+      "crew": "Luc van Rooijen",
+      "sailNumber": "1014",
+      "boatName": "1014",
+      "boatClass": "Nacra 570",
+      "country": "Netherlands",
+      "boatId": "nacra_570_mkii",
+      "spinnaker": true,
+      "rating": 104,
       "category": "catamaran_duo"
     },
     {
