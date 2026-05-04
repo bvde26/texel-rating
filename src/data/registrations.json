@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-03T07:14:17.230Z",
+  "fetchedAt": "2026-05-04T07:44:15.757Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 163,
+      "count": 164,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2144,6 +2144,19 @@
       "boatId": "nacra_570_mkii",
       "spinnaker": true,
       "rating": 104,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_164",
+      "skipper": "Bart van der Meulen",
+      "crew": "Maarten van der Meulen",
+      "sailNumber": "1799",
+      "boatName": "1799",
+      "boatClass": "F18 / Nacra Infusion",
+      "country": "Netherlands",
+      "boatId": null,
+      "spinnaker": true,
+      "rating": 100,
       "category": "catamaran_duo"
     },
     {
