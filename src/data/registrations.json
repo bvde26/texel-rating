@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-04T07:44:15.757Z",
+  "fetchedAt": "2026-05-05T07:13:19.638Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 164,
+      "count": 165,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -563,14 +563,14 @@
     {
       "id": "reg_042",
       "skipper": "Eric de Haas",
-      "crew": "Eric De Haas",
+      "crew": "Marc Onland",
       "sailNumber": "162",
       "boatName": "162",
-      "boatClass": "F20",
+      "boatClass": "F20 Carbon",
       "country": "Netherlands",
-      "boatId": "formula_20",
+      "boatId": null,
       "spinnaker": true,
-      "rating": 88,
+      "rating": 89,
       "category": "catamaran_duo"
     },
     {
@@ -1109,7 +1109,7 @@
     {
       "id": "reg_084",
       "skipper": "Stefan Rumpf",
-      "crew": "Ella Smit",
+      "crew": "Andreas Frahm",
       "sailNumber": "117980",
       "boatName": "117980",
       "boatClass": "Hobie 16",
@@ -2157,6 +2157,19 @@
       "boatId": null,
       "spinnaker": true,
       "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_165",
+      "skipper": "Anna Kroon",
+      "crew": "Matthijs Spijk",
+      "sailNumber": "Ned2025",
+      "boatName": "Ned2025",
+      "boatClass": "Nacra F16 double curved foils",
+      "country": "Netherlands",
+      "boatId": null,
+      "spinnaker": true,
+      "rating": 101,
       "category": "catamaran_duo"
     },
     {
