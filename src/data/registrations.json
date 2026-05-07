@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-05-06T07:32:03.949Z",
+  "fetchedAt": "2026-05-07T07:38:46.368Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
@@ -198,14 +198,14 @@
     },
     {
       "id": "reg_014",
-      "skipper": "Eelco Kaan",
-      "crew": "Bob oord",
-      "sailNumber": "NL1406",
-      "boatName": "NL1406",
-      "boatClass": "F18",
+      "skipper": "leon enthoven",
+      "crew": "natasha smit",
+      "sailNumber": "NL2560",
+      "boatName": "NL2560",
+      "boatClass": "F18/ Hobie Tiger",
       "country": "Netherlands",
-      "boatId": "formula_18",
-      "spinnaker": true,
+      "boatId": null,
+      "spinnaker": false,
       "rating": 100,
       "category": "catamaran_duo"
     },
