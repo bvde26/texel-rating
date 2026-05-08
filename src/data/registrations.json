@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-07T07:38:46.368Z",
+  "fetchedAt": "2026-05-08T06:28:32.807Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 165,
+      "count": 166,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2170,6 +2170,19 @@
       "boatId": null,
       "spinnaker": true,
       "rating": 101,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_166",
+      "skipper": "Robert Klein Breteler",
+      "crew": "Bernard Klein Breteler",
+      "sailNumber": "513",
+      "boatName": "513",
+      "boatClass": "Nacra F18",
+      "country": "Netherlands",
+      "boatId": "nacra_f18",
+      "spinnaker": true,
+      "rating": 100,
       "category": "catamaran_duo"
     },
     {
