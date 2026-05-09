@@ -1,16 +1,16 @@
 {
-  "fetchedAt": "2026-05-08T06:28:32.807Z",
+  "fetchedAt": "2026-05-09T07:03:03.243Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 166,
+      "count": 168,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
       "name": "Wingfoil Marathon",
       "nameNl": "Wingfoil",
-      "count": 61,
+      "count": 62,
       "url": "https://scoring.winterwave.nl/register/3b15cb900f46"
     },
     "windsurf": {
@@ -2178,6 +2178,32 @@
       "crew": "Bernard Klein Breteler",
       "sailNumber": "513",
       "boatName": "513",
+      "boatClass": "Nacra F18",
+      "country": "Netherlands",
+      "boatId": "nacra_f18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_167",
+      "skipper": "Felix Sponholz",
+      "crew": "Leo Lüdtke",
+      "sailNumber": "GER 323",
+      "boatName": "GER 323",
+      "boatClass": "Hobie Tiger F18",
+      "country": "Germany",
+      "boatId": "hobie_tiger_f18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_168",
+      "skipper": "Bjorn David Scherphuis",
+      "crew": "Jan Pieter van Zijtveld",
+      "sailNumber": "227",
+      "boatName": "227",
       "boatClass": "Nacra F18",
       "country": "Netherlands",
       "boatId": "nacra_f18",
