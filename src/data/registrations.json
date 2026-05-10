@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-09T07:03:03.243Z",
+  "fetchedAt": "2026-05-10T07:23:17.719Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 168,
+      "count": 169,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -16,7 +16,7 @@
     "windsurf": {
       "name": "Windsurfing Marathon",
       "nameNl": "Windsurf",
-      "count": 4,
+      "count": 5,
       "url": "https://scoring.winterwave.nl/register/b2fc55e1570b"
     },
     "catamaran_single": {
@@ -2207,6 +2207,19 @@
       "boatClass": "Nacra F18",
       "country": "Netherlands",
       "boatId": "nacra_f18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_169",
+      "skipper": "Wouter de Baat",
+      "crew": "Jan de Baat",
+      "sailNumber": "2619",
+      "boatName": "2619",
+      "boatClass": "Hobie Tiger F18",
+      "country": "Netherlands",
+      "boatId": "hobie_tiger_f18",
       "spinnaker": true,
       "rating": 100,
       "category": "catamaran_duo"
