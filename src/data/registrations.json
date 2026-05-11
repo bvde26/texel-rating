@@ -1,22 +1,22 @@
 {
-  "fetchedAt": "2026-05-10T07:23:17.719Z",
+  "fetchedAt": "2026-05-11T08:21:31.434Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 169,
+      "count": 170,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
       "name": "Wingfoil Marathon",
       "nameNl": "Wingfoil",
-      "count": 62,
+      "count": 63,
       "url": "https://scoring.winterwave.nl/register/3b15cb900f46"
     },
     "windsurf": {
       "name": "Windsurfing Marathon",
       "nameNl": "Windsurf",
-      "count": 5,
+      "count": 7,
       "url": "https://scoring.winterwave.nl/register/b2fc55e1570b"
     },
     "catamaran_single": {
@@ -2222,6 +2222,19 @@
       "boatId": "hobie_tiger_f18",
       "spinnaker": true,
       "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_170",
+      "skipper": "Taeke Dirk Hendrik Talsma",
+      "crew": "Ties Caboort",
+      "sailNumber": "15287",
+      "boatName": "15287",
+      "boatClass": "hobie 18",
+      "country": "Netherlands",
+      "boatId": "hobie_18",
+      "spinnaker": false,
+      "rating": 107,
       "category": "catamaran_duo"
     },
     {
