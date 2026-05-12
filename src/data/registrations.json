@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-11T08:21:31.434Z",
+  "fetchedAt": "2026-05-12T07:39:14.088Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 170,
+      "count": 173,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2235,6 +2235,45 @@
       "boatId": "hobie_18",
       "spinnaker": false,
       "rating": 107,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_171",
+      "skipper": "Wim van der Bijl",
+      "crew": "Erik van der Bijl",
+      "sailNumber": "003",
+      "boatName": "003",
+      "boatClass": "Nacra 500",
+      "country": "Netherlands",
+      "boatId": "nacra_500_mk2",
+      "spinnaker": false,
+      "rating": -2,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_172",
+      "skipper": "Olivier de Bruijn",
+      "crew": "Ron de Bruijn",
+      "sailNumber": "NED 914",
+      "boatName": "NED 914",
+      "boatClass": "Nacra Infusion f18",
+      "country": "Netherlands",
+      "boatId": "nacra_infusion_f18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_173",
+      "skipper": "Willem Stoutenbeek",
+      "crew": "Stan Vos",
+      "sailNumber": "NED704",
+      "boatName": "NED704",
+      "boatClass": "F18",
+      "country": "Netherlands",
+      "boatId": "formula_18",
+      "spinnaker": true,
+      "rating": 1,
       "category": "catamaran_duo"
     },
     {
