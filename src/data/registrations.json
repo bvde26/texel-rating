@@ -1,10 +1,10 @@
 {
-  "fetchedAt": "2026-05-12T07:39:14.088Z",
+  "fetchedAt": "2026-05-13T07:45:26.497Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 173,
+      "count": 175,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
@@ -2274,6 +2274,32 @@
       "boatId": "formula_18",
       "spinnaker": true,
       "rating": 1,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_174",
+      "skipper": "Grant Piggot",
+      "crew": "Thomas de Jong",
+      "sailNumber": "1908",
+      "boatName": "1908",
+      "boatClass": "F18 evolution",
+      "country": "Netherlands",
+      "boatId": null,
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_175",
+      "skipper": "Siebenga",
+      "crew": "Berend de Jongh",
+      "sailNumber": "123",
+      "boatName": "123",
+      "boatClass": "Nacra Inter 20",
+      "country": "Netherlands",
+      "boatId": "nacra_inter_20_f20",
+      "spinnaker": false,
+      "rating": 101,
       "category": "catamaran_duo"
     },
     {
