@@ -110,13 +110,36 @@ function buildCatamaran() {
   }
   for (const z of [-1.0, 1.0]) add(buildHullGeometry(), bodyMat, [0, 0.05, z])
 
-  // --- Dwarsbalken (voor/achter) ---
-  const beamGeo = new THREE.CylinderGeometry(0.07, 0.07, 2.3, 12)
-  add(beamGeo, bodyMat, [1.1, 0.12, 0], [Math.PI / 2, 0, 0])  // voorbalk
-  add(beamGeo, bodyMat, [-1.0, 0.12, 0], [Math.PI / 2, 0, 0]) // achterbalk
+  // Dunne staaf/draad tussen twee punten (verstaging, schoten, striker).
+  const strut = (a, b, r) => {
+    const A = new THREE.Vector3(...a)
+    const B = new THREE.Vector3(...b)
+    const dir = new THREE.Vector3().subVectors(B, A)
+    const len = dir.length()
+    const mesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(r, r, len, 7),
+      bodyMat,
+    )
+    mesh.position.copy(A).addScaledVector(dir, 0.5)
+    mesh.quaternion.setFromUnitVectors(
+      new THREE.Vector3(0, 1, 0),
+      dir.normalize(),
+    )
+    group.add(mesh)
+    parts.push(mesh)
+    return mesh
+  }
 
-  // --- Trampoline-dek ---
-  add(new THREE.BoxGeometry(2.0, 0.03, 1.7), bodyMat, [0.05, 0.13, 0])
+  // Dekhoogte: balken en trampoline liggen bóvenop de rompen.
+  const DECK = 0.24
+
+  // --- Dwarsbalken (voor/achter) — op de rompen ---
+  const beamGeo = new THREE.CylinderGeometry(0.07, 0.07, 2.3, 12)
+  add(beamGeo, bodyMat, [1.1, DECK, 0], [Math.PI / 2, 0, 0])  // voorbalk
+  add(beamGeo, bodyMat, [-1.0, DECK, 0], [Math.PI / 2, 0, 0]) // achterbalk
+
+  // --- Trampoline-dek — op de rompen, tussen de balken ---
+  add(new THREE.BoxGeometry(2.0, 0.025, 1.7), bodyMat, [0.05, DECK + 0.02, 0])
 
   // --- Mast (hoog, lichte buiging via segmenten) ---
   const mast = add(new THREE.CylinderGeometry(0.06, 0.085, 7.4, 12), bodyMat, [0.9, 3.85, 0], [0, 0, -0.04])
@@ -160,6 +183,24 @@ function buildCatamaran() {
   // --- Zwaarden (daggerboards) ---
   const dbGeo = new THREE.BoxGeometry(0.05, 0.9, 0.22)
   for (const z of [-1.0, 1.0]) add(dbGeo, bodyMat, [0.2, -0.55, z], [0, 0, 0.05])
+
+  // --- Verstaging (staand want) ---
+  const mastTop = [0.78, 7.5, 0]
+  // Voorstag: masttop -> boeg/voorbalk-aanslag
+  strut(mastTop, [2.15, DECK + 0.04, 0], 0.013)
+  // Zijstagen (zeilkant, bakboord + stuurboord): masttop -> romp bij voorbalk
+  for (const z of [-1.0, 1.0]) strut(mastTop, [0.9, DECK, z], 0.013)
+
+  // --- Dolphin striker (onder voorbalk/mast) ---
+  const strikerTip = [1.1, -0.16, 0]
+  strut([1.1, DECK, 0], strikerTip, 0.03) // verticale stut
+  for (const z of [-1.0, 1.0]) strut(strikerTip, [1.1, DECK - 0.02, z], 0.011) // spandraden
+
+  // --- Grootschoot (giek-eind -> achterbalk) ---
+  strut([-1.55, 0.5, 0], [-1.0, DECK + 0.02, 0], 0.014)
+
+  // --- Fokkeschoten (fok-schoothoek -> rompen) ---
+  for (const z of [-1.0, 1.0]) strut([2.4, 0.46, 0], [0.95, DECK, z], 0.012)
 
   // Centreer de groep op zijn bounding-center.
   const box = new THREE.Box3().setFromObject(group)
