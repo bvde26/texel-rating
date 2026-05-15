@@ -38,6 +38,9 @@ function relativeTime(ms, lang) {
   return lang === 'de' ? `vor ${n} ${L.day}` : lang === 'fr' ? `il y a ${n} ${L.day}` : `${n} ${L.day}`
 }
 
+// Nieuws-tegel tijdelijk verborgen — nog geen relevante content
+const SHOW_NEWS_TILE = false
+
 function useLatestNewsAt() {
   const [ms, setMs] = useState(null)
   useEffect(() => {
@@ -252,14 +255,16 @@ export default function Home({ t, lang, setLang, go }) {
         className="scrollbar-none"
       >
         <div className="tile-grid">
-          <HomeTile
-            accent="coral"
-            icon={Icon.Bell}
-            title={t.tile_nieuws_title}
-            sub={t.tile_nieuws_sub}
-            chip={newsMeta}
-            onClick={() => go('nieuws')}
-          />
+          {SHOW_NEWS_TILE && (
+            <HomeTile
+              accent="coral"
+              icon={Icon.Bell}
+              title={t.tile_nieuws_title}
+              sub={t.tile_nieuws_sub}
+              chip={newsMeta}
+              onClick={() => go('nieuws')}
+            />
+          )}
           <HomeTile
             accent="indigo"
             icon={Icon.Calendar}

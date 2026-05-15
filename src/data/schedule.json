@@ -1,75 +1,58 @@
 {
-  "eventName": "Round Texel",
-  "eventYear": 2025,
-  "eventDate": "2025-06-07",
+  "eventName": "Ronde om Texel",
+  "eventYear": 2026,
+  "eventDate": "2026-06-06",
+  "edition": 47,
   "days": [
     {
-      "day": 1,
-      "date": "2025-06-07",
-      "title": "Registration & Skippers Meeting",
+      "date": "2026-06-04",
+      "title": "Donderdag 4 juni",
       "events": [
         {
-          "time": "10:00",
-          "title": "Registration opens",
-          "location": "Texel Marina"
+          "title": "Korte Speed Marathon",
+          "desc": "Een intensieve, tactische race waarin snelheid en uithoudingsvermogen samenkomen. Snelste over 5 kilometer is de winnaar.",
+          "time": "volgt (afhankelijk van condities). Max 30 minuten",
+          "location": "Start- en finishgebied: het strand bij Paal 17."
         },
         {
-          "time": "15:00",
-          "title": "Skippers Meeting",
-          "location": "Clubhouse"
-        },
-        {
-          "time": "18:00",
-          "title": "Welcome dinner",
-          "location": "Clubhouse"
+          "title": "Sprintwedstrijden",
+          "desc": "Korte, explosieve races gericht op starts, acceleratie en snelheid. Door middel van met eliminatierondes. Kwartfinales → Halve finales → Finale",
+          "time": "volgt (afhankelijk van condities)",
+          "location": "Start- en finishgebied: het strand bij Paal 17."
         }
       ]
     },
     {
-      "day": 2,
-      "date": "2025-06-08",
-      "title": "Race Day 1",
+      "date": "2026-06-05",
+      "title": "Vrijdag 5 juni",
       "events": [
         {
-          "time": "08:00",
-          "title": "Briefing",
-          "location": "On water"
+          "title": "Speedchallenge – Afvalrace",
+          "desc": "Een snelheidsrace: de hoogste topsnelheid neerzetten binnen een vastgesteld vak van 750 x 750 meter. Tijdsvensters per ronde. Kwartfinale: 20 minuten | Halve finale: 15 minuten | Finale: 10 minuten",
+          "time": "volgt",
+          "location": "Start- en finishgebied: het strand bij Paal 17."
         },
         {
-          "time": "10:00",
-          "title": "Start Race 1",
-          "location": "Start line"
-        },
-        {
-          "time": "15:00",
-          "title": "Expected finish",
-          "location": "Finish line"
+          "title": "AB Texel Marathon om de Noord",
+          "desc": "Een langere en strategische race waarbij uithoudingsvermogen en koerskeuze bepalend zijn.",
+          "time": "volgt",
+          "location": "Start- en finishgebied: het strand bij Paal 17."
         }
       ]
     },
     {
-      "day": 3,
-      "date": "2025-06-09",
-      "title": "Race Day 2",
+      "date": "2026-06-06",
+      "title": "Zaterdag 6 juni",
       "events": [
         {
-          "time": "08:00",
-          "title": "Briefing",
-          "location": "On water"
-        },
-        {
-          "time": "10:00",
-          "title": "Start Race 2",
-          "location": "Start line"
-        },
-        {
-          "time": "15:00",
-          "title": "Expected finish",
-          "location": "Finish line"
+          "title": "De 47e editie van de Ronde om Texel."
         }
       ]
     }
   ],
+  "source": "https://www.roundtexel.com/en/competition-info",
+  "fetchedAt": "2026-05-15T14:02:23.294Z",
+  "programHash": "45de63c5b5a322d9",
   "rules": [
     "All boats must comply with Texel Rating rule 2025",
     "Class certificates are mandatory",

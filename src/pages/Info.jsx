@@ -24,6 +24,9 @@ function TabUnderline({ label, active, onClick }) {
 
 function TabProgramma() {
   const [open, setOpen] = useState(0)
+  const updated = schedule.fetchedAt
+    ? new Date(schedule.fetchedAt).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' })
+    : null
 
   return (
     <div style={{ padding: '16px 16px 32px', display: 'grid', gap: 10 }}>
@@ -37,7 +40,9 @@ function TabProgramma() {
             >
               <div>
                 <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 15, color: '#000' }}>{day.title}</div>
-                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.3, marginTop: 3 }}>{day.date}</div>
+                <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, color: 'rgba(0,0,0,0.45)', letterSpacing: 0.3, marginTop: 3 }}>
+                  {day.events.length} {day.events.length === 1 ? 'onderdeel' : 'onderdelen'}
+                </div>
               </div>
               <div style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 280ms', flexShrink: 0 }}>
                 <Icon.ChevronDown size={16} color="rgba(0,0,0,0.4)"/>
@@ -46,16 +51,27 @@ function TabProgramma() {
             {isOpen && (
               <div style={{ borderTop: '1px solid var(--border)' }}>
                 {day.events.map((ev, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 14, padding: '12px 16px', borderTop: i > 0 ? '1px dashed rgba(0,0,0,0.08)' : 'none' }}>
-                    <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 14, fontWeight: 600, color: '#000', letterSpacing: -0.5, width: 44, flexShrink: 0, paddingTop: 1 }}>
-                      {ev.time}
-                    </div>
-                    <div>
-                      <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 500, fontSize: 14.5, color: '#000' }}>{ev.title}</div>
-                      {ev.location && (
-                        <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12.5, color: 'rgba(0,0,0,0.5)', marginTop: 2 }}>{ev.location}</div>
-                      )}
-                    </div>
+                  <div key={i} style={{ padding: '14px 16px', borderTop: i > 0 ? '1px dashed rgba(0,0,0,0.08)' : 'none' }}>
+                    <div style={{ fontFamily: 'Outfit, sans-serif', fontWeight: 600, fontSize: 14.5, color: '#000' }}>{ev.title}</div>
+                    {ev.desc && (
+                      <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, lineHeight: 1.55, color: 'rgba(0,0,0,0.65)', marginTop: 5 }}>{ev.desc}</div>
+                    )}
+                    {(ev.time || ev.location) && (
+                      <div style={{ display: 'grid', gap: 4, marginTop: 9 }}>
+                        {ev.time && (
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, fontWeight: 700, color: 'rgba(0,0,0,0.35)', letterSpacing: 0.6, paddingTop: 1, flexShrink: 0, width: 52 }}>TIJD</span>
+                            <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12.5, color: 'rgba(0,0,0,0.6)' }}>{ev.time}</span>
+                          </div>
+                        )}
+                        {ev.location && (
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <span style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, fontWeight: 700, color: 'rgba(0,0,0,0.35)', letterSpacing: 0.6, paddingTop: 1, flexShrink: 0, width: 52 }}>LOCATIE</span>
+                            <span style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12.5, color: 'rgba(0,0,0,0.6)' }}>{ev.location.replace(/^Start-?\s*en\s*finishgebied:\s*/i, '')}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -63,6 +79,11 @@ function TabProgramma() {
           </div>
         )
       })}
+      {updated && (
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 10, color: 'rgba(0,0,0,0.3)', letterSpacing: 0.4, textAlign: 'center', marginTop: 6 }}>
+          AUTOMATISCH BIJGEWERKT · {updated}
+        </div>
+      )}
     </div>
   )
 }
