@@ -165,10 +165,30 @@ function parseNames(raw) {
   return { skipper: parts[0] || '', crew: parts[1] || null };
 }
 
+// Mapt kolommen via de tabelheader (kolomvolgorde verschilt per categorie).
+function mapColumns(html) {
+  const head = html.match(/<thead>([\s\S]*?)<\/thead>/i);
+  if (!head) return null;
+  const headers = [...head[1].matchAll(/<th[^>]*>([\s\S]*?)<\/th>/gi)].map((m) =>
+    stripTags(m[1]).toLowerCase()
+  );
+  if (!headers.length) return null;
+  const find = (re) => headers.findIndex((h) => re.test(h));
+  return {
+    name: find(/name/),
+    sail: find(/sail\s*number|sailnumber/),
+    country: find(/country/),
+    boatClass: find(/boat\s*class|type/),
+    spinnaker: find(/spinnaker/),
+    rating: find(/texel\s*rating|rating/),
+  };
+}
+
 function parseRegistrations(html) {
   const tbodyMatch = html.match(/<tbody>([\s\S]*?)<\/tbody>/);
   if (!tbodyMatch) return [];
 
+  const cols = mapColumns(html);
   const boats = [];
   const rows = [...tbodyMatch[1].matchAll(/<tr>([\s\S]*?)<\/tr>/g)];
 
@@ -176,36 +196,32 @@ function parseRegistrations(html) {
     const row = rowMatch[1];
     const thMatch = row.match(/<th[^>]*>([\s\S]*?)<\/th>/);
     const tds = [...row.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)];
-    if (tds.length < 2) continue;
+    if (tds.length < 1) continue;
 
     const index = thMatch ? stripTags(thMatch[1]) : '';
-    const nameStr = stripTags(tds[0][1]);
+    // Kolom 0 = de <th> (#), kolom i>=1 = tds[i-1]
+    const cell = (i) =>
+      i == null || i < 0 ? '' : i === 0 ? stripTags(thMatch?.[1] || '') : stripTags(tds[i - 1]?.[1] || '');
+
+    const nameStr = cols ? cell(cols.name) : stripTags(tds[0][1]);
     const { skipper, crew } = parseNames(nameStr);
 
-    // Full catamaran table: sailNumber, country, boatClass, vak, spinnaker, rating, status
-    if (tds.length >= 7) {
-      const sailNumber = stripTags(tds[1][1]);
-      const country = stripTags(tds[2][1]);
-      const boatClass = stripTags(tds[3][1]);
-      const spinnaker = stripTags(tds[5][1]).toLowerCase() === 'yes';
-      const rating = parseInt(stripTags(tds[6][1])) || 0;
-      const boatId = CLASS_MAP[boatClass.toLowerCase()] ?? null;
-
+    if (cols) {
+      const boatClass = cell(cols.boatClass);
       boats.push({
         id: `reg_${String(index).padStart(3, '0')}`,
         skipper,
         crew,
-        sailNumber,
-        boatName: sailNumber,
+        sailNumber: cell(cols.sail),
+        boatName: cell(cols.sail),
         boatClass,
-        country,
-        boatId,
-        spinnaker,
-        rating,
+        country: cell(cols.country),
+        boatId: boatClass ? CLASS_MAP[boatClass.toLowerCase()] ?? null : null,
+        spinnaker: cell(cols.spinnaker).toLowerCase() === 'yes',
+        rating: parseInt(cell(cols.rating)) || 0,
       });
     } else {
-      // Simplified table (wingfoil/windsurf): name, country, status
-      const country = tds.length >= 2 ? stripTags(tds[1][1]) : '';
+      // Fallback zonder header: minimaal naam + (mogelijke) landkolom
       boats.push({
         id: `reg_${String(index).padStart(3, '0')}`,
         skipper,
@@ -213,7 +229,7 @@ function parseRegistrations(html) {
         sailNumber: '',
         boatName: '',
         boatClass: '',
-        country,
+        country: tds.length >= 2 ? stripTags(tds[1][1]) : '',
         boatId: null,
       });
     }
@@ -238,10 +254,7 @@ async function main() {
       url: cat.url,
     };
 
-    // Only store boat details for catamaran categories (used in comparator)
-    if (cat.id.startsWith('catamaran')) {
-      allBoats = allBoats.concat(boats.map(b => ({ ...b, category: cat.id })));
-    }
+    allBoats = allBoats.concat(boats.map(b => ({ ...b, category: cat.id })));
   }
 
   const output = {

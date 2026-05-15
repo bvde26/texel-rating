@@ -1,3 +1,4 @@
+import { useState, useMemo } from 'react'
 import Pressable from '../components/Pressable'
 import { Icon } from '../components/icons'
 import registrationsData from '../data/registrations.json'
@@ -12,6 +13,11 @@ const totalPeople = Object.entries(registrationsData.categories).reduce(
 const COPY = {
   nl: {
     title: 'Weetjes',
+    tab_facts: 'Weetjes',
+    tab_list: 'Deelnemers',
+    search_ph: 'Zoek op naam, boot of zeilnummer',
+    cat_all: 'Alle',
+    no_results: 'Geen deelnemers gevonden',
     subtitle_suffix: 'deelnemers · 4 categorieën',
     section_field: 'Het veld',
     section_countries: 'Top landen',
@@ -38,6 +44,11 @@ const COPY = {
   },
   en: {
     title: 'Fun facts',
+    tab_facts: 'Fun facts',
+    tab_list: 'Participants',
+    search_ph: 'Search by name, boat or sail number',
+    cat_all: 'All',
+    no_results: 'No participants found',
     subtitle_suffix: 'participants · 4 categories',
     section_field: 'The fleet',
     section_countries: 'Top countries',
@@ -64,6 +75,11 @@ const COPY = {
   },
   de: {
     title: 'Fakten',
+    tab_facts: 'Fakten',
+    tab_list: 'Teilnehmer',
+    search_ph: 'Suche nach Name, Boot oder Segelnummer',
+    cat_all: 'Alle',
+    no_results: 'Keine Teilnehmer gefunden',
     subtitle_suffix: 'Teilnehmer · 4 Kategorien',
     section_field: 'Das Feld',
     section_countries: 'Top Länder',
@@ -90,6 +106,11 @@ const COPY = {
   },
   fr: {
     title: 'Chiffres',
+    tab_facts: 'Chiffres',
+    tab_list: 'Participants',
+    search_ph: 'Rechercher par nom, bateau ou numéro de voile',
+    cat_all: 'Tous',
+    no_results: 'Aucun participant trouvé',
     subtitle_suffix: 'participants · 4 catégories',
     section_field: 'Le plateau',
     section_countries: 'Top pays',
@@ -266,14 +287,129 @@ function CountryRow({ country, count, last }) {
   )
 }
 
+const CAT_LIST = Object.entries(registrationsData.categories).map(([id, v]) => ({ id, ...v }))
+
+function catLabel(id, lang) {
+  const v = registrationsData.categories[id]
+  if (!v) return id
+  return lang === 'nl' ? v.nameNl : v.name
+}
+
+function ParticipantRow({ b, lang, last }) {
+  const name = b.crew ? `${b.skipper} & ${b.crew}` : b.skipper
+  const meta = [b.boatClass, b.sailNumber].filter(Boolean).join(' · ') || catLabel(b.category, lang)
+  const code = b.country ? (COUNTRY_CODE[b.country] || b.country.slice(0, 3).toUpperCase()) : ''
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+      padding: '12px 16px', gap: 12,
+      borderBottom: last ? 'none' : '1px solid rgba(0,0,0,0.05)',
+    }}>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, color: '#000', letterSpacing: -0.1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</div>
+        <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12, color: 'rgba(0,0,0,0.4)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{meta}</div>
+      </div>
+      {code && (
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, fontWeight: 600, letterSpacing: 0.5, color: 'rgba(0,0,0,0.45)', flexShrink: 0 }}>{code}</div>
+      )}
+    </div>
+  )
+}
+
+function ParticipantList({ lang, c }) {
+  const [query, setQuery] = useState('')
+  const [cat, setCat] = useState('all')
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return allBoats.filter(b => {
+      if (cat !== 'all' && b.category !== cat) return false
+      if (!q) return true
+      return [b.skipper, b.crew, b.sailNumber, b.boatClass, b.country]
+        .filter(Boolean)
+        .some(v => v.toLowerCase().includes(q))
+    })
+  }, [query, cat])
+
+  return (
+    <div style={{ padding: '12px 16px 40px' }}>
+      <input
+        value={query}
+        onChange={e => setQuery(e.target.value)}
+        placeholder={c.search_ph}
+        style={{
+          width: '100%', boxSizing: 'border-box', padding: '11px 14px',
+          fontFamily: 'Outfit, sans-serif', fontSize: 14,
+          borderRadius: 12, border: '1px solid rgba(0,0,0,0.12)',
+          background: '#fff', outline: 'none', marginBottom: 12,
+        }}
+      />
+      <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 12 }} className="scrollbar-none">
+        {[{ id: 'all', label: c.cat_all, count: allBoats.length }, ...CAT_LIST.map(x => ({ id: x.id, label: catLabel(x.id, lang), count: x.count }))].map(chip => {
+          const active = cat === chip.id
+          return (
+            <Pressable
+              key={chip.id}
+              onClick={() => setCat(chip.id)}
+              style={{
+                flexShrink: 0, padding: '7px 13px', borderRadius: 999,
+                fontFamily: 'Outfit, sans-serif', fontSize: 13, fontWeight: active ? 600 : 500,
+                color: active ? '#fff' : 'rgba(0,0,0,0.6)',
+                background: active ? '#000' : 'var(--chip)',
+                border: '1px solid', borderColor: active ? '#000' : 'var(--border3)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {chip.label} · {chip.count}
+            </Pressable>
+          )
+        })}
+      </div>
+      <div style={{
+        background: '#fff', borderRadius: 16,
+        border: '1px solid rgba(0,0,0,0.06)',
+        boxShadow: '0 2px 8px -4px rgba(0,0,0,0.08)',
+        overflow: 'hidden',
+      }}>
+        {filtered.length === 0 ? (
+          <div style={{ padding: '28px 16px', textAlign: 'center', fontFamily: 'Outfit, sans-serif', fontSize: 14, color: 'rgba(0,0,0,0.4)' }}>{c.no_results}</div>
+        ) : (
+          filtered.map((b, i) => (
+            <ParticipantRow key={`${b.category}-${b.id}-${i}`} b={b} lang={lang} last={i === filtered.length - 1} />
+          ))
+        )}
+      </div>
+    </div>
+  )
+}
+
+function TabBtn({ label, active, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        background: 'none', border: 'none', cursor: 'pointer',
+        padding: '12px 6px 12px',
+        fontFamily: 'Outfit, sans-serif', fontSize: 14,
+        fontWeight: active ? 600 : 500,
+        color: active ? '#000' : 'rgba(0,0,0,0.45)',
+        borderBottom: active ? '2px solid #000' : '2px solid transparent',
+        letterSpacing: -0.1, whiteSpace: 'nowrap',
+        WebkitTapHighlightColor: 'transparent',
+      }}
+    >{label}</button>
+  )
+}
+
 export default function Stats({ lang, onBack }) {
   const c = COPY[lang] || COPY.nl
+  const [tab, setTab] = useState('facts')
 
   return (
     <div style={{ height: '100%', display: 'flex', flexDirection: 'column', background: 'var(--bg)' }}>
       {/* Header — consistent met Info/RaceComparison */}
       <div style={{ flexShrink: 0, background: 'var(--surface)', borderBottom: '1px solid var(--border2)' }}>
-        <div style={{ padding: '18px 20px 14px', display: 'flex', alignItems: 'center', gap: 14 }}>
+        <div style={{ padding: '18px 20px 0', display: 'flex', alignItems: 'center', gap: 14 }}>
           <Pressable
             onClick={onBack}
             style={{
@@ -288,9 +424,18 @@ export default function Stats({ lang, onBack }) {
             {c.title}
           </div>
         </div>
+        <div style={{ display: 'flex', gap: 4, padding: '6px 14px 0' }}>
+          <TabBtn label={c.tab_facts} active={tab === 'facts'} onClick={() => setTab('facts')} />
+          <TabBtn label={c.tab_list} active={tab === 'list'} onClick={() => setTab('list')} />
+        </div>
       </div>
 
-      {/* Scrollable content */}
+      {tab === 'list' ? (
+        <div style={{ flex: 1, overflowY: 'auto' }} className="scrollbar-none">
+          <ParticipantList lang={lang} c={c} />
+        </div>
+      ) : (
+      /* Scrollable content */
       <div style={{ flex: 1, overflowY: 'auto', padding: '4px 16px 40px' }}>
 
         <SectionLabel text={c.section_field} />
@@ -339,6 +484,7 @@ export default function Stats({ lang, onBack }) {
         </Card>
 
       </div>
+      )}
     </div>
   )
 }
