@@ -299,12 +299,16 @@ function ParticipantRow({ b, lang, last }) {
   const name = b.crew ? `${b.skipper} & ${b.crew}` : b.skipper
   const meta = [b.boatClass, b.sailNumber].filter(Boolean).join(' · ') || catLabel(b.category, lang)
   const code = b.country ? (COUNTRY_CODE[b.country] || b.country.slice(0, 3).toUpperCase()) : ''
+  const num = parseInt(String(b.id).replace(/\D/g, '')) || null
   return (
     <div style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '12px 16px', gap: 12,
       borderBottom: last ? 'none' : '1px solid rgba(0,0,0,0.05)',
     }}>
+      {num != null && (
+        <div style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, fontWeight: 600, color: 'rgba(0,0,0,0.3)', flexShrink: 0, width: 34, textAlign: 'right' }}>#{num}</div>
+      )}
       <div style={{ minWidth: 0, flex: 1 }}>
         <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 14, color: '#000', letterSpacing: -0.1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{name}</div>
         <div style={{ fontFamily: 'Outfit, sans-serif', fontSize: 12, color: 'rgba(0,0,0,0.4)', marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{meta}</div>
