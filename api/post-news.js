@@ -1,6 +1,13 @@
 import { initializeApp, getApps, cert } from 'firebase-admin/app'
 import { getFirestore, FieldValue } from 'firebase-admin/firestore'
 import { getMessaging } from 'firebase-admin/messaging'
+import { getAuth } from 'firebase-admin/auth'
+
+const ADMIN_EMAIL = 'bramvdelst@gmail.com'
+
+// Push tijdelijk volledig uit (niet in gebruik). Zet op true om notificaties
+// bij nieuwe nieuwsberichten weer mee te sturen.
+const PUSH_ENABLED = false
 
 function normalizePrivateKey(raw) {
   if (!raw) return raw
@@ -25,8 +32,19 @@ if (!getApps().length) {
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end()
 
-  const { title, body, secret } = req.body
-  if (secret !== process.env.PUSH_SECRET) return res.status(403).json({ error: 'Forbidden' })
+  const authHeader = req.headers.authorization || ''
+  const idToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null
+  if (!idToken) return res.status(401).json({ error: 'Unauthorized' })
+
+  let decoded
+  try {
+    decoded = await getAuth().verifyIdToken(idToken)
+  } catch {
+    return res.status(401).json({ error: 'Invalid token' })
+  }
+  if (decoded.email !== ADMIN_EMAIL) return res.status(403).json({ error: 'Forbidden' })
+
+  const { title, body } = req.body
   if (!title || !body) return res.status(400).json({ error: 'Missing fields' })
 
   try {
@@ -39,7 +57,7 @@ export default async function handler(req, res) {
 
     // Send push in parallel
     let pushSent = 0
-    try {
+    if (PUSH_ENABLED) try {
       const tokensSnap = await db.collection('fcm_tokens').get()
       const tokens = tokensSnap.docs.map(d => d.data().token).filter(Boolean)
       if (tokens.length > 0) {

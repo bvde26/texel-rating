@@ -1,14 +1,15 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, lazy, Suspense } from 'react'
 import useVersionCheck from './hooks/useVersionCheck'
 import Home from './pages/Home'
-import RaceComparison from './pages/RaceComparison'
-import Info from './pages/Info'
-import Stats from './pages/Stats'
-import Nieuws from './pages/Nieuws'
-import Weer from './pages/Weer'
-import Rondje from './pages/Rondje'
-import Webcams from './pages/Webcams'
-import Beheer from './pages/Beheer'
+
+const RaceComparison = lazy(() => import('./pages/RaceComparison'))
+const Info = lazy(() => import('./pages/Info'))
+const Stats = lazy(() => import('./pages/Stats'))
+const Nieuws = lazy(() => import('./pages/Nieuws'))
+const Weer = lazy(() => import('./pages/Weer'))
+const Rondje = lazy(() => import('./pages/Rondje'))
+const Webcams = lazy(() => import('./pages/Webcams'))
+const Beheer = lazy(() => import('./pages/Beheer'))
 
 const COPY = {
   nl: {
@@ -290,15 +291,17 @@ export default function App() {
     <div style={{ minHeight: '100svh', background: 'var(--stage)', display: 'flex', justifyContent: 'center' }}>
       <div style={{ width: '100%', maxWidth: isHome ? 1280 : 430, height: '100svh', position: 'relative', overflow: 'hidden' }}>
         <div key={page} className={`page-${dir}`} style={{ height: '100svh' }}>
-          {page === 'home'    && <Home    {...props} />}
-          {page === 'compare' && <RaceComparison {...props} />}
-          {page === 'agenda'  && <Info    {...props} />}
-          {page === 'stats'   && <Stats   {...props} />}
-          {page === 'nieuws'  && <Nieuws  {...props} />}
-          {page === 'weer'    && <Weer    {...props} />}
-          {page === 'rondje'  && <Rondje  {...props} />}
-          {page === 'webcams' && <Webcams {...props} />}
-          {page === 'beheer'  && <Beheer  {...props} />}
+          <Suspense fallback={<div style={{ height: '100svh' }} />}>
+            {page === 'home'    && <Home    {...props} />}
+            {page === 'compare' && <RaceComparison {...props} />}
+            {page === 'agenda'  && <Info    {...props} />}
+            {page === 'stats'   && <Stats   {...props} />}
+            {page === 'nieuws'  && <Nieuws  {...props} />}
+            {page === 'weer'    && <Weer    {...props} />}
+            {page === 'rondje'  && <Rondje  {...props} />}
+            {page === 'webcams' && <Webcams {...props} />}
+            {page === 'beheer'  && <Beheer  {...props} />}
+          </Suspense>
         </div>
       </div>
     </div>

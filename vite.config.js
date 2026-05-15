@@ -40,4 +40,17 @@ export default defineConfig({
   define: {
     __APP_VERSION__: JSON.stringify(gitShortHash()),
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('firebase') || id.includes('@firebase')) return 'firebase'
+            if (id.includes('leaflet')) return 'leaflet'
+            if (id.includes('react')) return 'react'
+          }
+        },
+      },
+    },
+  },
 })

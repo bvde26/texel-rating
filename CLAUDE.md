@@ -3,7 +3,7 @@
 Rating-app voor Texel — [later: doel specifiek bepalen]
 
 ## Stack
-- **Frontend**: React 18 + Vite
+- **Frontend**: React 19 + Vite
 - **Styling**: Tailwind CSS
 - **Hosting**: Vercel
 - **VCS**: GitHub

@@ -2,16 +2,18 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // Nieuws: iedereen mag lezen, alleen ingelogden mogen schrijven/verwijderen
+    // Nieuws: iedereen mag lezen, alleen de beheerder mag schrijven/wijzigen/verwijderen.
     match /news/{docId} {
       allow read: if true;
-      allow write: if request.auth != null;
+      allow write: if request.auth != null
+                   && request.auth.token.email == 'bramvdelst@gmail.com'
+                   && request.auth.token.email_verified == true;
     }
 
-    // FCM tokens: iedereen mag aanmaken, niemand mag lezen (alleen server via Admin SDK)
+    // FCM tokens: client heeft geen directe toegang. Registratie loopt via
+    // /api/register-token (Admin SDK), dat de rules omzeilt.
     match /fcm_tokens/{token} {
-      allow create, update: if true;
-      allow read, delete: if false;
+      allow read, write: if false;
     }
   }
 }

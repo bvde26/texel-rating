@@ -2,7 +2,12 @@ import { getMessagingInstance } from '../firebase'
 
 const VAPID_KEY = import.meta.env.VITE_FIREBASE_VAPID_KEY
 
+// Push is tijdelijk volledig uitgeschakeld (niet in gebruik). Zet op true om
+// notificaties weer aan te zetten — de rest van de flow blijft intact.
+const PUSH_ENABLED = false
+
 export const requestPushPermission = async () => {
+  if (!PUSH_ENABLED) return null
   if (!VAPID_KEY) return null
   const messaging = await getMessagingInstance()
   if (!messaging) return null
