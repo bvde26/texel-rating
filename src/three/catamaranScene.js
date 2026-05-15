@@ -1,0 +1,181 @@
+// src/three/catamaranScene.js
+import * as THREE from 'three'
+import { fibonacciSpherePoints } from './fibonacciSphere.js'
+
+const GREY = 0x9aa0a6
+const GREY_SAIL = 0xb9bdc2
+
+function mat(color) {
+  return new THREE.MeshStandardMaterial({ color, metalness: 0.15, roughness: 0.62 })
+}
+
+// Bouwt de catamaran. Retourneert { group, parts } met parts = Mesh[].
+function buildCatamaran() {
+  const group = new THREE.Group()
+  const parts = []
+  const bodyMat = mat(GREY)
+  const sailMat = mat(GREY_SAIL)
+  sailMat.side = THREE.DoubleSide
+
+  const add = (geo, m, pos, rot = [0, 0, 0]) => {
+    const mesh = new THREE.Mesh(geo, m)
+    mesh.position.set(...pos)
+    mesh.rotation.set(...rot)
+    group.add(mesh)
+    parts.push(mesh)
+    return mesh
+  }
+
+  // --- Rompen (slank, capsule langs X, dun in Y/Z) ---
+  const hullGeo = new THREE.CapsuleGeometry(0.22, 4.0, 6, 14)
+  for (const z of [-1.0, 1.0]) {
+    const hull = add(hullGeo, bodyMat, [0, 0, z], [0, 0, Math.PI / 2])
+    hull.scale.set(1, 1, 0.7) // iets afgeplat
+  }
+
+  // --- Dwarsbalken (voor/achter) ---
+  const beamGeo = new THREE.CylinderGeometry(0.07, 0.07, 2.3, 12)
+  add(beamGeo, bodyMat, [1.1, 0.12, 0], [Math.PI / 2, 0, 0])  // voorbalk
+  add(beamGeo, bodyMat, [-1.0, 0.12, 0], [Math.PI / 2, 0, 0]) // achterbalk
+
+  // --- Trampoline-dek ---
+  add(new THREE.BoxGeometry(2.0, 0.03, 1.7), bodyMat, [0.05, 0.13, 0])
+
+  // --- Mast (hoog, lichte buiging via segmenten) ---
+  const mast = add(new THREE.CylinderGeometry(0.06, 0.085, 7.4, 12), bodyMat, [0.9, 3.85, 0], [0, 0, -0.04])
+  mast.name = 'mast'
+
+  // --- Giek ---
+  add(new THREE.CylinderGeometry(0.045, 0.045, 2.6, 10), bodyMat, [-0.35, 0.55, 0], [0, 0, Math.PI / 2])
+
+  // --- Square-top grootzeil (driehoek met brede platte top) ---
+  {
+    const s = new THREE.Shape()
+    s.moveTo(0, 0)
+    s.lineTo(2.5, 0.2)
+    s.lineTo(0.55, 6.7)  // schuine top
+    s.lineTo(-0.15, 6.95) // brede square-top
+    s.lineTo(0, 0)
+    const geo = new THREE.ShapeGeometry(s)
+    add(geo, sailMat, [0.85, 0.55, 0.01], [0, -Math.PI / 2, 0])
+  }
+
+  // --- Fok (kleiner, voorin) ---
+  {
+    const s = new THREE.Shape()
+    s.moveTo(0, 0)
+    s.lineTo(1.5, 0.1)
+    s.lineTo(0.1, 3.6)
+    s.lineTo(0, 0)
+    const geo = new THREE.ShapeGeometry(s)
+    add(geo, sailMat, [2.1, 0.5, 0], [0, -Math.PI / 2, 0])
+  }
+
+  // --- Roeren (achter, in elke romp) ---
+  const rudderGeo = new THREE.BoxGeometry(0.06, 0.7, 0.28)
+  for (const z of [-1.0, 1.0]) add(rudderGeo, bodyMat, [-2.05, -0.42, z], [0, 0, 0.15])
+
+  // --- Helmstok-verbinding ---
+  add(new THREE.CylinderGeometry(0.025, 0.025, 2.1, 8), bodyMat, [-1.8, 0.15, 0], [Math.PI / 2, 0, 0])
+
+  // --- Zwaarden (daggerboards) ---
+  const dbGeo = new THREE.BoxGeometry(0.05, 0.9, 0.22)
+  for (const z of [-1.0, 1.0]) add(dbGeo, bodyMat, [0.2, -0.55, z], [0, 0, 0.05])
+
+  // Centreer de groep op zijn bounding-center.
+  const box = new THREE.Box3().setFromObject(group)
+  const center = box.getCenter(new THREE.Vector3())
+  group.children.forEach((c) => c.position.sub(center))
+
+  // Sla assembled transform op en bereken sphere-targets.
+  const radius = box.getSize(new THREE.Vector3()).length() * 0.55
+  const targets = fibonacciSpherePoints(parts.length, radius)
+  parts.forEach((mesh, i) => {
+    mesh.userData.homePos = mesh.position.clone()
+    mesh.userData.homeQuat = mesh.quaternion.clone()
+    mesh.userData.target = new THREE.Vector3(targets[i].x, targets[i].y, targets[i].z)
+    // willekeurige maar deterministische spin-as per part
+    mesh.userData.spin = new THREE.Vector3(
+      Math.sin(i * 1.3), Math.cos(i * 0.7), Math.sin(i * 2.1),
+    ).normalize()
+  })
+
+  return { group, parts }
+}
+
+export function createCatamaranScene(container) {
+  const scene = new THREE.Scene()
+  scene.background = new THREE.Color(0xe9eaec) // strakke studio-achtergrond
+
+  const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100)
+  camera.position.set(7.5, 2.6, 9.5)
+  camera.lookAt(0, 0.4, 0)
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true })
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  container.appendChild(renderer.domElement)
+  renderer.domElement.style.display = 'block'
+  renderer.domElement.style.width = '100%'
+  renderer.domElement.style.height = '100%'
+
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9a9a, 0.85))
+  const key = new THREE.DirectionalLight(0xffffff, 1.1)
+  key.position.set(6, 9, 7)
+  scene.add(key)
+  const rim = new THREE.DirectionalLight(0xffffff, 0.45)
+  rim.position.set(-7, 3, -6)
+  scene.add(rim)
+
+  const { group, parts } = buildCatamaran()
+  scene.add(group)
+
+  const _v = new THREE.Vector3()
+  const _q = new THREE.Quaternion()
+
+  function update(progress) {
+    const p = Math.max(0, Math.min(1, progress))
+    for (const mesh of parts) {
+      _v.copy(mesh.userData.homePos).lerp(mesh.userData.target, p)
+      mesh.position.copy(_v)
+      _q.setFromAxisAngle(mesh.userData.spin, p * Math.PI * 1.2)
+      mesh.quaternion.copy(mesh.userData.homeQuat).multiply(_q)
+    }
+  }
+
+  let raf = 0
+  let clock = new THREE.Clock()
+  function loop() {
+    raf = requestAnimationFrame(loop)
+    group.rotation.y += clock.getDelta() * 0.18 // trage cinematic turn
+    renderer.render(scene, camera)
+  }
+
+  function start() {
+    if (!raf) { clock = new THREE.Clock(); loop() }
+  }
+
+  function resize() {
+    const w = container.clientWidth || 1
+    const h = container.clientHeight || 1
+    camera.aspect = w / h
+    camera.updateProjectionMatrix()
+    renderer.setSize(w, h, false)
+  }
+
+  function dispose() {
+    cancelAnimationFrame(raf)
+    raf = 0
+    scene.traverse((o) => {
+      if (o.geometry) o.geometry.dispose()
+      if (o.material) o.material.dispose()
+    })
+    renderer.dispose()
+    if (renderer.domElement.parentNode) {
+      renderer.domElement.parentNode.removeChild(renderer.domElement)
+    }
+  }
+
+  resize()
+  update(0)
+  return { update, start, resize, dispose, _parts: parts }
+}
