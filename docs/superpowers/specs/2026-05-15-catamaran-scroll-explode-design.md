@@ -15,7 +15,9 @@ Inspiratie: cinematic "sliding" website-animaties (anime.js + Three.js).
 
 ## Scope-beslissingen (vastgelegd met gebruiker)
 
-- **Locatie:** nieuwe pagina binnen Texel Rating (geen losse site).
+- **Locatie:** **intro-gate vóór de app-shell** binnen Texel Rating (geen losse
+  site, géén pagina in de nav/page-switch). Speelt 1× af bij het eerste bezoek;
+  daarna gaat de app direct naar Home.
 - **Techniek:** echte 3D met Three.js, model **procedureel** opgebouwd uit
   primitives (geen externe `.glb`, geen licentie-afhankelijkheid).
 - **Referentiemodel:** Nacra 15 — slanke gebogen rompen, square-top grootzeil,
@@ -27,31 +29,52 @@ Inspiratie: cinematic "sliding" website-animaties (anime.js + Three.js).
   `src/App.jsx`, er is dus geen normale paginascroll. Virtual scroll past bij de
   app-shell, werkt op mobiel en is omkeerbaar.
 - **Tekst:** géén overlay-tekst, géén onderdeel-labels, géén titel. Puur de
-  animatie.
+  animatie. Eén uitzondering: een **icon-only skip-control** (chevron, geen
+  woorden) om de intro over te slaan.
+- **Eerste-bezoek-detectie:** `localStorage`-sleutel
+  `texelrating:catamaranIntroSeen`. Afwezig + geen reduced-motion → intro tonen.
+  Aanwezig → intro nooit renderen, direct Home.
+- **Voltooiing:** progress bereikt 1 → korte hold (~600 ms) → fade-out naar
+  Home, en flag gezet. Skip-chevron of `prefers-reduced-motion` doen hetzelfde
+  (flag zetten + door naar Home), reduced-motion zonder enige render/scroll-lock.
 - **Kleur:** één grijstint (matcap/studio-look). Geen blauw, logo's of branding —
   alleen de vorm.
 
 ## Architectuur
 
 Vaste-viewport app-shell met state-based navigatie (`page`/`setPage` in
-`src/App.jsx`, geen router-library). De nieuwe pagina wordt op dezelfde manier
-ingehangen als bestaande pagina's (lazy import + entry in de page-switch + nav).
+`src/App.jsx`, geen router-library). De catamaran is **geen pagina** in de
+page-switch maar een **intro-gate** die in `App.jsx` vóór de normale shell-render
+komt:
+
+- Bij mount leest `App.jsx` de localStorage-flag. Ontbreekt die én geen
+  `prefers-reduced-motion` → render `<CatamaranIntro onDone={finishIntro} />`
+  i.p.v. de page-shell. Anders meteen de normale shell (Home).
+- `finishIntro()` zet `texelrating:catamaranIntroSeen='1'`, fade-out, en toont
+  daarna de normale shell. Geen `history`/`popstate`-interactie nodig: de intro
+  zit niet in de page-history en wordt na voltooiing nooit meer gerenderd.
+- Wordt aangeroepen door: progress→1 (+hold), skip-chevron, of (synchroon, vóór
+  eerste render) de reduced-motion-check.
 
 ### Componenten / bestanden
 
 | Bestand | Verantwoordelijkheid |
 |---|---|
-| `src/pages/Catamaran.jsx` | Pagina-wrapper. Mount/unmount van de scène, koppelt `useScrollProgress` aan `catamaranScene.update(progress)`. Bevat de canvas-container en `prefers-reduced-motion`-afhandeling. |
+| `src/pages/CatamaranIntro.jsx` | Intro-wrapper. Mount/unmount van de scène, koppelt `useScrollProgress` aan `catamaranScene.update(progress)`. Canvas-container, icon-only skip-chevron, hold+fade, roept `onDone` aan. |
 | `src/three/catamaranScene.js` | Pure Three.js-module, framework-agnostisch. Bouwt geometrie + lights + camera, levert `update(progress)`, `resize()`, `dispose()`. Geen React-imports. |
-| `src/hooks/useScrollProgress.js` | Vangt `wheel` + touch-drag op, accumuleert naar een geëaste progress `0..1` (clamp, geen overscroll). Levert progress + of de animatie "klaar" is. |
+| `src/hooks/useScrollProgress.js` | Vangt `wheel` + touch-drag op, accumuleert delta naar geëaste progress `0..1`. Constante `SCROLL_DISTANCE_PX` (richtwaarde ~1400px geaccumuleerde delta = 0→1, tunebaar in implementatie). Hard geclamped, geen overscroll/rubber-band. Levert `{ progress, done }`. |
+| `src/App.jsx` (wijziging) | localStorage-check + reduced-motion-check, conditioneel `CatamaranIntro` vóór de bestaande shell, `finishIntro`-callback + fade. |
 
 ### Afhankelijkheden (nieuw)
 
 - `three`
 - `animejs`
 
-Geen overige dependencies. Beide zijn klein genoeg en passen bij de
-"geen onnodige dependencies"-voorkeur.
+`animejs` levert de easing-curve waarop progress geseekt wordt; het is bewust
+beperkt in gebruik (geen autoplay-timelines). Als de easing triviaal blijkt kan
+het in de implementatiefase vervallen ten gunste van `THREE.MathUtils` — dan
+wordt `animejs` geschrapt. Geen overige dependencies; past bij de "geen
+onnodige dependencies"-voorkeur.
 
 ## 3D-model (procedureel, Nacra 15)
 
@@ -81,9 +104,8 @@ geen kleur.
 
 1. `useScrollProgress` produceert een geëaste `progress` (0 = compleet,
    1 = volledig exploded).
-2. Een **anime.js-timeline** definieert de easing-curve; de pagina "seekt" deze
-   timeline op `progress` (geen autoplay). anime.js levert hier de easing en
-   getweende waarden; Three.js doet het renderen.
+2. Een **anime.js easing-curve** wordt op `progress` geseekt (geen autoplay);
+   `CatamaranIntro` mapt de geëaste waarde door naar de scène. Three.js rendert.
 3. `catamaranScene.update(progress)` interpoleert per onderdeel tussen:
    - **assembled transform**: lokale positie/rotatie in het samengestelde model.
    - **exploded transform**: een doelpositie verdeeld over een bol
@@ -95,28 +117,36 @@ geen kleur.
 
 ## Edge cases / robuustheid
 
-- **`prefers-reduced-motion: reduce`**: geen wheel-lock/virtual scroll-capture;
-  toon een statische, leesbare tussenstand (bijv. progress ≈ 0.5) zodat de
-  vorm zichtbaar is zonder beweging.
+- **`prefers-reduced-motion: reduce`**: intro volledig overslaan — flag direct
+  zetten, `CatamaranIntro` wordt nooit gerenderd, geen scroll-capture, meteen
+  Home. (Synchroon vóór eerste render bepaald, geen flits.)
 - **Resize / orientatie**: `resize()` herberekent camera-aspect + renderer-size.
 - **Unmount**: `dispose()` ruimt geometries, materials, renderer en
-  event-listeners op (geen memory leaks bij paginawissel).
-- **Touch vs wheel**: beide gemapt naar dezelfde progress-accumulator; touch-drag
-  omhoog/omlaag voelt natuurlijk t.o.v. scrollrichting.
+  event-listeners op bij fade-out/`finishIntro` (geen memory leaks).
+- **Touch vs wheel**: beide gemapt naar dezelfde progress-accumulator via
+  `SCROLL_DISTANCE_PX`; touch-drag-richting volgt scrollrichting (omhoog scrollen
+  = explode vooruit). Geen conflict met `.page-fwd/.page-back` CSS-transitions:
+  de intro zit buiten de page-switch.
 - **Clamp**: progress hard geclamped op `[0, 1]`, geen rubber-band/overscroll.
+- **Skip-chevron**: icon-only, roept dezelfde `finishIntro` aan als voltooiing.
+- **localStorage onbeschikbaar/privémodus**: bij read/write-fout intro gewoon
+  tonen en niet crashen (best-effort flag, geen blocker).
 
 ## Testen (visueel)
 
-- Playwright/webapp-testing smoke:
-  - pagina mount, `<canvas>` aanwezig, geen console-errors;
+- Playwright/webapp-testing smoke (met gewiste localStorage = eerste bezoek):
+  - intro mount, `<canvas>` aanwezig, geen console-errors;
   - progress-input verandert mesh-posities (compleet → exploded);
-  - `dispose` bij paginawissel geeft geen errors.
+  - voltooiing/skip → flag gezet, Home zichtbaar, `dispose` zonder errors;
+  - tweede load (flag gezet) → intro wordt overgeslagen, direct Home.
 - Screenshots bij progress **0 / 0.5 / 1** als visuele bewijsvoering.
-- `prefers-reduced-motion`-pad: statische stand, geen scroll-capture.
+- `prefers-reduced-motion`-pad: intro overgeslagen, direct Home, geen capture.
 
 ## Bewust buiten scope (YAGNI)
 
-- Geen onderdeel-labels, tooltips, titels of UI-tekst.
+- Geen onderdeel-labels, tooltips, titels of UI-tekst (alleen icon-only skip).
+- Geen herhaling: intro speelt alleen bij eerste bezoek, geen "opnieuw"-knop.
+- Geen pagina/nav-entry, geen deeplink-route, geen history-integratie.
 - Geen kleuren, texturen, branding of Nacra-logo.
 - Geen externe 3D-modellen of asset-pipeline.
 - Geen autoplay/loop of klik/hover-variant.
