@@ -57,7 +57,8 @@ function buildCatamaran() {
     s.lineTo(-0.15, 6.95) // brede square-top
     s.lineTo(0, 0)
     const geo = new THREE.ShapeGeometry(s)
-    add(geo, sailMat, [0.85, 0.55, 0.01], [0, -Math.PI / 2, 0])
+    // Zeil in het fore-aft vlak (normaal langs Z), achter de mast.
+    add(geo, sailMat, [0.9, 0.5, 0], [0, Math.PI, 0])
   }
 
   // --- Fok (kleiner, voorin) ---
@@ -68,7 +69,8 @@ function buildCatamaran() {
     s.lineTo(0.1, 3.6)
     s.lineTo(0, 0)
     const geo = new THREE.ShapeGeometry(s)
-    add(geo, sailMat, [2.1, 0.5, 0], [0, -Math.PI / 2, 0])
+    // Fok in hetzelfde vlak, voor de mast richting boeg.
+    add(geo, sailMat, [0.95, 0.4, 0], [0, 0, 0])
   }
 
   // --- Roeren (achter, in elke romp) ---
@@ -88,7 +90,7 @@ function buildCatamaran() {
   group.children.forEach((c) => c.position.sub(center))
 
   // Sla assembled transform op en bereken sphere-targets.
-  const radius = box.getSize(new THREE.Vector3()).length() * 0.55
+  const radius = box.getSize(new THREE.Vector3()).length() * 0.4
   const targets = fibonacciSpherePoints(parts.length, radius)
   parts.forEach((mesh, i) => {
     mesh.userData.homePos = mesh.position.clone()
@@ -108,8 +110,8 @@ export function createCatamaranScene(container) {
   scene.background = new THREE.Color(0xe9eaec) // strakke studio-achtergrond
 
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100)
-  camera.position.set(7.5, 2.6, 9.5)
-  camera.lookAt(0, 0.4, 0)
+  camera.position.set(8.5, 3.4, 11.5)
+  camera.lookAt(0, 0.2, 0)
 
   const renderer = new THREE.WebGLRenderer({ antialias: true })
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
@@ -143,15 +145,17 @@ export function createCatamaranScene(container) {
   }
 
   let raf = 0
-  let clock = new THREE.Clock()
-  function loop() {
+  let last = 0
+  function loop(now) {
     raf = requestAnimationFrame(loop)
-    group.rotation.y += clock.getDelta() * 0.18 // trage cinematic turn
+    const dt = last ? (now - last) / 1000 : 0
+    last = now
+    group.rotation.y += dt * 0.18 // trage cinematic turn
     renderer.render(scene, camera)
   }
 
   function start() {
-    if (!raf) { clock = new THREE.Clock(); loop() }
+    if (!raf) { last = 0; raf = requestAnimationFrame(loop) }
   }
 
   function resize() {

@@ -1,6 +1,5 @@
 // src/pages/CatamaranIntro.jsx
-import { useEffect, useRef } from 'react'
-import anime from 'animejs'
+import { useCallback, useEffect, useRef } from 'react'
 import { createCatamaranScene } from '../three/catamaranScene.js'
 import { useScrollProgress } from '../hooks/useScrollProgress.js'
 
@@ -9,7 +8,23 @@ export default function CatamaranIntro({ onDone }) {
   const canvasHostRef = useRef(null)
   const sceneRef = useRef(null)
   const finishedRef = useRef(false)
+  const timerRef = useRef(null)
+  const onDoneRef = useRef(onDone)
+  useEffect(() => {
+    onDoneRef.current = onDone
+  }, [onDone])
   const { progress, done } = useScrollProgress(wrapRef, true)
+
+  const fadeOut = useCallback((duration) => {
+    if (finishedRef.current) return
+    finishedRef.current = true
+    const el = wrapRef.current
+    if (el) {
+      el.style.transition = `opacity ${duration}ms ease-in-out`
+      el.style.opacity = '0'
+    }
+    setTimeout(() => onDoneRef.current?.(), duration)
+  }, [])
 
   // Scene-lifecycle
   useEffect(() => {
@@ -32,34 +47,16 @@ export default function CatamaranIntro({ onDone }) {
     sceneRef.current?.update(progress)
   }, [progress])
 
-  // Voltooiing: hold + fade -> onDone
+  // Voltooiing: hold + fade -> onDone (timer alleen op unmount opruimen,
+  // niet bij elke re-render — anders wist een re-render de hold-timer).
   useEffect(() => {
-    if (!done || finishedRef.current) return
-    finishedRef.current = true
-    const holdMs = 600
-    const timer = setTimeout(() => {
-      anime({
-        targets: wrapRef.current,
-        opacity: [1, 0],
-        duration: 650,
-        easing: 'easeInOutQuad',
-        complete: onDone,
-      })
-    }, holdMs)
-    return () => clearTimeout(timer)
-  }, [done, onDone])
+    if (!done || finishedRef.current || timerRef.current) return
+    timerRef.current = setTimeout(() => fadeOut(650), 600)
+  }, [done, fadeOut])
 
-  const skip = () => {
-    if (finishedRef.current) return
-    finishedRef.current = true
-    anime({
-      targets: wrapRef.current,
-      opacity: [1, 0],
-      duration: 400,
-      easing: 'easeInOutQuad',
-      complete: onDone,
-    })
-  }
+  useEffect(() => () => clearTimeout(timerRef.current), [])
+
+  const skip = () => fadeOut(400)
 
   return (
     <div
