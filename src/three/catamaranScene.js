@@ -1,21 +1,62 @@
 // src/three/catamaranScene.js
 import * as THREE from 'three'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js'
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js'
 import { fibonacciSpherePoints } from './fibonacciSphere.js'
 
-const GREY = 0x9aa0a6
-const GREY_SAIL = 0xb9bdc2
+// Neurale "brain"-stijl: diep violet/indigo, doorschijnend, met een
+// fresnel-randgloed die door bloom oplicht tegen een bijna-zwarte achtergrond.
+const BG = 0x05030f
+const HULL_COLOR = 0x2b2170
+const HULL_EMISSIVE = 0x4b3bd6
+const SAIL_COLOR = 0x3a2f8c
+const SAIL_EMISSIVE = 0x7d6cff
+const RIM = new THREE.Color(0x9d8bff)
 
-function mat(color) {
-  return new THREE.MeshStandardMaterial({ color, metalness: 0.15, roughness: 0.62 })
+function addFresnel(material, rimColor, power, scale) {
+  material.onBeforeCompile = (shader) => {
+    shader.uniforms.uRim = { value: rimColor }
+    shader.uniforms.uRimPow = { value: power }
+    shader.uniforms.uRimScale = { value: scale }
+    shader.vertexShader =
+      'varying vec3 vWP;\nvarying vec3 vWN;\n' +
+      shader.vertexShader.replace(
+        '#include <worldpos_vertex>',
+        '#include <worldpos_vertex>\n vWP = (modelMatrix * vec4(transformed,1.0)).xyz;\n vWN = normalize(mat3(modelMatrix) * objectNormal);',
+      )
+    shader.fragmentShader =
+      'uniform vec3 uRim;\nuniform float uRimPow;\nuniform float uRimScale;\nvarying vec3 vWP;\nvarying vec3 vWN;\n' +
+      shader.fragmentShader.replace(
+        '#include <emissivemap_fragment>',
+        '#include <emissivemap_fragment>\n float fres = pow(1.0 - clamp(dot(normalize(vWN), normalize(cameraPosition - vWP)), 0.0, 1.0), uRimPow);\n totalEmissiveRadiance += uRim * fres * uRimScale;',
+      )
+  }
+  return material
+}
+
+function mat(color, emissive, rimScale) {
+  const m = new THREE.MeshStandardMaterial({
+    color,
+    emissive,
+    emissiveIntensity: 0.32,
+    metalness: 0.0,
+    roughness: 0.55,
+    transparent: true,
+    opacity: 0.5,
+    depthWrite: false,
+  })
+  return addFresnel(m, RIM, 3.2, rimScale)
 }
 
 // Bouwt de catamaran. Retourneert { group, parts } met parts = Mesh[].
 function buildCatamaran() {
   const group = new THREE.Group()
   const parts = []
-  const bodyMat = mat(GREY)
-  const sailMat = mat(GREY_SAIL)
+  const bodyMat = mat(HULL_COLOR, HULL_EMISSIVE, 0.9)
+  const sailMat = mat(SAIL_COLOR, SAIL_EMISSIVE, 0.55)
   sailMat.side = THREE.DoubleSide
+  sailMat.opacity = 0.28
 
   const add = (geo, m, pos, rot = [0, 0, 0]) => {
     const mesh = new THREE.Mesh(geo, m)
@@ -143,7 +184,7 @@ function buildCatamaran() {
 
 export function createCatamaranScene(container) {
   const scene = new THREE.Scene()
-  scene.background = new THREE.Color(0xe9eaec) // strakke studio-achtergrond
+  scene.background = new THREE.Color(BG) // diepe neurale achtergrond
 
   const camera = new THREE.PerspectiveCamera(42, 1, 0.1, 100)
   camera.position.set(8.5, 3.4, 11.5)
@@ -156,13 +197,18 @@ export function createCatamaranScene(container) {
   renderer.domElement.style.width = '100%'
   renderer.domElement.style.height = '100%'
 
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9a9a, 0.85))
-  const key = new THREE.DirectionalLight(0xffffff, 1.1)
+  scene.add(new THREE.HemisphereLight(0x8a7dff, 0x140a2e, 0.55))
+  const key = new THREE.DirectionalLight(0x9d8bff, 0.6)
   key.position.set(6, 9, 7)
   scene.add(key)
-  const rim = new THREE.DirectionalLight(0xffffff, 0.45)
+  const rim = new THREE.DirectionalLight(0x5ad0ff, 0.4)
   rim.position.set(-7, 3, -6)
   scene.add(rim)
+
+  const composer = new EffectComposer(renderer)
+  composer.addPass(new RenderPass(scene, camera))
+  const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.55, 0.55, 0.22)
+  composer.addPass(bloom)
 
   const { group, parts } = buildCatamaran()
   scene.add(group)
@@ -187,7 +233,7 @@ export function createCatamaranScene(container) {
     const dt = last ? (now - last) / 1000 : 0
     last = now
     group.rotation.y += dt * 0.18 // trage cinematic turn
-    renderer.render(scene, camera)
+    composer.render()
   }
 
   function start() {
@@ -200,6 +246,8 @@ export function createCatamaranScene(container) {
     camera.aspect = w / h
     camera.updateProjectionMatrix()
     renderer.setSize(w, h, false)
+    composer.setSize(w, h)
+    bloom.setSize(w, h)
   }
 
   function dispose() {
@@ -216,6 +264,7 @@ export function createCatamaranScene(container) {
         o.material.dispose()
       }
     })
+    composer.dispose()
     renderer.dispose()
     if (renderer.domElement.parentNode) {
       renderer.domElement.parentNode.removeChild(renderer.domElement)
