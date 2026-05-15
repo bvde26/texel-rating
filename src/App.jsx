@@ -1,6 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from 'react'
 import useVersionCheck from './hooks/useVersionCheck'
 import Home from './pages/Home'
+import { shouldSkipIntro, markIntroSeen } from './intro/introGate.js'
 
 const RaceComparison = lazy(() => import('./pages/RaceComparison'))
 const Info = lazy(() => import('./pages/Info'))
@@ -10,6 +11,7 @@ const Weer = lazy(() => import('./pages/Weer'))
 const Rondje = lazy(() => import('./pages/Rondje'))
 const Webcams = lazy(() => import('./pages/Webcams'))
 const Beheer = lazy(() => import('./pages/Beheer'))
+const CatamaranIntro = lazy(() => import('./pages/CatamaranIntro'))
 
 const COPY = {
   nl: {
@@ -259,6 +261,11 @@ export default function App() {
   const [page, setPage] = useState(initialPage)
   const [dir, setDir] = useState('fwd')
   const [lang, setLang] = useState('nl')
+  const [introDone, setIntroDone] = useState(() => shouldSkipIntro())
+  const finishIntro = () => {
+    markIntroSeen()
+    setIntroDone(true)
+  }
   useVersionCheck()
 
   useEffect(() => {
@@ -286,6 +293,14 @@ export default function App() {
   const props = { t, lang, setLang, go, onBack: () => go('home') }
 
   const isHome = page === 'home'
+
+  if (!introDone) {
+    return (
+      <Suspense fallback={<div style={{ position: 'fixed', inset: 0, background: '#e9eaec' }} />}>
+        <CatamaranIntro onDone={finishIntro} />
+      </Suspense>
+    )
+  }
 
   return (
     <div style={{ minHeight: '100svh', background: 'var(--stage)', display: 'flex', justifyContent: 'center' }}>
