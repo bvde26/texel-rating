@@ -26,12 +26,48 @@ function buildCatamaran() {
     return mesh
   }
 
-  // --- Rompen (slank, capsule langs X, dun in Y/Z) ---
-  const hullGeo = new THREE.CapsuleGeometry(0.22, 4.0, 6, 14)
-  for (const z of [-1.0, 1.0]) {
-    const hull = add(hullGeo, bodyMat, [0, 0, z], [0, 0, Math.PI / 2])
-    hull.scale.set(1, 1, 0.7) // iets afgeplat
+  // --- Rompen (slanke bootromp: zij-profiel geëxtrudeerd, getaperd naar
+  //     een fijne opgewipte boeg en kleine spiegel — Nacra 15-silhouet) ---
+  function buildHullGeometry() {
+    const s = new THREE.Shape()
+    // Kiel (onderlijn) van spiegel naar boeg, met lichte rocker.
+    s.moveTo(-2.20, -0.10) // spiegel onder
+    s.quadraticCurveTo(-1.20, -0.20, -0.20, -0.205) // rocker laagste
+    s.quadraticCurveTo(1.10, -0.17, 1.60, -0.05)
+    s.quadraticCurveTo(2.05, 0.05, 2.30, 0.30) // scherpe opgewipte boeg
+    // Dek (bovenlijn) van boeg terug naar spiegel.
+    s.quadraticCurveTo(2.18, 0.42, 1.60, 0.34)
+    s.quadraticCurveTo(0.40, 0.29, -0.60, 0.27)
+    s.quadraticCurveTo(-1.60, 0.25, -2.05, 0.22)
+    s.lineTo(-2.20, 0.18) // spiegel boven
+    s.lineTo(-2.20, -0.10)
+
+    const geo = new THREE.ExtrudeGeometry(s, {
+      depth: 0.46, bevelEnabled: true, bevelThickness: 0.04,
+      bevelSize: 0.035, bevelSegments: 3, steps: 1, curveSegments: 18,
+    })
+    geo.center()
+
+    // Breedte taperen langs de lengte: vol middenscheeps, fijn naar boeg
+    // (scherper) en spiegel.
+    const pos = geo.attributes.position
+    let minX = Infinity, maxX = -Infinity
+    for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i)
+      if (x < minX) minX = x
+      if (x > maxX) maxX = x
+    }
+    for (let i = 0; i < pos.count; i++) {
+      const nx = (pos.getX(i) - minX) / (maxX - minX) // 0 spiegel .. 1 boeg
+      let w = Math.max(0.16, Math.pow(Math.sin(Math.PI * nx), 0.45))
+      if (nx > 0.78) w *= 1 - ((nx - 0.78) / 0.22) * 0.78 // scherpe boeg
+      pos.setZ(i, pos.getZ(i) * w)
+    }
+    pos.needsUpdate = true
+    geo.computeVertexNormals()
+    return geo
   }
+  for (const z of [-1.0, 1.0]) add(buildHullGeometry(), bodyMat, [0, 0.05, z])
 
   // --- Dwarsbalken (voor/achter) ---
   const beamGeo = new THREE.CylinderGeometry(0.07, 0.07, 2.3, 12)
