@@ -2,7 +2,8 @@ import { useState } from 'react'
 import { Icon } from '../components/icons'
 import Pressable from '../components/Pressable'
 
-const SPOT_URL = 'https://21knots.nl/spot/texel-paal-17'
+const EMBED_URL = 'https://www.21knots.nl/embed/spot/texel-paal-17'
+const SPOT_URL = 'https://www.21knots.nl/spot/texel-paal-17'
 
 export default function Weer({ onBack, lang, t }) {
   const [loading, setLoading] = useState(true)
@@ -71,7 +72,7 @@ export default function Weer({ onBack, lang, t }) {
           </div>
         )}
         <iframe
-          src={SPOT_URL}
+          src={EMBED_URL}
           title="Wind & weer paal 17"
           onLoad={() => setLoading(false)}
           style={{
