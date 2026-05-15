@@ -150,13 +150,36 @@ const COUNTRY_DISPLAY = {
   'United States of America': 'United States',
 }
 
+// Inschrijvers spellen klassen op tientallen manieren ("F18", "Nacra F18
+// Infusion mk3", ...). Voor de weetjes normaliseren we naar de bekende
+// box-/eenheidsklassen zodat de telling klopt (F18 = ~68, niet 19).
+function normalizeClass(b) {
+  const raw = (b.boatClass || '').trim()
+  const id = b.boatId || ''
+  const s = raw.toLowerCase()
+  if (/f ?18|formula 18|formule 18/.test(s) || /f18/.test(id)) return 'F18'
+  if (/f ?16|formula 16/.test(s) || /f16/.test(id)) return 'F16'
+  if (/f ?20|formula 20/.test(s) || /f20/.test(id)) return 'F20'
+  if (/hobie\s*1?6|hobie16/.test(s)) return 'Hobie 16'
+  if (/hobie\s*18/.test(s)) return 'Hobie 18'
+  if (/dart\s*18/.test(s)) return 'Dart 18'
+  if (/nacra\s*17/.test(s)) return 'Nacra 17'
+  if (/nacra\s*15/.test(s)) return 'Nacra 15'
+  if (/tornado/.test(s)) return 'Tornado'
+  if (!raw) return null
+  return raw
+}
+
 function buildStats() {
   const countryCount = {}
   allBoats.forEach(b => { if (b.country) countryCount[b.country] = (countryCount[b.country] || 0) + 1 })
   const topCountries = Object.entries(countryCount).sort((a, b) => b[1] - a[1]).slice(0, 3)
 
   const classCount = {}
-  allBoats.forEach(b => { if (b.boatClass) classCount[b.boatClass] = (classCount[b.boatClass] || 0) + 1 })
+  allBoats.forEach(b => {
+    const cls = normalizeClass(b)
+    if (cls) classCount[cls] = (classCount[cls] || 0) + 1
+  })
   const sortedClasses = Object.entries(classCount).sort((a, b) => b[1] - a[1])
 
   const ratings = allBoats.map(b => b.rating).filter(n => n >= 50)
