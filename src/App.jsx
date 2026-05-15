@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from 'react'
+import { useCallback, useEffect, useState, lazy, Suspense } from 'react'
 import useVersionCheck from './hooks/useVersionCheck'
 import Home from './pages/Home'
 import { shouldSkipIntro, markIntroSeen } from './intro/introGate.js'
@@ -262,10 +262,10 @@ export default function App() {
   const [dir, setDir] = useState('fwd')
   const [lang, setLang] = useState('nl')
   const [introDone, setIntroDone] = useState(() => shouldSkipIntro())
-  const finishIntro = () => {
+  const finishIntro = useCallback(() => {
     markIntroSeen()
     setIntroDone(true)
-  }
+  }, [])
   useVersionCheck()
 
   useEffect(() => {

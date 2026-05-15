@@ -169,9 +169,16 @@ export function createCatamaranScene(container) {
   function dispose() {
     cancelAnimationFrame(raf)
     raf = 0
+    const seen = new Set()
     scene.traverse((o) => {
-      if (o.geometry) o.geometry.dispose()
-      if (o.material) o.material.dispose()
+      if (o.geometry && !seen.has(o.geometry)) {
+        seen.add(o.geometry)
+        o.geometry.dispose()
+      }
+      if (o.material && !seen.has(o.material)) {
+        seen.add(o.material)
+        o.material.dispose()
+      }
     })
     renderer.dispose()
     if (renderer.domElement.parentNode) {
