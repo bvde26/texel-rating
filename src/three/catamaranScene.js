@@ -725,15 +725,16 @@ export function createCatamaranScene(container, opts = {}) {
   }
 
   // --- Akte 1: genesis-storm (parts stormen aan, kolken, klikken samen).
-  //     Akte 2: 1x ademen. Akte 3: finale-explode → bol → automatisch
-  //     door naar de pagina (onComplete). ---
+  //     Akte 2: één klein pulsje (onderdelen iets uit elkaar en terug).
+  //     Akte 3: boot blijft in elkaar, korte hold → door naar de pagina. ---
   let GEN_MAX = 0
   for (const m of parts) {
     GEN_MAX = Math.max(GEN_MAX, m.userData.delay + m.userData.flightDur)
   }
   GEN_MAX += 0.15
-  const INTRO_DUR = 1.7 // s, één "ademhaling" (1x uit/in)
-  const FINALE_DUR = 2.4 // s, autonome explode naar de bol
+  const INTRO_DUR = 1.5 // s, één klein pulsje (uit/in)
+  const PULSE_AMT = 0.06 // hoe ver de parts uit elkaar gaan bij het pulsje
+  const FINALE_DUR = 0.8 // s, boot blijft in elkaar voor 'ie wegfade't
   const baseAmp = P.pulse ? P.pulse[1] : 0
   const camBase = camera.position.clone()
 
@@ -783,14 +784,13 @@ export function createCatamaranScene(container, opts = {}) {
     } else if (phase === 'breathe') {
       introT += dt
       const k = introT / INTRO_DUR // 0..1 → 0→1→0 (1x uit/in)
-      applyProgress(0.5 - 0.5 * Math.cos(2 * Math.PI * k))
+      applyProgress(PULSE_AMT * (0.5 - 0.5 * Math.cos(2 * Math.PI * k)))
       if (introT >= INTRO_DUR) phase = 'finale'
     } else {
-      // Autonome finale: explodeer naar de bol, dan door naar de pagina.
+      // Boot blijft in elkaar; korte hold, dan door naar de pagina.
       finaleT += dt
-      const f = Math.min(1, finaleT / FINALE_DUR)
-      applyProgress(f * f * (3 - 2 * f)) // smoothstep
-      if (f >= 1 && !completed) {
+      applyProgress(0)
+      if (finaleT >= FINALE_DUR && !completed) {
         completed = true
         opts.onComplete?.()
       }
