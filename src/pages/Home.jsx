@@ -215,7 +215,7 @@ export default function Home({ t, lang, setLang, go }) {
             letterSpacing: -1, color: 'var(--spring-ink)',
             lineHeight: 1.05,
             textTransform: 'uppercase',
-          }}>Round Texel</div>
+          }}>Round Texel info</div>
           <div style={{
             fontFamily: 'Outfit, sans-serif',
             fontWeight: 500, fontSize: 15,
