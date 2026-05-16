@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, lazy, Suspense } from 'react'
 import useVersionCheck from './hooks/useVersionCheck'
 import Home from './pages/Home'
-import { shouldSkipIntro, markIntroSeen } from './intro/introGate.js'
+import { shouldSkipIntro } from './intro/introGate.js'
 
 const RaceComparison = lazy(() => import('./pages/RaceComparison'))
 const Info = lazy(() => import('./pages/Info'))
@@ -263,7 +263,6 @@ export default function App() {
   const [lang, setLang] = useState('nl')
   const [introDone, setIntroDone] = useState(() => shouldSkipIntro())
   const finishIntro = useCallback(() => {
-    markIntroSeen()
     setIntroDone(true)
   }, [])
   useVersionCheck()

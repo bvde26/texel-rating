@@ -1,19 +1,19 @@
 // src/pages/CatamaranIntro.jsx
 import { useCallback, useEffect, useRef } from 'react'
 import { createCatamaranScene } from '../three/catamaranScene.js'
-import { useScrollProgress } from '../hooks/useScrollProgress.js'
 
 export default function CatamaranIntro({ onDone }) {
   const wrapRef = useRef(null)
   const canvasHostRef = useRef(null)
+  const titleRef = useRef(null)
   const sceneRef = useRef(null)
   const finishedRef = useRef(false)
   const timerRef = useRef(null)
+  const titleTimerRef = useRef(null)
   const onDoneRef = useRef(onDone)
   useEffect(() => {
     onDoneRef.current = onDone
   }, [onDone])
-  const { progress, done } = useScrollProgress(wrapRef, true)
 
   const fadeOut = useCallback((duration) => {
     if (finishedRef.current) return
@@ -26,61 +26,78 @@ export default function CatamaranIntro({ onDone }) {
     setTimeout(() => onDoneRef.current?.(), duration)
   }, [])
 
-  // Scene-lifecycle
+  // Scene-lifecycle. Als de animatie klaar is → korte hold → fade → Home.
   useEffect(() => {
     const host = canvasHostRef.current
     if (!host) return
-    const scene = createCatamaranScene(host)
+    const scene = createCatamaranScene(host, {
+      onComplete: () => {
+        if (finishedRef.current || timerRef.current) return
+        timerRef.current = setTimeout(() => fadeOut(650), 500)
+      },
+    })
     sceneRef.current = scene
     scene.start()
+    // Titel fade-in rond het "snap"-moment (catamaran klikt samen).
+    titleTimerRef.current = setTimeout(() => {
+      const t = titleRef.current
+      if (t) t.style.opacity = '1'
+    }, 2700)
     const onResize = () => scene.resize()
     window.addEventListener('resize', onResize)
     return () => {
       window.removeEventListener('resize', onResize)
+      clearTimeout(timerRef.current)
+      clearTimeout(titleTimerRef.current)
       scene.dispose()
       sceneRef.current = null
     }
-  }, [])
+  }, [fadeOut])
 
-  // Progress -> scène
-  useEffect(() => {
-    sceneRef.current?.update(progress)
-  }, [progress])
-
-  // Voltooiing: hold + fade -> onDone (timer alleen op unmount opruimen,
-  // niet bij elke re-render — anders wist een re-render de hold-timer).
-  useEffect(() => {
-    if (!done || finishedRef.current || timerRef.current) return
-    timerRef.current = setTimeout(() => fadeOut(650), 600)
-  }, [done, fadeOut])
-
-  useEffect(() => () => clearTimeout(timerRef.current), [])
-
+  // Klik / toets waar dan ook → meteen door naar de pagina.
   const skip = () => fadeOut(400)
 
   return (
     <div
       ref={wrapRef}
+      onClick={skip}
+      role="button"
+      tabIndex={0}
+      aria-label="Doorgaan naar de pagina"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') skip()
+      }}
       style={{
-        position: 'fixed', inset: 0, background: '#e9eaec',
+        position: 'fixed', inset: 0, background: '#F6F2E9',
         touchAction: 'none', overflow: 'hidden', zIndex: 50,
+        cursor: 'pointer',
       }}
     >
       <div ref={canvasHostRef} style={{ position: 'absolute', inset: 0 }} />
-      <button
-        onClick={skip}
-        aria-label="Skip intro"
+      <div
+        ref={titleRef}
         style={{
-          position: 'absolute', bottom: 22, left: '50%',
-          transform: 'translateX(-50%)', background: 'transparent',
-          border: 'none', cursor: 'pointer', padding: 12, opacity: 0.55,
+          position: 'absolute', top: '13%', left: '50%',
+          transform: 'translateX(-50%)', opacity: 0,
+          transition: 'opacity 1100ms ease-out',
+          font: '600 clamp(20px, 3.4vw, 38px)/1.1 Inter, system-ui, sans-serif',
+          color: '#1A1F1A', letterSpacing: '0.16em', whiteSpace: 'nowrap',
+          textTransform: 'uppercase', pointerEvents: 'none',
+          textShadow: '0 1px 14px rgba(246,242,233,0.9)',
         }}
       >
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none"
-          stroke="#3a3f44" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-      </button>
+        -= Round Texel Info =-
+      </div>
+      <div
+        style={{
+          position: 'absolute', bottom: 22, left: '50%',
+          transform: 'translateX(-50%)', opacity: 0.5,
+          font: '500 13px/1 Inter, system-ui, sans-serif',
+          color: '#3a3f44', letterSpacing: '0.04em', pointerEvents: 'none',
+        }}
+      >
+        klik om door te gaan
+      </div>
     </div>
   )
 }

@@ -1,5 +1,4 @@
 // src/intro/introGate.js
-const KEY = 'texelrating:catamaranIntroSeen'
 
 function prefersReducedMotion() {
   try {
@@ -9,22 +8,11 @@ function prefersReducedMotion() {
   }
 }
 
-// Intro overslaan als: flag gezet, reduced-motion, of deeplink naar /beheer.
+// Intro speelt elke keer bij het laden van de app.
+// Alleen overslaan bij: reduced-motion of deeplink naar /beheer.
 export function shouldSkipIntro() {
   if (typeof window === 'undefined') return true
   if (window.location.pathname === '/beheer') return true
   if (prefersReducedMotion()) return true
-  try {
-    return window.localStorage.getItem(KEY) === '1'
-  } catch {
-    return false // privémodus: intro gewoon tonen
-  }
-}
-
-export function markIntroSeen() {
-  try {
-    window.localStorage.setItem(KEY, '1')
-  } catch {
-    /* best-effort: geen blocker */
-  }
+  return false
 }
