@@ -463,7 +463,7 @@ export default function Stats({ lang, onBack }) {
         </div>
       ) : (
       /* Scrollable content */
-      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 16px 40px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 16px 40px' }} className="scrollbar-none">
 
         <SectionLabel text={c.section_field} />
         <Card>
