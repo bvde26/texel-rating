@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=DM+Mono:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800&family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600&family=DM+Mono:wght@500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -71,31 +71,47 @@ body {
   min-height: 132px;
   background: var(--spring-surface);
   border: 1px solid var(--spring-edge);
-  border-radius: 24px;
+  border-radius: 22px;
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.9) inset,
-    0 12px 32px -16px rgba(26, 31, 26, 0.18);
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 1px 2px rgba(26, 31, 26, 0.04),
+    0 14px 30px -18px rgba(26, 31, 26, 0.22);
   color: var(--spring-ink);
   text-align: left;
   overflow: hidden;
-  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  isolation: isolate;
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 200ms ease, background 200ms ease;
 }
+/* Soft accent bloom, top-left, behind the icon */
 .tile::before {
   content: '';
   position: absolute;
-  inset: 0 auto 0 0;
-  width: 3px;
-  background: var(--tile-accent, transparent);
-  opacity: 0.9;
+  top: -40%;
+  left: -20%;
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle at center,
+    var(--tile-accent, transparent) 0%, transparent 70%);
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: -1;
+  transition: opacity 200ms ease;
 }
 .tile:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   background: var(--spring-surface-strong);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 1) inset,
-    0 20px 44px -20px rgba(26, 31, 26, 0.24);
+    0 0 0 1px var(--tile-accent, transparent),
+    0 22px 46px -20px rgba(26, 31, 26, 0.26);
+}
+.tile:hover::before { opacity: 0.45; }
+.tile:active {
+  transform: translateY(-1px) scale(0.992);
+  transition-duration: 90ms;
 }
 .tile[data-accent="moss"]   { --tile-accent: var(--accent-moss); }
 .tile[data-accent="sky"]    { --tile-accent: var(--accent-sky); }
@@ -115,26 +131,34 @@ body {
 }
 
 .tile-icon {
-  width: 36px; height: 36px;
-  border-radius: 12px;
-  background: var(--tile-accent, rgba(26, 31, 26, 0.06));
+  width: 38px; height: 38px;
+  border-radius: 13px;
+  background:
+    linear-gradient(140deg,
+      color-mix(in srgb, var(--tile-accent, #d8d8d2) 70%, white) 0%,
+      var(--tile-accent, rgba(26, 31, 26, 0.08)) 100%);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.7) inset,
+    0 4px 10px -6px var(--tile-accent, rgba(26, 31, 26, 0.2));
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
   color: var(--spring-ink);
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
 }
+.tile:hover .tile-icon { transform: scale(1.06) rotate(-2deg); }
 
 .tile-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 10px;
+  padding: 4px 9px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px solid var(--spring-edge);
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10.5px;
+  background: rgba(26, 31, 26, 0.045);
+  border: 1px solid transparent;
+  font-family: 'DM Mono', 'JetBrains Mono', monospace;
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   text-transform: uppercase;
   color: var(--spring-ink);
   white-space: nowrap;
