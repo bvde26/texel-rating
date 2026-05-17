@@ -1,16 +1,16 @@
 {
-  "fetchedAt": "2026-05-16T07:10:38.007Z",
+  "fetchedAt": "2026-05-17T07:30:43.527Z",
   "categories": {
     "catamaran_duo": {
       "name": "Catamaran duo handed",
       "nameNl": "Catamaran duo",
-      "count": 177,
+      "count": 179,
       "url": "https://scoring.winterwave.nl/register/5bb713f702ce"
     },
     "wingfoil": {
       "name": "Wingfoil Marathon",
       "nameNl": "Wingfoil",
-      "count": 64,
+      "count": 65,
       "url": "https://scoring.winterwave.nl/register/3b15cb900f46"
     },
     "windsurf": {
@@ -2329,6 +2329,32 @@
       "category": "catamaran_duo"
     },
     {
+      "id": "reg_178",
+      "skipper": "Mark Klaaijsen",
+      "crew": "Guus groeneveld",
+      "sailNumber": "Ned777",
+      "boatName": "Ned777",
+      "boatClass": "Nacra evolution",
+      "country": "Netherlands",
+      "boatId": null,
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
+      "id": "reg_179",
+      "skipper": "Gerrit Wormland",
+      "crew": "Lina Esders",
+      "sailNumber": "2455",
+      "boatName": "2455",
+      "boatClass": "F18",
+      "country": "Germany",
+      "boatId": "formula_18",
+      "spinnaker": true,
+      "rating": 100,
+      "category": "catamaran_duo"
+    },
+    {
       "id": "reg_001",
       "skipper": "L.J. Hassing",
       "crew": null,
@@ -3150,6 +3176,19 @@
     {
       "id": "reg_064",
       "skipper": "remon mocking",
+      "crew": null,
+      "sailNumber": "",
+      "boatName": "",
+      "boatClass": "",
+      "country": "Netherlands",
+      "boatId": null,
+      "spinnaker": false,
+      "rating": 0,
+      "category": "wingfoil"
+    },
+    {
+      "id": "reg_065",
+      "skipper": "Robert de lang",
       "crew": null,
       "sailNumber": "",
       "boatName": "",
